@@ -13,7 +13,7 @@ let TTT=()=><div>asdfasdf</div>
 const App = () =>
    <BrowserRouter>
         <Routes>
-            <Route index element={<TTT />} />
+            <Route index element={<Order />} />
             <Route path="/order" element={<Order />} />
             <Route path="/backstage" element={<BackStage />} />
             <Route path="/productmanage" element={<ProductManage />} />

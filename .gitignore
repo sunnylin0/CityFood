@@ -1,6 +1,7 @@
 node_modules
 .DS_Store
 obj
+bin
 dist
 dist-ssr
 *.local
