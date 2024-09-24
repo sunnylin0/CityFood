@@ -11,7 +11,7 @@ import { RevenueAnalysis } from './backstage/RevenueAnalysis'
 
 let TTT=()=><div>asdfasdf</div>
 const App = () =>
-   <BrowserRouter>
+    <BrowserRouter basename="/app/">
         <Routes>
             <Route index element={<Order />} />
             <Route path="/order" element={<Order />} />
@@ -21,7 +21,7 @@ const App = () =>
             <Route path="/main" element={<MainLogo />} />
             <Route path="/home" element={<Home />} />
             <Route path="/other" element={<Other />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<Order />} />
         </Routes>
 </BrowserRouter>
 
