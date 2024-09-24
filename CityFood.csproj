@@ -1,0 +1,242 @@
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B770BADF-8042-4BE5-AB1B-D733E836A512}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CityFood</RootNamespace>
+    <AssemblyName>CityFood</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+    <TypeScriptModuleKind />
+    <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include="dist\assets\image-9-7c193d55.png" />
+    <Content Include="dist\assets\index-656fd679.js" />
+    <Content Include="dist\assets\index-f0975382.css" />
+    <Content Include="dist\assets\logo-6a9afda7.svg" />
+    <Content Include="dist\assets\logo-70aa190a.svg" />
+    <Content Include="dist\favicon.svg" />
+    <Content Include="dist\index.html" />
+    <Content Include="dist\robots.txt" />
+    <Content Include="food.jsx" />
+    <Content Include="img\favicon.png" />
+    <Content Include="img\logo.png" />
+    <Content Include="img\logo.svg" />
+    <Content Include="img\MOBILE\banner.png" />
+    <Content Include="img\MOBILE\image-1.png" />
+    <Content Include="img\MOBILE\image-2.png" />
+    <Content Include="img\MOBILE\image-3.png" />
+    <Content Include="img\MOBILE\image-4.png" />
+    <Content Include="img\MOBILE\image-5.png" />
+    <Content Include="img\MOBILE\image-6.png" />
+    <Content Include="img\MOBILE\image-7.png" />
+    <Content Include="img\MOBILE\image-8.png" />
+    <Content Include="img\MOBILE\image-9.png" />
+    <Content Include="img\MOBILE\image.png" />
+    <Content Include="img\PC\A3-qrcode.png" />
+    <Content Include="img\PC\Arrow circle down.png" />
+    <Content Include="img\PC\Arrow circle up.png" />
+    <Content Include="img\PC\banner.png" />
+    <Content Include="img\PC\burger.jpg" />
+    <Content Include="img\PC\image-1.png" />
+    <Content Include="img\PC\image-2.png" />
+    <Content Include="img\PC\image-3.png" />
+    <Content Include="img\PC\image-4.png" />
+    <Content Include="img\PC\image-5.png" />
+    <Content Include="img\PC\image-6.png" />
+    <Content Include="img\PC\image-7.png" />
+    <Content Include="img\PC\image-8.png" />
+    <Content Include="img\PC\image-9.png" />
+    <Content Include="img\PC\image.png" />
+    <Content Include="img\PC\p012.jpg" />
+    <Content Include="img\PC\p013.jpg" />
+    <Content Include="img\PC\p014.jpg" />
+    <Content Include="img\PC\p015.jpg" />
+    <Content Include="img\PC\p016.jpg" />
+    <Content Include="img\PC\p021.jpg" />
+    <Content Include="img\PC\p022.jpg" />
+    <Content Include="img\PC\p023.jpg" />
+    <Content Include="img\PC\p024.jpg" />
+    <Content Include="img\PC\p031.jpg" />
+    <Content Include="img\PC\p032.jpg" />
+    <Content Include="img\PC\p033.jpg" />
+    <Content Include="img\PC\p034.jpg" />
+    <Content Include="img\PC\p035.jpg" />
+    <Content Include="img\PC\p036.jpg" />
+    <Content Include="img\PC\p041.jpg" />
+    <Content Include="img\PC\p042.jpg" />
+    <Content Include="img\PC\p051.jpg" />
+    <Content Include="img\PC\p052.jpg" />
+    <Content Include="img\PC\p053.jpg" />
+    <Content Include="img\PC\p054.jpg" />
+    <Content Include="img\PC\p055.jpg" />
+    <Content Include="img\PC\p061.jpg" />
+    <Content Include="img\PC\p062.jpg" />
+    <Content Include="index.html" />
+    <Content Include="lib\bootstrap.5.1.1.min.css" />
+    <Content Include="lib\bootstrap.bundle.5.1.1.min.js" />
+    <Content Include="public\favicon.svg" />
+    <Content Include="public\robots.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\App.css" />
+    <Content Include="src\App.jsx" />
+    <Content Include="src\App.test.jsx" />
+    <Content Include="src\backstage\CustomerOrders.jsx" />
+    <Content Include="src\backstage\RevenueAnalysis.jsx" />
+    <Content Include="src\backstage\ProductEditModal.jsx" />
+    <Content Include="src\backstage\ProductManage.jsx" />
+    <Content Include="src\backstage\BackStage.css" />
+    <Content Include="src\backstage\BackFooter.jsx" />
+    <Content Include="src\backstage\BackHeader.jsx" />
+    <Content Include="src\backstage\BackStage.jsx" />
+    <Content Include="src\core\abcClass.__" />
+    <Content Include="src\index.css" />
+    <Content Include="src\index.jsx" />
+    <Content Include="src\index2.css" />
+    <Content Include="src\logo.svg" />
+    <Content Include="src\modal\AdModal.jsx" />
+    <Content Include="src\modal\CartModal.jsx" />
+    <Content Include="src\modal\GuideModal.jsx" />
+    <Content Include="src\modal\LoginModal.jsx" />
+    <Content Include="src\modal\ProductModal.jsx" />
+    <Content Include="src\modal\UserOrdersModal.jsx" />
+    <Content Include="src\pages\Footer %283%29.jsx" />
+    <Content Include="src\pages\Footer.jsx" />
+    <Content Include="src\pages\Header.jsx" />
+    <Content Include="src\pages\Home.jsx" />
+    <Content Include="src\pages\mainlogo.jsx" />
+    <Content Include="src\pages\Menu.jsx" />
+    <Content Include="src\pages\notfound.jsx" />
+    <Content Include="src\pages\Order.jsx" />
+    <Content Include="src\pages\other.jsx" />
+    <Content Include="src\pages\PModalContent.jsx" />
+    <Content Include="src\pages\PNoModalContent.jsx" />
+    <Content Include="src\pages\Popup.jsx" />
+    <Content Include="src\pages\PPortalExample.jsx" />
+    <Content Include="src\pages\TagList.jsx" />
+    <Content Include="src\setupTests.js" />
+    <Content Include="vite.config.js" />
+    <Content Include="web.config" />
+    <Content Include="LICENSE" />
+    <Content Include="package.json" />
+    <Content Include="package-lock.json" />
+    <Content Include="README.md" />
+    <Content Include="src\pages\package_fakerest.json" />
+    <Content Include="src\pages\package_yao-client.json" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>10202</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:3000/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <UserProperties NpmRestoreOnProjectOpen="True" package_1json__JsonSchema="" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>npm run start</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>if not exist "..\node_modules" (
+
+echo ERROR: npm packages have not been restored. Wait for automatic package install, or right-click package.json in Solution Explorer/Restore Packages.
+
+exit /b 1
+)</PreBuildEvent>
+  </PropertyGroup>
+</Project>

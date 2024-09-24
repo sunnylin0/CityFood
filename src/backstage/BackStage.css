@@ -1,0 +1,229 @@
+
+/*#region ---------- 通用設定 ----------*/
+/* 主色調設定 */
+:root {
+    /* 主色: 橘色 */
+    --color-primary: #ff855e;
+    /* 次要色: 米黃色 */
+    --color-secondary: #ffd5a4;
+    /* 灰色 */
+    --color-gray: #666666;
+    /* 黑色 */
+    --color-dark: #303030;
+    /* 白色 */
+    --color-white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100vh;
+}
+
+.color-primary {
+    color: var(--color-primary);
+}
+
+.color-secondary {
+    color: var(--color-secondary);
+}
+/* 滑鼠改手指圖案 */
+.finger {
+    cursor: pointer;
+}
+
+.noClick {
+    pointer-events: none;
+}
+
+.text-center {
+    text-align: center;
+}
+/* 隱藏捲軸 */
+::-webkit-scrollbar {
+    display: none;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    background-color: var(--color-secondary);
+    width: 100%;
+    /* height: 72px; */
+    z-index: 100;
+    font-size: 20px;
+}
+
+.main-content {
+    min-height: 100vh;
+    max-height: 100vh;
+    /* max-width: 100vh; */
+    padding-top: 72px;
+    padding-bottom: 72px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    background-color: var(--color-secondary);
+    width: 100%;
+    /* height: 72px; */
+    z-index: 100;
+}
+
+.page {
+    display: none;
+    height: 80vh;
+    overflow-y: auto;
+}
+/*#endregion 通用設定*/
+
+/*#region ---------- 卡片 ----------*/
+
+.foodCard {
+    /* display: flex; */
+    box-sizing: border-box;
+    padding: 12px 16px;
+    gap: 8px;
+    width: 100%;
+    /* height: 194px; */
+
+    background: var(--color-white);
+    /* secondary */
+
+    border: 1px solid var(--color-secondary);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.card {
+    border: none;
+    border-radius: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 0;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.btn-my-primary {
+    color: var(--color-white);
+    padding: 0.25rem 0.5rem;
+    /* width: auto;
+                height: 40px; */
+    background: var(--color-primary);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+/*#endregion 卡片*/
+
+/*#region ---------- 產品管理表格 ----------*/
+.tableFoodImg {
+    text-align: center;
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+/*#endregion 產品管理表格*/
+
+/*#region ---------- Footer ----------*/
+.footer {
+    height: 56px;
+}
+
+.border-left {
+    border-left: 4px solid var(--color-primary);
+}
+
+.btn-outline-my-primary {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+/*#endregion Footer*/
+
+/*#region Table設定*/
+
+.h-100vh {
+    height: 80vh;
+}
+
+.table-scroll {
+    overflow-y: auto;
+}
+
+    .table-scroll thead {
+        position: sticky;
+        top: 0;
+        background-color: #ffffff;
+        /* background-color: rgb(241, 241, 241); */
+    }
+
+    .table-scroll tbody tr {
+        vertical-align: middle;
+        border-bottom: 1px solid #ddd;
+    }
+
+/*#endregion Table設定*/
+
+/*#region ---------- 產品編輯Modal productEditModal ----------*/
+#productEditModal .modal-body input:not([type="radio"]),
+#productEditModal .modal-body select {
+    width: 100%;
+    height: 40px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 8px;
+    padding: 0 8px;
+}
+
+#productEditModal .modal-body div.item {
+    margin-bottom: 1rem;
+}
+
+.btn-radio {
+    /* box-sizing: border-box; */
+    padding: 0.5rem 1.5rem;
+    height: 40px;
+    border: 2px solid var(--color-primary);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.2));
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+.btn-check:checked + .btn-radio {
+    background: var(--color-primary);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+    color: var(--color-white);
+}
+
+.btn-pill-primary {
+    background: var(--color-white);
+    color: var(--color-primary);
+    border-radius: 50rem;
+    padding: 0.25rem 0.5rem;
+    margin: 2px 1px;
+    border: 1px solid var(--color-primary);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-check:checked + .btn-pill-primary {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+/*#endregion 產品編輯Modal productEditModal*/
+
