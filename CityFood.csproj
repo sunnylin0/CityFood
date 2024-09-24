@@ -74,6 +74,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="dist\assets\image-9-7c193d55.png" />
+    <Content Include="dist\assets\index-656fd679.js" />
+    <Content Include="dist\assets\index-f0975382.css" />
+    <Content Include="dist\assets\logo-6a9afda7.svg" />
+    <Content Include="dist\assets\logo-70aa190a.svg" />
+    <Content Include="dist\favicon.svg" />
+    <Content Include="dist\index.html" />
+    <Content Include="dist\robots.txt" />
     <Content Include="food.jsx" />
     <Content Include="img\favicon.png" />
     <Content Include="img\logo.png" />
@@ -217,7 +225,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties package_1json__JsonSchema="" NpmRestoreOnProjectOpen="True" />
+      <UserProperties NpmRestoreOnProjectOpen="True" package_1json__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
