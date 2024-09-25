@@ -11,7 +11,7 @@ import { RevenueAnalysis } from './backstage/RevenueAnalysis'
 
 let TTT=()=><div>asdfasdf</div>
 const App = () =>
-    <BrowserRouter basename="/app/">
+    <BrowserRouter >
         <Routes>
             <Route index element={<Order />} />
             <Route path="/order" element={<Order />} />
