@@ -24,7 +24,7 @@ export const Order = () => {
         <div>
             <Header />
             <div className="main-content">
-                <Footer />
+            
 
                 <div className="container">
                     <div className="d-flex py-2 justify-content-center">
