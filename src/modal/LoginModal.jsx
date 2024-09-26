@@ -29,7 +29,7 @@ export const LoginModal = ({ onClose }) => {
                     </div>
                 </div>
             </div>
-            <div className="modal-backdrop fade show">ggggggggggggggggggggggggggggggggggggggg</div>
+            <div className="modal-backdrop fade show"></div>
 
         </>
     )
