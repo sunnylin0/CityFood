@@ -72,6 +72,9 @@ body {
 	overflow-y: hidden;
 	overflow-x: hidden;
 	position: relative;
+	background-image: url("/img/PC/wood2.jpg");
+	/* font-size: large;
+	font-weight: bold; */
 }
 
 .footer {
@@ -113,6 +116,7 @@ a.grayLink:hover {
 
 .tagList li {
 	position: relative;
+
 }
 
 ul.tagList {
@@ -121,16 +125,19 @@ ul.tagList {
 	padding: 0;
 	display: flex;
 	gap: 20px;
+
 }
+
 
 .btn-cat-tag {
 	/* box-sizing: border-box; */
 	padding: 0.5rem 3rem;
 	height: 40px;
-	border: 2px solid var(--color-primary);
+	border: 1px solid var(--color-primary);
 	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.2));
 	border-radius: 8px;
 	white-space: nowrap;
+	/* font-size: 33px; */
 }
 
 .btn-check:checked+.btn-cat-tag {
@@ -174,7 +181,7 @@ ul.tagList {
 	background: var(--color-white);
 	/* secondary */
 
-	border: 1px solid var(--color-secondary);
+	border: 2px solid var(--color-secondary);
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
 	border-radius: 8px;
 }
@@ -304,7 +311,7 @@ ul.tagList {
 	/* height: 194px; */
 
 	background: var(--color-white);
-	border: 1px solid var(--color-secondary);
+	border: 3px solid var(--color-secondary);
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
 	border-radius: 8px;
 }
