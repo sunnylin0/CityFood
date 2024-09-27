@@ -1,4 +1,12 @@
-﻿
+﻿import { FormTable} from './otherForm'
+import { OtherFooter } from './otherFooter'
+
 export const Other = () => {
-    return <div>Other Page</div>
+    return (
+        <div>
+            <FormTable />
+            <OtherFooter />
+        </div>
+    )
 }
+

@@ -54,7 +54,7 @@ export const Header = () => {
                             <HeadeItem onClick={openUserOrderModal} title='訂單查詢' />
                             <HeadeLink to="/backstage" title='切換至後台' />
                             <HeadeItem onClick={openLoginModal} title='登入/註冊' />
-                            <NavLink className="nav-link finger"  to="/backstage">後台</NavLink>
+                            <NavLink className="nav-link finger"  to="./backstage">後台</NavLink>
                         </ul>
                     </div>
                 </div>
