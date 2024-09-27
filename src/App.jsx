@@ -3,7 +3,7 @@ import { Routes, Route, BrowserRouter} from 'react-router-dom'
 import MainLogo from './pages/mainlogo'
 import { Order } from './pages/Order'
 import { Home } from './pages/home'
-import { Other,Other2,Other3 } from './pages/other'
+import { Other,Other2,Other3,Other4 } from './pages/other'
 import { NotFound } from './pages/notfound'
 import { BackStage } from './backstage/BackStage'
 import { ProductManage } from './backstage/ProductManage'
@@ -23,6 +23,7 @@ const App = () =>
             <Route path="/other" element={<Other />} />
             <Route path="/other2" element={<Other2 />} />
             <Route path="/other3" element={<Other3 />} />
+            <Route path="/other4" element={<Other4 />} />
             <Route path="*" element={<Order />} />
         </Routes>
 </BrowserRouter>
