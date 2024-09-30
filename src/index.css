@@ -2,9 +2,9 @@
 /* 主色調設定 */
 :root {
 	 /*主色: 橘色*/ 
-	--color-primary: #ff855e;
+	--color-primary: #6daeb3;
 	/* 次要色: 米黃色 */
-	--color-secondary: #ffd5a4;
+	--color-secondary: #c5f1df;
 	 /*灰色 */
 	--color-gray: #666666;
 	/* 黑色 */
@@ -56,11 +56,15 @@ body {
 .header {
 	position: fixed;
 	top: 0;
-	background-color: var(--color-secondary);
+	/* background-color: var(--color-secondary,0.5); */
+	background-image:url("/img/PC/wood1.jpg");
 	width: 100%;
 	/* height: 72px; */
 	z-index: 100;
 	font-size: 20px;
+    color: inherit; /* 保持文字顏色 */
+    opacity: 1; /* 保持文字不受背景透明度影響 */
+
 }
 
 .main-content {
@@ -72,7 +76,8 @@ body {
 	overflow-y: hidden;
 	overflow-x: hidden;
 	position: relative;
-	background-image: url("/img/PC/wood2.jpg");
+	background-image: url("/img/PC/wood4.jpg");
+	background-size:cover;
 	/* font-size: large;
 	font-weight: bold; */
 }
@@ -133,11 +138,21 @@ ul.tagList {
 	/* box-sizing: border-box; */
 	padding: 0.5rem 3rem;
 	height: 40px;
-	border: 1px solid var(--color-primary);
+	border: 2px solid rgb(121, 172, 136);
 	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.2));
 	border-radius: 8px;
 	white-space: nowrap;
-	/* font-size: 33px; */
+	font-size: 20px;
+	font-weight: bold;
+
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: rgba(221, 212, 212, 0.5); /* 按鈕背景透明度為30% */
+    color: inherit; /* 保持文字顏色 */
+    opacity: 1; /* 保持文字不受背景透明度影響 */
+	
 }
 
 .btn-check:checked+.btn-cat-tag {
@@ -161,7 +176,7 @@ ul.tagList {
 }
 
 .catTitle {
-	color: var(--color-primary);
+	color: rgb(8, 8, 8);
 	text-align: center;
 }
 
@@ -293,13 +308,17 @@ ul.tagList {
 .btn-minus,
 .btn-add {
 	border-radius: 50%;
+	width: 30px;
+	height: 30px;
 	border: 1px solid var(--color-primary);
 	background: var(--color-white);
 	color: var(--color-primary);
-	/* font-size: 20px; */
+	/* font-size: 20px;  */
 	font-weight: bold;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
 }
+.fa-minus::before{ content: "-";}
+.fa-plus::before{ content: "+";}
 
 .cartfoodCard {
 	display: flex;

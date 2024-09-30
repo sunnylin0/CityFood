@@ -6,14 +6,14 @@ let AdditionContents = ({ additionIds }) => {
         let addObj = theFoodAdditions.find(x => x.id == additionId);
 
         return (
-            <div key={key} className="" data-addtion-id={addObj.id}>
+            <div key={key} className="row" data-addtion-id={addObj.id}>
                 <label>{addObj.name}</label>
                 <hr className="my-1" />
                 {addObj.items.map((item, key) =>
-                    <div key={key}>
+                    <div className="col-auto" key={key}>
                         <input type={addObj.isMulti ? 'checkbox' : 'radio'} className="btn-check foodAdditionOption" name={addObj.name}
                             id={'add-' + item.id} value={item.id} data-add-price={item.price} />
-                        <label className="btn btn-pill-primary" htmlFor={'add-' + item.id} >{item.name + '$' + item.price}</label>
+                        <label className="btn btn-pill-primary" htmlFor={'add-' + item.id} >{ifitem.price? ( item.name +  '+$' + item.price):item.name}</label>
                     </div>
                 )
                 }
@@ -50,7 +50,7 @@ export function ProductModal({ productId, onClose, addToCart }) {
                                 <p className="h5">${price}</p>
                             </div>
                             {/*<!-- 選項 -->*/}
-                            <div id="foodAdditionOptions">
+                            <div id="foodAdditionOptions" className="">
                                 <AdditionContents additionIds={additionIds} />
                             </div>
 

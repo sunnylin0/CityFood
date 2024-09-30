@@ -69,79 +69,86 @@ let foodCat = {
 	{	"id":"c01",	"name":"前菜",	"products":[
 	{	"id":"p012",	"name":"布里起司塔佐蔓越莓醬",	"catId":"c01",	"img":"./Img/PC/aa1.jpg",	"comment":"蔓越莓醬佐特製布里起司",	"isSoldOut":false,	"price":180,	"additionIds":[	"AH01"	]	},
 	{	"id":"p013",	"catId":"c01",	"name":"培根扇貝捲佐香醋蛋黃醬",	"price":200,	"comment":"高級培根+生食級干貝",	"img":"./Img/PC/aa9.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
-	{	"id":"p014",	"catId":"c01",	"name":"美味香辣芥末蛋",	"price":130,	"comment":"放山雞蛋+特製芥末醬",	"img":"./Img/PC/aa4.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
-	{	"id":"p015",	"catId":"c01",	"name":"季節特選海鮮杯",	"price":200,	"comment":"特選海鮮層層推疊",	"img":"./Img/PC/aa3.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
+	{	"id":"p014",	"catId":"c01",	"name":"美味香辣惡魔蛋",	"price":130,	"comment":"放山雞蛋+特製芥末醬",	"img":"./Img/PC/aa4.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
+	{	"id":"p015",	"catId":"c01",	"name":"炙燒黑松露海膽",	"price":200,	"comment":"極致鮮美的海陸首選",	"img":"./Img/PC/aa2.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
 	{	"id":"p016",	"catId":"c01",	"name":"蜜餞山核桃蔓越莓山羊起司球",	"price":150,	"comment":"精選果乾堅果+爆漿山羊起司",	"img":"./Img/PC/aa5.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	}	]	},
 	
     {	"id":"c02",	"name":"沙拉",	"products":[
-	{	"id":"p021",	"catId":"c02",	"name":"果醬吐司",	"price":15,	"comment":"切邊烤土司+一公分厚塗果醬",	"img":"./Img/PC/p021.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
-	{	"id":"p022",	"catId":"c02",	"name":"鮪魚沙拉吐司",	"price":35,	"comment":"切邊烤土司+一整罐鮪魚",	"img":"./Img/PC/p022.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
-	{	"id":"p023",	"catId":"c02",	"name":"培根吐司",	"price":35,	"comment":"切邊烤土司+雙份培根",	"img":"./Img/PC/p023.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
-	{	"id":"p024",	"catId":"c02",	"name":"里肌豬排吐司",	"price":35,	"comment":"切邊烤土司+厚切里肌豬排",	"img":"./Img/PC/p024.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	}	]	},
+	{	"id":"p021",	"catId":"c02",	"name":"晨曦之露沙拉",	"price":130,	"comment":"清新脆口的沙拉，帶來早晨露珠般的清爽感覺",	"img":"./Img/PC/ss2.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
+	{	"id":"p022",	"catId":"c02",	"name":"綠野仙踪沙拉",	"price":150,	"comment":"彷彿讓人置身於森林之中，感受自然的豐富風味",	"img":"./Img/PC/ss4.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
+	{	"id":"p023",	"catId":"c02",	"name":"陽光綻放沙拉",	"price":130,	"comment":"充滿了陽光般的明亮色彩與活力，讓人感受到夏日的溫暖。",	"img":"./Img/PC/ss5.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
+	{	"id":"p024",	"catId":"c02",	"name":"彩虹果園沙拉",	"price":150,	"comment":"繽紛的水果搭配脆爽的生菜，像彩虹般絢麗的視覺享受。",	"img":"./Img/PC/ss6.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	}	]	},
 	
     {	"id":"c03",	"name":"湯品",	"products":[
-	{	"id":"p031",	"catId":"c03",	"name":"紐澳良豬排堡",	"price":55,	"comment":"就是豬排加生菜的漢堡啦",	"img":"./Img/PC/p031.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
-	{	"id":"p032",	"catId":"c03",	"name":"美味蟹堡",	"price":45,	"comment":"是誰住在深海的大鳳梨裡",	"img":"./Img/PC/p032.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
-	{	"id":"p033",	"catId":"c03",	"name":"阿拉斯加鱈魚堡",	"price":45,	"comment":"鱈~魚~堡~",	"img":"./Img/PC/p033.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
-	{	"id":"p034",	"catId":"c03",	"name":"日式和牛堡",	"price":100,	"comment":"日本來的和牛，頂級享受",	"img":"./Img/PC/p034.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
-	{	"id":"p035",	"catId":"c03",	"name":"薯泥堡",	"price":40,	"comment":"內含薯泥沙拉，美味蔬食",	"img":"./Img/PC/p035.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":true	},
-	{	"id":"p036",	"catId":"c03",	"name":"無骨雞腿堡",	"price":55,	"comment":"精選黃金右腿去骨雞腿排",	"img":"./Img/PC/p036.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	}	]	},
+//	{	"id":"p031",	"catId":"c03",	"name":"紐澳良豬排堡",	"price":55,	"comment":"就是豬排加生菜的漢堡啦",	"img":"./Img/PC/p031.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
+//	{	"id":"p032",	"catId":"c03",	"name":"美味蟹堡",	"price":45,	"comment":"是誰住在深海的大鳳梨裡",	"img":"./Img/PC/p032.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
+	{	"id":"p033",	"catId":"c03",	"name":"綠花椰菜切達起士濃湯",	"price":120,	"comment":"濃鬱、濃鬱、起司的味道。",	"img":"./Img/PC/pp2.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
+	{	"id":"p034",	"catId":"c03",	"name":"糯米椒白豆湯",	"price":120,	"comment":"具有美味的奶油味和白豆的舒適感",	"img":"./Img/PC/pp3.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
+	{	"id":"p035",	"catId":"c03",	"name":"素食玉米餅湯",	"price":120,	"comment":"豐盛、溫暖、充滿大膽的味道。",	"img":"./Img/PC/pp4.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
+	{	"id":"p036",	"catId":"c03",	"name":"橡子南瓜湯",	"price":120,	"comment":"木質百里香、溫暖的肉荳蔻和辣椒調味，味道鮮美",	"img":"./Img/PC/pp5.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	}	]	},
 	{	"id":"c04",	"name":"主菜",	"products":[
-	{	"id":"p041",	"catId":"c04",	"name":"經典美味沙拉",	"price":55,	"comment":"全素草食餐",	"img":"./Img/PC/p041.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
-	{	"id":"p042",	"catId":"c04",	"name":"低脂蛋白沙拉",	"price":55,	"comment":"很多葉子搭配水煮蛋、舒肥雞胸肉",	"img":"./Img/PC/p042.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	}	]	},
+	{	"id":"p041",	"catId":"c04",	"name":"紅鯛魚佐柑橘醬","price":360,	"comment":"融合了原始菜餚的所有明亮、酥脆的味道",	"img":"./Img/PC/mm11.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
+    {	"id":"p042",	"catId":"c04",	"name":"紐約客牛排佐紅酒醬",	"price":450,	"comment":"特製紅酒醬配精選紐約客",	"img":"./Img/PC/mm8.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
+    {	"id":"p043",	"catId":"c04",	"name":"帕爾瑪乾酪龍蝦",	"price":680,	"comment":"閃閃發光的龍蝦鮮甜味",	"img":"./Img/PC/mm12.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
+    {	"id":"p044",	"catId":"c04",	"name":"經典油封鴨",	"price":580,	"comment":"每一口都會在嘴裡融化",	"img":"./Img/PC/mm13.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
+    {	"id":"p045",	"catId":"c04",	"name":"蔬菜煎餅半熟蛋",	"price":200,	"comment":"蛋素草食餐",	"img":"./Img/PC/mm1.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
+	{	"id":"p046",	"catId":"c04",	"name":"主廚特製早午餐",	"price":360,	"comment":"滿足一天的所需",	"img":"./Img/PC/mm2.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	}	]	},
+    
 	{	"id":"c05",	"name":"點心",	"products":[
-	{	"id":"p051",	"name":"歡樂薯餅",	"catId":"c05",	"img":"./Img/PC/p051.jpg",	"comment":"薯餅薯餅得第一",	"isSoldOut":false,	"price":10,	"additionIds":[	"AH01",	"AH04"	]	},
-	{	"id":"p052",	"catId":"c05",	"name":"雞塊",	"price":30,	"comment":"一份4塊",	"img":"./Img/PC/p052.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	},
-	{	"id":"p053",	"catId":"c05",	"name":"薯條",	"price":30,	"comment":"酥脆薯條，素食可用",	"img":"./Img/PC/p053.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	},
-	{	"id":"p054",	"catId":"c05",	"name":"熱狗",	"price":30,	"comment":"國產熱狗",	"img":"./Img/PC/p054.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	},
-	{	"id":"p055",	"catId":"c05",	"name":"月亮蝦餅",	"price":30,	"comment":"泰式月亮蝦餅搭配泰式酸辣醬",	"img":"./Img/PC/p055.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	}	]	},
+	{	"id":"p051",	"name":"莓好焦糖鬆餅",	"catId":"c05",	"img":"./Img/PC/dd2.jpg",	"comment":"酸甜莓果襯托出鬆餅的美好",	"isSoldOut":false,	"price":180,	"additionIds":[	"AH01",	"AH04"	]	},
+	{	"id":"p052",	"catId":"c05",	"name":"經典蜂蜜鬆餅",	"price":150,	"comment":"簡單又不會尷尬的甜香",	"img":"./Img/PC/dd5.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	},
+	{	"id":"p053",	"catId":"c05",	"name":"蔓越莓一口酥",	"price":160,	"comment":"甜香酥脆一口一個",	"img":"./Img/PC/dd6.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	},
+	{	"id":"p054",	"catId":"c05",	"name":"晴王葡萄澎派",	"price":220,	"comment":"滿滿麝香葡萄太過癮",	"img":"./Img/PC/dd7.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	},
+	{	"id":"p055",	"catId":"c05",	"name":"栗拔山兮蛋糕",	"price":200,	"comment":"栗子泥加上好幾顆栗子的美好",	"img":"./Img/PC/dd8.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	}	]	},
 	{	"id":"c06",	"name":"飲品",	"products":[
-	{	"id":"p061",	"catId":"c06",	"name":"早餐店奶茶",	"price":15,	"comment":"台灣特色，早餐店奶茶",	"img":"./Img/PC/p061.jpg",	"additionIds":[	"AH02",	"AH03"	],	"isSoldOut":false	},
-	{	"id":"p062",	"catId":"c06",	"name":"經典紅茶",	"price":15,	"comment":"台灣高山茶葉沖泡",	"img":"./Img/PC/p062.jpg",	"additionIds":[	"AH02",	"AH03"	],	"isSoldOut":false	}	]	}	]
+	{	"id":"p061",	"catId":"c06",	"name":"夢幻咖啡拿鐵",	"price":180,	"comment":"哥倫比單品深烘培日曬處理",	"img":"./Img/PC/latte3.jpg",	"additionIds":[	"AH02",	"AH03"	],	"isSoldOut":false	},
+	{	"id":"p062",	"catId":"c06",	"name":"頂級抹茶拿鐵",	"price":180,	"comment":"宇治高級抹茶配上小農鮮乳",	"img":"./Img/PC/macha2.jpg",	"additionIds":[	"AH02",	"AH03"	],	"isSoldOut":false	},
+    {	"id":"p063",	"catId":"c06",	"name":"熱帶蘭姆氣旋",	"price":180,	"comment":"加勒比熱帶風情",	"img":"./Img/PC/cock1.jpg",	"additionIds":[	"AH02",	"AH03"	],	"isSoldOut":false	},
+    {	"id":"p064",	"catId":"c06",	"name":"綜合水果茶",	"price":180,	"comment":"新鮮酸甜好滋味",	"img":"./Img/PC/tea1.jpg",	"additionIds":[	"AH02",	"AH03"	],	"isSoldOut":false	}	]	}	]
 
 
 theFoodAdditions =
     [
         {
             "id": "AH01",
-            "name": "加料",
+            "name": "餐點特製",
             "isMulti": true,
             "items": [
                 {
                     "id": "AD011",
-                    "name": "加蛋",
-                    "price": 10
+                    "name": "減油",
+                    "price": 0
                 },
                 {
                     "id": "AD012",
-                    "name": "加培根",
-                    "price": 15
+                    "name": "減鹽",
+                    "price": 0
                 },
                 {
                     "id": "AD013",
-                    "name": "加蔥花",
-                    "price": 5
+                    "name": "減糖",
+                    "price": ""
                 },
-                {
-                    "id": "AD014",
-                    "name": "加起司",
-                    "price": 10
-                },
-                {
-                    "id": "AD015",
-                    "name": "加蔬菜",
-                    "price": 10
-                },
-                {
-                    "id": "AD016",
-                    "name": "不要醬料",
-                    "price": 0
-                },
-                {
-                    "id": "AH017",
-                    "name": "不要胡椒",
-                    "price": 0
-                }
+                //{
+                //     "id": "AD014",
+                //     "name": "加起司",
+                //     "price": 10
+                // },
+                // {
+                //     "id": "AD015",
+                //     "name": "加蔬菜",
+                //     "price": 10
+                // },
+                // {
+                //     "id": "AD016",
+                //     "name": "不要醬料",
+                //     "price": 0
+                // },
+                // {
+                //     "id": "AH017",
+                //     "name": "不要胡椒",
+                //     "price": 0
+                // }
             ]
         },
         {
