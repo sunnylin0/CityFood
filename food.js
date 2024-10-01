@@ -24,6 +24,15 @@ let theCats = []; //商品類別
 let theFoodAdditions = []; //食品附加選項
 
 
+let arr = [
+    { title: "可樂", num: 0, price: 25, sum: 0 },
+    { title: "百香果", num: 0, price: 50, sum: 0 },
+    { title: "糖果", num: 0, price: 15, sum: 0 },
+    { title: "香草", num: 0, price: 30, sum: 0 },
+    { title: "火龍果", num: 0, price: 55, sum: 0 },
+]
+
+
 //#endregion
 
 let foodCat = {

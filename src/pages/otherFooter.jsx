@@ -1,4 +1,5 @@
 ﻿import { useState } from 'react'
+import {  } from 'react-dom'
 
 export function OtherFooter({ onClose }) {
     const [showCartModal, setShowCartModal] = useState(false);

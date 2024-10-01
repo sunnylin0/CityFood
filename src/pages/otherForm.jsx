@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 
 
-let arr = ["可樂", "百香果", "糖果", "香草", "火龍果"];
+
 export const FormTable = () => {
     let handelSubmit = (data) => {
         event.preventDefault();
@@ -17,7 +17,7 @@ export const FormTable = () => {
                 <div className="row">
                     {arr.map((its, index) =>
                         <div className="col w-25" key={index}>
-                            <CardItem key={index} title={its} />
+                            <CardItem id={index} {...its} />
                         </div>
                     )}
                 </div>
@@ -33,17 +33,27 @@ export const FormTable = () => {
 let CardItem = (props) => {
     let [count, setSUM] = useState(0);
     function btnAdd() {
-        setSUM(count => count + 1);
+        setSUM(count => {
+            count +=1;
+            arr[props.id].num = count;
+            arr[props.id].sum = count * props.price;
+            return count;
+        });
+        
+        console.log(arr)
     }
     function btnMin() {
         setSUM(count => count - 1);
+        console.log(arr)
     }
     return (
         <div className="card fs-4">
-            { props.title}
-            <input className="btn m-3 fs-4" type="button" value="-" onClick={btnMin} />
-            <input className="btn m-3 fs-4" type="text" value={count} readOnly />
-            <input className="btn m-3 fs-4" type="button" value="+" onClick={btnAdd} />
+            {props.title}
+            <br />
+            { "　價格:" + props.price + "　總價:" + count * props.price}
+            <input className="btn m-１ fs-4" type="button" value="-" onClick={btnMin} />
+            <input className="btn m-１ fs-4" type="text" value={count} readOnly />
+            <input className="btn m-１ fs-4" type="button" value="+" onClick={btnAdd} />
         </div>
     )
 }
