@@ -15,13 +15,22 @@ const expireMins = 30; //登入過期時間(分鐘)
 // const urlDomain = 'http://localhost:3000';
 const urlDomain = 'https://json-server-vercel-a.vercel.app';
 
-
+let sumPrice = 0;   //總價格
 let theNotDoneOrders = []; //未完成的 客戶訂單資料
 let theAllOrders = []; //全部的 客戶訂單
 let theDoneOrders = []; //已完成的 客戶訂單資料
 let theMenu = []; //存放菜單的陣列(sort by catId)(cat 底下再放 products)
 let theCats = []; //商品類別
 let theFoodAdditions = []; //食品附加選項
+
+
+let arr = [
+    { title: "可樂", num: 0, price: 25, sum: 0 },
+    { title: "百香果", num: 0, price: 50, sum: 0 },
+    { title: "糖果", num: 0, price: 15, sum: 0 },
+    { title: "香草", num: 0, price: 30, sum: 0 },
+    { title: "火龍果", num: 0, price: 55, sum: 0 },
+]
 
 
 //#endregion
@@ -374,7 +383,8 @@ theMenu = [
                 "img": "./Img/PC/p061.jpg",
                 "additionIds": [
                     "AH02",
-                    "AH03"
+                    "AH03",
+                    "AH04",
                 ],
                 "isSoldOut": false
             },
@@ -386,6 +396,7 @@ theMenu = [
                 "comment": "台灣高山茶葉沖泡",
                 "img": "./Img/PC/p062.jpg",
                 "additionIds": [
+                    "AH01",
                     "AH02",
                     "AH03"
                 ],
@@ -524,7 +535,7 @@ theFoodAdditions =
     ]
 
 
-theAllOrders=   [
+theAllOrders = [
     {
         "id": "OD1669619419597",
         "userId": 2,
@@ -928,7 +939,7 @@ theAllOrders=   [
             }
         ]
     }
-    ]
+]
 theNotDoneOrders = theAllOrders.filter(x => x.isDone == false);
 theDoneOrders = theAllOrders.filter(x => x.isDone == true);
 

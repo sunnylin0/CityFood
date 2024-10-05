@@ -383,7 +383,8 @@ theMenu = [
                 "img": "./Img/PC/p061.jpg",
                 "additionIds": [
                     "AH02",
-                    "AH03"
+                    "AH03",
+                    "AH04",
                 ],
                 "isSoldOut": false
             },
@@ -395,6 +396,7 @@ theMenu = [
                 "comment": "台灣高山茶葉沖泡",
                 "img": "./Img/PC/p062.jpg",
                 "additionIds": [
+                    "AH01",
                     "AH02",
                     "AH03"
                 ],

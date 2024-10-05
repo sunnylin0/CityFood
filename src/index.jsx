@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider } from 'jotai';
 import '../lib/bootstrap.5.1.1.min.css'
 import './index.css';
 import * as bootstrap from '../lib/bootstrap.bundle.5.1.1.min'
@@ -7,6 +8,9 @@ import * as bootstrap from '../lib/bootstrap.bundle.5.1.1.min'
 import App from './App';
 
 const root = ReactDOM.render(
-    <React.StrictMode>
+    <Provider>
         <App />
-    </React.StrictMode>, document.getElementById('root'));
+    </Provider>, document.getElementById('root'));
+//<React.StrictMode>
+//    <App />
+//</React.StrictMode>, document.getElementById('root'));
