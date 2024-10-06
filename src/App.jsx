@@ -8,6 +8,7 @@ import { NotFound } from './pages/notfound'
 import { BackStage } from './backstage/BackStage'
 import { ProductManage } from './backstage/ProductManage'
 import { RevenueAnalysis } from './backstage/RevenueAnalysis'
+import { FoceAtom_extemplat } from './foce/index'
 
 let TTT=()=><div>asdfasdf</div>
 const App = () =>
@@ -21,7 +22,7 @@ const App = () =>
             <Route path="/main" element={<MainLogo />} />
             <Route path="/home" element={<Home />} />
             <Route path="/other" element={<Other />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<FoceAtom_extemplat />} />
         </Routes>
 </BrowserRouter>
 

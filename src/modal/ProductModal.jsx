@@ -57,6 +57,7 @@ function getImageUrl(name) {
 export function ProductModal({ productId, onClose, addToCart }) {
     const myProductObj = theProducts.find(productObj => productObj.id == productId);
     const { catId, id, name, comment, price, img, isSoldOut, additionIds } = myProductObj;
+
     let [countProductAmount, setProductAmount] = useState(1);       //商品數量
     let [countProductTotal, setProductTotal] = useState(0);         //總價
     let [sItem, setSItem] = useAtom(singleItem);

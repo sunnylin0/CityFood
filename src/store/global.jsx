@@ -15,6 +15,6 @@ export let singleItem = atom({
     qty: 2,               //"qty": 2,
     comment: "",          //"comment": "",
     additems: ["A011", "A022"],          //"additems": []
-    addTotalPrice:0,
-    total:0
+    addTotalPrice: 0,
+    total: 0
 })
