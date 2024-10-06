@@ -8,7 +8,7 @@ import { NotFound } from './pages/notfound'
 import { BackStage } from './backstage/BackStage'
 import { ProductManage } from './backstage/ProductManage'
 import { RevenueAnalysis } from './backstage/RevenueAnalysis'
-import { FoceAtom_extemplat } from './foce/index'
+import { FoceAtom_extemplat } from './focusAtom/index'
 
 let TTT=()=><div>asdfasdf</div>
 const App = () =>

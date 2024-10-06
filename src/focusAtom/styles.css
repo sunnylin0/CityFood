@@ -1,11 +1,8 @@
-.App {
-  font-family: sans-serif;
-  text-align: center;
+.AppFocus {
+    font-family: sans-serif;
+    text-align: center;
 }
 
-body {
-  background-color: rgb(31 41 55);
-}
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {

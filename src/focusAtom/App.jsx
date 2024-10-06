@@ -157,7 +157,7 @@ const Summary = ({ foodListAtom }) => {
 
 export default function App() {
   return (
-    <div className="App text-zinc-100">
+    <div className="AppFocus text-zinc-100">
       <ItemList foodListAtom={basicFoodListAtom} />
       <Summary foodListAtom={basicFoodListAtom} />
     </div>

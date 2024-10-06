@@ -1,12 +1,46 @@
-﻿import { useState, useEffect } from 'react'
-import { atom,useAtom } from 'jotai'
+﻿import { useState, useEffect, useCallback } from 'react'
+import { atom, useAtom, useSetAtom } from 'jotai'
+import {  focusAtom } from 'jotai-optics'
 import {singleItem } from '../store/global'
+
+const useFocusQTY = (initialAtom) => {
+    return useSetAtom(focusAtom(
+            initialAtom,
+            useCallback((optic) => optic.prop("qty"), [])
+        ));
+};
+
+const useFocusTotal = (initialAtom) => {
+    return useSetAtom(focusAtom(
+            initialAtom,
+            useCallback((optic) => optic.prop("total"), [])
+        ));
+};
+
+
+const useFocusAddPrice = (initialAtom) => {
+    return useSetAtom(focusAtom(
+            initialAtom,
+            useCallback((optic) => optic.prop("addTotalPrice"), [])
+        ));
+};
+
+const useFocusAddItems = (initialAtom) => {
+    return useSetAtom(focusAtom(
+            initialAtom,
+            useCallback((optic) => optic.prop("additems"), [])
+        ));
+};
 
 //食物的附加選項
 let AdditionContents = ({ additionIds }) => {
     //let [additionTotalPrice, setAdditionTotalPrice] = useState(0);       //附加選項價格
     //let [account, setAccount] = useState(0);       //附加選項價格
-    let [sItem, setSItem] = useAtom(singleItem);
+    //let [sItem, setSItem] = useAtom(singleItem);
+    let [additems] = useAtom(atom((get) => get(singleItem).additems))
+    let [additionTotalPrice] = useAtom(atom((get) => get(singleItem).addTotalPrice))
+    const setAdditionTotalPrice = useFocusAddPrice(singleItem);
+    const setAdditionItems = useFocusAddItems(singleItem);
 
     //計算食物的附加選項總價
     function handleClickAddition(idName,isChecked){
@@ -18,14 +52,16 @@ let AdditionContents = ({ additionIds }) => {
         });
         //setAdditionTotalPrice(() => addTotlePrice);
 
-        let filterNotIsIdname = sItem.additems.filter((item, index, array)=>
+        let filterNotIsIdname = additems.filter((item, index, array)=>
             item != idName
         );
         if (isChecked) filterNotIsIdname.push(idName);
         console.log(filterNotIsIdname);
-        console.log(sItem);
+        console.log(additems);
         // 更新 附加選項
-        setSItem(() => { return { ...sItem, additems: filterNotIsIdname, addTotalPrice} }  )
+        //setSItem(() => { return { ...sItem, additems: filterNotIsIdname, addTotalPrice} }  )
+        setAdditionTotalPrice(addTotalPrice)
+        setAdditionItems(filterNotIsIdname)
     }
 
     return (additionIds.map((additionId, key) => {
@@ -43,7 +79,8 @@ let AdditionContents = ({ additionIds }) => {
                     </div>
                 )
                 }
-                {sItem.addTotalPrice}
+                {/* {sItem.addTotalPrice}*/}
+                {additionTotalPrice}
             </div>
         )
     }))
@@ -58,9 +95,15 @@ export function ProductModal({ productId, onClose, addToCart }) {
     const myProductObj = theProducts.find(productObj => productObj.id == productId);
     const { catId, id, name, comment, price, img, isSoldOut, additionIds } = myProductObj;
 
-    let [countProductAmount, setProductAmount] = useState(1);       //商品數量
-    let [countProductTotal, setProductTotal] = useState(0);         //總價
-    let [sItem, setSItem] = useAtom(singleItem);
+    let [countProductAmount] = useAtom(atom((get) => get(singleItem).qty))   //商品數量
+    const setProductAmount = useFocusQTY(singleItem);
+
+    let [countProductTotal] = useAtom(atom((get) => get(singleItem).total))  //總價
+    const setProductTotal = useFocusTotal(singleItem);
+
+    //let [countProductAmount, setProductAmount] = useState(1);       //商品數量
+    //let [countProductTotal, setProductTotal] = useState(0);         //總價
+    //let [sItem, setSItem] = useAtom(singleItem);
 
     //調整商品數量
     function handleAdd() {
@@ -75,7 +118,7 @@ export function ProductModal({ productId, onClose, addToCart }) {
         countCurrentPrice();
     }
 
-    useEffect(countCurrentPrice, [countProductAmount])
+    //useEffect(countCurrentPrice, [countProductAmount])
 
     //計算產品總價
     function countCurrentPrice() {
