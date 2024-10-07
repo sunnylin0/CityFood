@@ -12,7 +12,7 @@ export let singleItem = atom({
     id: "p053",           //"id": "p053",
     name: "Á¦±ø",         //"name": "Á¦±ø",
     price: 30,            //"price": 30,
-    qty: 2,               //"qty": 2,
+    qty: 1,               //"qty": 2,
     comment: "",          //"comment": "",
     additems: ["A011", "A022"],          //"additems": []
     addTotalPrice: 0,

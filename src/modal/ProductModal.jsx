@@ -1,46 +1,59 @@
 ﻿import { useState, useEffect, useCallback } from 'react'
-import { atom, useAtom, useSetAtom } from 'jotai'
+import { atom, useAtom, useAtomValue , useSetAtom } from 'jotai'
 import {  focusAtom } from 'jotai-optics'
-import {singleItem } from '../store/global'
+//import {singleItem } from '../store/global'
 
-const useFocusQTY = (initialAtom) => {
-    return useSetAtom(focusAtom(
-            initialAtom,
-            useCallback((optic) => optic.prop("qty"), [])
-        ));
+
+export let singleItem = {
+    catId: "",                              //"catId": "c05",
+    id: "",                                 //"id": "p053",
+    name: "",                               //"name": "薯條",
+    price: 30,                                  //"price": 30,
+    qty: atom(1),                               //"qty": 2,
+    comment: "",                                //"comment": "",
+    additems: atom(["A011", "A022"]),          //"additems": []
+    addTotalPrice: atom(0),
+    total: atom(0)
+}
+
+//save data in local storage
+function saveDataToLocalStorage(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+}
+//get data from local storage
+function getDataFromLocalStorage(key) {
+    return JSON.parse(localStorage.getItem(key));
+}
+//delete data from local storage
+function deleteDataFromLocalStorage(key) {
+    localStorage.removeItem(key);
+}
+// 取得當前時間(2022-01-01 00:00:00)
+function getTimeNow() {
+    let d = new Date();
+    const theTime = d.getFullYear() + "-" + (d.getMonth() + 1).AddZero() + "-" + d.getDate().AddZero() + " " + d.getHours().AddZero() + ":" + d.getMinutes().AddZero() + ":" + d.getSeconds().AddZero();
+    return theTime;
 };
 
-const useFocusTotal = (initialAtom) => {
-    return useSetAtom(focusAtom(
-            initialAtom,
-            useCallback((optic) => optic.prop("total"), [])
-        ));
-};
 
+//讀取購物車內容
+function getCarts() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    return cart;
+}
 
-const useFocusAddPrice = (initialAtom) => {
-    return useSetAtom(focusAtom(
-            initialAtom,
-            useCallback((optic) => optic.prop("addTotalPrice"), [])
-        ));
-};
-
-const useFocusAddItems = (initialAtom) => {
-    return useSetAtom(focusAtom(
-            initialAtom,
-            useCallback((optic) => optic.prop("additems"), [])
-        ));
-};
 
 //食物的附加選項
 let AdditionContents = ({ additionIds }) => {
-    //let [additionTotalPrice, setAdditionTotalPrice] = useState(0);       //附加選項價格
-    //let [account, setAccount] = useState(0);       //附加選項價格
+    let [additems, setAdditionItems] = useAtom(singleItem.additems);       //附加選項 項目
+    let [additionTotalPrice, setAdditionTotalPrice] = useAtom(singleItem.addTotalPrice);       //附加選項價格
+    
     //let [sItem, setSItem] = useAtom(singleItem);
-    let [additems] = useAtom(atom((get) => get(singleItem).additems))
-    let [additionTotalPrice] = useAtom(atom((get) => get(singleItem).addTotalPrice))
-    const setAdditionTotalPrice = useFocusAddPrice(singleItem);
-    const setAdditionItems = useFocusAddItems(singleItem);
+
+    //let [additems] = useAtom(atom((get) => get(singleItem).additems))
+    //let [additionTotalPrice] = useAtom(atom((get) => get(singleItem).addTotalPrice))
+    //const setAdditionTotalPrice = useFocusAddPrice(singleItem);
+    //const setAdditionItems = useFocusAddItems(singleItem);
 
     //計算食物的附加選項總價
     function handleClickAddition(idName,isChecked){
@@ -91,19 +104,14 @@ function getImageUrl(name) {
 }
 
 //渲染產品Modal
-export function ProductModal({ productId, onClose, addToCart }) {
+export function ProductModal({ productId, onClose }) {
     const myProductObj = theProducts.find(productObj => productObj.id == productId);
     const { catId, id, name, comment, price, img, isSoldOut, additionIds } = myProductObj;
 
-    let [countProductAmount] = useAtom(atom((get) => get(singleItem).qty))   //商品數量
-    const setProductAmount = useFocusQTY(singleItem);
 
-    let [countProductTotal] = useAtom(atom((get) => get(singleItem).total))  //總價
-    const setProductTotal = useFocusTotal(singleItem);
-
-    //let [countProductAmount, setProductAmount] = useState(1);       //商品數量
-    //let [countProductTotal, setProductTotal] = useState(0);         //總價
-    //let [sItem, setSItem] = useAtom(singleItem);
+    let [countProductAmount, setProductAmount] = useAtom(singleItem.qty);      //商品數量
+    let [countProductTotal, setProductTotal] = useAtom(singleItem.total);      //總價
+    let [additionTotalPrice] = useAtom(singleItem.addTotalPrice);       //附加選項價格
 
     //調整商品數量
     function handleAdd() {
@@ -118,16 +126,47 @@ export function ProductModal({ productId, onClose, addToCart }) {
         countCurrentPrice();
     }
 
-    //useEffect(countCurrentPrice, [countProductAmount])
+
 
     //計算產品總價
     function countCurrentPrice() {
         setProductTotal(
-            () => price * countProductAmount
+            () => (price + additionTotalPrice) * countProductAmount
         )
     }
 
-    //useEffect(countCurrentPrice, [countProductAmount]);
+
+
+
+
+    useEffect(countCurrentPrice, [countProductAmount, additionTotalPrice])
+
+    let qty= useAtomValue(singleItem.qty);
+    let additems= useAtomValue(singleItem.additems);
+    let addTotalPrice= useAtomValue(singleItem.addTotalPrice);
+    let total= useAtomValue(singleItem.total);
+
+    //加入購物車
+    function addToCart() {
+        //const products = theMenu.find(x => x.id == catId).products.find(x => x.id == productId);
+        const carts = getCarts();
+        //const qty = parseInt($('#tempProductAmount').text());
+        //const comment = $('#tempProductComment').val();
+        //let additems = [];
+        //$('#foodAdditionOptions input.foodAdditionOption:checked').each(function () {
+        //    additems.push($(this).val());
+        //});
+        //const price = parseInt($("#tempProductTotal").text());        
+        carts.push({
+            ...singleItem, qty, additems, addTotalPrice, total
+        });
+        saveDataToLocalStorage('cart', carts);
+        //$('#productModal').modal('hide');
+        //updateFooterTotalPrice();
+    }
+
+
+
 
 
     return (
@@ -170,7 +209,7 @@ export function ProductModal({ productId, onClose, addToCart }) {
                             </div>
 
                             {/* <!-- 加入購物車 -->*/}
-                            <button type="button" className="btn btn-addToCart my-1" id="btnAddToCart" onClick={() => addToCart(catId, id)} >
+                            <button type="button" className="btn btn-addToCart my-1" id="btnAddToCart" onClick={addToCart} >
                                 <span className=""> 加入購物車($</span>
                                 <span className="" id="tempProductTotal" data-food-price={price} data-add-price="0" data-total-price={countProductTotal}>{countProductTotal}</span>
                                 <span className="">)</span>
