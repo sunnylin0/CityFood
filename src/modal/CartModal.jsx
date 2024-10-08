@@ -1,7 +1,11 @@
 ﻿
 
-import { useState } from 'react';
-import { getCarts,saveDataToLocalStorage} from '../store/utils'
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom'
+import { useAtom } from 'jotai'
+import { getCarts, saveDataToLocalStorage } from '../store/utils'
+import { ProductModal } from './ProductModal'
+import { editProductModal, editProductObj } from '../store/state'
 
 
 //附加選項id轉name
@@ -46,21 +50,20 @@ let CartFoodCard = ({ index, productObj, deleteCartProduct, editCartProduct }) =
 	)
 }
 
-
-
 export let CartModal = ({ onClose }) => {
 	//let cartList = getCarts()
 	let [cartList, setCartList] = useState(getCarts())
-	let contentCartList = [];
+	let contentCartList = [];	
+	let [showModal, setShowModal] = useState(false)
+	//let editProductObj;
+	let [showEidtProductModal, setShowEditProductModal] = useAtom(editProductModal)
+	let [postEditProductObj, setEditProductObj] = useAtom(editProductObj)
+
 	//刪除購物車商品
 	let deleteCartProduct=(productIndex)=>{
-		//let cartList = getCarts();
-		console.log('productIndex' + productIndex)
-		let tempList = cartList.slice(productIndex+1, productIndex + 2);
-		setCartList(() => tempList);
-		
-		saveDataToLocalStorage('cart', tempList);
-		
+		cartList.splice(productIndex, 1);
+		setCartList(() => [...cartList]);		
+		saveDataToLocalStorage('cart', cartList);		
 		//renderCartModal();
 		//updateFooterTotalPrice();
 	}
@@ -68,8 +71,11 @@ export let CartModal = ({ onClose }) => {
 	function editCartProduct(productId, productIndex) {
 		//$('#cartModal').modal('hide');
 		//renderProductModal(productId);
-		//let cartList = getCarts();
-		//let productObj = cartList[productIndex];
+		let cartList = getCarts();
+		console.log('editCartProduct')
+		setEditProductObj(cartList[productIndex]);
+		onClose();
+		setShowEditProductModal(() => true)
 		//$('#tempProductAmount').text(productObj.qty);
 		//$('#tempProductComment').val(productObj.comment);
 		//$('#tempProductTotal').text(`${productObj.price * productObj.qty}`);
@@ -78,10 +84,11 @@ export let CartModal = ({ onClose }) => {
 		//productObj.additems.forEach(additem => {
 		//	$(`#foodAdditionOptions input[value=${additem}]`).prop('checked', true);
 		//})
-
 	}
+	useEffect(() => setShowModal(true), [showModal]);
 	return (
 		<>
+		
 			<div className="modal fade show" id="cartModal" tabIndex="-1" aria-modal="true" role="dialog" style={{ display: "block" }} >
 				<div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 					<div className="modal-content">

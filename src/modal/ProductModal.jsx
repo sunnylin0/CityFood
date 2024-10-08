@@ -67,9 +67,18 @@ function getImageUrl(name) {
 }
 
 //渲染產品Modal
-export function ProductModal({ productId, onClose }) {
-    const myProductObj = theProducts.find(productObj => productObj.id == productId);
-    const { catId, id, name, comment, price, img, isSoldOut, additionIds} = myProductObj;
+export function ProductModal({ productId, editProduct, onClose }) {
+    console.log( 'load ProductModal')
+    let myProductObj
+    if (productId) {
+         myProductObj = theProducts.find(productObj => productObj.id == productId);
+    } else if (editProduct) {
+        let pID =editProduct.catId
+        myProductObj = theProducts.find(productObj => productObj.id == pID);
+        myProductObj = { ...myProductObj, ...editProduct}
+    }else return <></>
+    let { catId, id, name, comment, price, img, isSoldOut, additionIds,
+        qty=1, total=0, additems=[], addTotalPrice=0, Remark="" }= myProductObj;
 
     singleItem = { ...singleItem, catId, id, name, price };
     let [countProduct, setCountProduct] = useState(singleItem.qty);      //商品數量
