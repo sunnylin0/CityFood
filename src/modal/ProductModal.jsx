@@ -2,6 +2,7 @@
 //import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
 //import { focusAtom } from 'jotai-optics'
 //import {singleItem } from '../store/global'
+import { getCarts, saveDataToLocalStorage } from '../store/utils'
 
 
 export let singleItem = {
@@ -15,31 +16,6 @@ export let singleItem = {
 	additems: [],          //"additems": []
 	addTotalPrice: 0,
 	total: 0
-}
-//save data in local storage
-function saveDataToLocalStorage(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
-}
-//get data from local storage
-function getDataFromLocalStorage(key) {
-    return JSON.parse(localStorage.getItem(key));
-}
-//delete data from local storage
-function deleteDataFromLocalStorage(key) {
-    localStorage.removeItem(key);
-}
-// 取得當前時間(2022-01-01 00:00:00)
-function getTimeNow() {
-    let d = new Date();
-    const theTime = d.getFullYear() + "-" + (d.getMonth() + 1).AddZero() + "-" + d.getDate().AddZero() + " " + d.getHours().AddZero() + ":" + d.getMinutes().AddZero() + ":" + d.getSeconds().AddZero();
-    return theTime;
-};
-
-
-//讀取購物車內容
-function getCarts() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    return cart;
 }
 
 
@@ -134,7 +110,8 @@ export function ProductModal({ productId, onClose }) {
             addTotalPrice: additionTotalPrice,
             total: countProductTotal,            
         });
-        saveDataToLocalStorage('cart', carts);
+		saveDataToLocalStorage('cart', carts);
+		onClose();
     }
 
     return (
