@@ -1,21 +1,21 @@
 ﻿import { useState, useEffect, useCallback } from 'react'
-import { atom, useAtom, useAtomValue , useSetAtom } from 'jotai'
-import {  focusAtom } from 'jotai-optics'
+//import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
+//import { focusAtom } from 'jotai-optics'
 //import {singleItem } from '../store/global'
 
 
 export let singleItem = {
-    catId: "",                              //"catId": "c05",
-    id: "",                                 //"id": "p053",
-    name: "",                               //"name": "薯條",
-    price: 30,                                  //"price": 30,
-    qty: atom(1),                               //"qty": 2,
-    comment: "",                                //"comment": "",
-    additems: atom(["A011", "A022"]),          //"additems": []
-    addTotalPrice: atom(0),
-    total: atom(0)
+	catId: "",                              //"catId": "c05",
+	id: "",                                 //"id": "p053",
+	name: "",                               //"name": "薯條",
+	price: 30,                                  //"price": 30,
+	qty: 1,                               //"qty": 2,
+	//comment: "",                                //"comment": "",
+	remark:"",
+	additems: [],          //"additems": []
+	addTotalPrice: 0,
+	total: 0
 }
-
 //save data in local storage
 function saveDataToLocalStorage(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
@@ -44,35 +44,23 @@ function getCarts() {
 
 
 //食物的附加選項
-let AdditionContents = ({ additionIds }) => {
-    let [additems, setAdditionItems] = useAtom(singleItem.additems);       //附加選項 項目
-    let [additionTotalPrice, setAdditionTotalPrice] = useAtom(singleItem.addTotalPrice);       //附加選項價格
-    
-    //let [sItem, setSItem] = useAtom(singleItem);
-
-    //let [additems] = useAtom(atom((get) => get(singleItem).additems))
-    //let [additionTotalPrice] = useAtom(atom((get) => get(singleItem).addTotalPrice))
-    //const setAdditionTotalPrice = useFocusAddPrice(singleItem);
-    //const setAdditionItems = useFocusAddItems(singleItem);
+let AdditionContents = ({ additionIds,useAdditionItems, useAdditionTotalPrice}) => {
+    let [additems, setAdditionItems] = useAdditionItems;                            //附加選項 項目
+    let [additionTotalPrice, setAdditionTotalPrice] = useAdditionTotalPrice;       //附加選項價格
 
     //計算食物的附加選項總價
-    function handleClickAddition(idName,isChecked){
+    function handleClickAddition(idName, isChecked) {
         let listAddition = document.querySelectorAll(".foodAdditionOption")
         let addTotalPrice = 0;
         listAddition.forEach((ths) => {
-            if (ths.checked) addTotalPrice += Number(ths.dataset.addprice);
-            console.log("addTotalPrice=" + addTotalPrice);
+            if (ths.checked) addTotalPrice += Number(ths.dataset.addprice);    
         });
-        //setAdditionTotalPrice(() => addTotlePrice);
 
-        let filterNotIsIdname = additems.filter((item, index, array)=>
+        let filterNotIsIdname = additems.filter((item, index, array) =>
             item != idName
         );
         if (isChecked) filterNotIsIdname.push(idName);
-        console.log(filterNotIsIdname);
-        console.log(additems);
         // 更新 附加選項
-        //setSItem(() => { return { ...sItem, additems: filterNotIsIdname, addTotalPrice} }  )
         setAdditionTotalPrice(addTotalPrice)
         setAdditionItems(filterNotIsIdname)
     }
@@ -87,87 +75,67 @@ let AdditionContents = ({ additionIds }) => {
                 {addObj.items.map((item, key) =>
                     <div key={key}>
                         <input type={addObj.isMulti ? 'checkbox' : 'radio'} className="btn-check foodAdditionOption" name={addObj.name}
-                            id={'add-' + item.id} value={item.id} data-addprice={item.price} onChange={(e) => handleClickAddition(item.id,e.target.checked)} />
+                            id={'add-' + item.id} value={item.id} data-addprice={item.price} onChange={(e) => handleClickAddition(item.id, e.target.checked)} />
                         <label className="btn btn-pill-primary" htmlFor={'add-' + item.id} >{item.name + '$' + item.price}</label>
                     </div>
                 )
                 }
-                {/* {sItem.addTotalPrice}*/}
                 {additionTotalPrice}
             </div>
         )
     }))
 }
 function getImageUrl(name) {
-    if (name.charAt(0) == '.')  name=name.slice(1);
+    if (name.charAt(0) == '.') name = name.slice(1);
     return new URL(name, import.meta.url).href;
 }
 
 //渲染產品Modal
 export function ProductModal({ productId, onClose }) {
     const myProductObj = theProducts.find(productObj => productObj.id == productId);
-    const { catId, id, name, comment, price, img, isSoldOut, additionIds } = myProductObj;
+    const { catId, id, name, comment, price, img, isSoldOut, additionIds} = myProductObj;
 
-
-    let [countProductAmount, setProductAmount] = useAtom(singleItem.qty);      //商品數量
-    let [countProductTotal, setProductTotal] = useAtom(singleItem.total);      //總價
-    let [additionTotalPrice] = useAtom(singleItem.addTotalPrice);       //附加選項價格
-
+    singleItem = { ...singleItem, catId, id, name, price };
+    let [countProduct, setCountProduct] = useState(singleItem.qty);      //商品數量
+    let [countProductTotal, setProductTotal] = useState(singleItem.total);      //總價
+    let [additionItems, setAdditionItems] = useState(singleItem.additems);       //附加選項價格
+    let [additionTotalPrice, setAdditionTotalPrice] = useState(singleItem.addTotalPrice);       //附加選項價格
+    let [postRemark, setRemark] = useState(singleItem.Remark);
+    
     //調整商品數量
     function handleAdd() {
-        setProductAmount(() => countProductAmount + 1);
+        setCountProduct(() => countProduct + 1);
         countCurrentPrice();
     }
     function handleMin() {
-        if (countProductAmount > 1)
-            setProductAmount(() => countProductAmount - 1)
+        if (countProduct > 1)
+            setCountProduct(() => countProduct - 1)
         else
-            setProductAmount(() => 1)
+            setCountProduct(() => 1)
         countCurrentPrice();
     }
 
-
-
     //計算產品總價
     function countCurrentPrice() {
-        setProductTotal(
-            () => (price + additionTotalPrice) * countProductAmount
-        )
+        setProductTotal(() => (price + additionTotalPrice) * countProduct)
     }
 
 
-
-
-
-    useEffect(countCurrentPrice, [countProductAmount, additionTotalPrice])
-
-    let qty= useAtomValue(singleItem.qty);
-    let additems= useAtomValue(singleItem.additems);
-    let addTotalPrice= useAtomValue(singleItem.addTotalPrice);
-    let total= useAtomValue(singleItem.total);
+    useEffect(countCurrentPrice, [countProduct, additionTotalPrice])
 
     //加入購物車
     function addToCart() {
-        //const products = theMenu.find(x => x.id == catId).products.find(x => x.id == productId);
-        const carts = getCarts();
-        //const qty = parseInt($('#tempProductAmount').text());
-        //const comment = $('#tempProductComment').val();
-        //let additems = [];
-        //$('#foodAdditionOptions input.foodAdditionOption:checked').each(function () {
-        //    additems.push($(this).val());
-        //});
-        //const price = parseInt($("#tempProductTotal").text());        
+        const carts = getCarts();  
         carts.push({
-            ...singleItem, qty, additems, addTotalPrice, total
+			...singleItem,
+			remark: postRemark,
+            qty: countProduct,
+            additems: additionItems,
+            addTotalPrice: additionTotalPrice,
+            total: countProductTotal,            
         });
         saveDataToLocalStorage('cart', carts);
-        //$('#productModal').modal('hide');
-        //updateFooterTotalPrice();
     }
-
-
-
-
 
     return (
         <div>
@@ -189,14 +157,20 @@ export function ProductModal({ productId, onClose }) {
                             </div>
                             {/*<!-- 選項 -->*/}
                             <div id="foodAdditionOptions">
-                                <AdditionContents additionIds={additionIds} />
+                                <AdditionContents
+                                    additionIds={additionIds}
+                                    useAdditionItems={[additionItems, setAdditionItems] }
+                                    useAdditionTotalPrice={[additionTotalPrice, setAdditionTotalPrice]}
+                                />
                             </div>
 
                             <br />
                             {/*<!-- 備註 -->*/}
                             <div>
                                 <p className="h6">餐點備註</p>
-                                <textarea className="form-control" id="tempProductComment" rows="2"></textarea>
+								<textarea className="form-control" id="tempProductRemark" rows="2"
+                                    value={postRemark}
+                                    onChange={e => setRemark(e.target.value)}></textarea>
                             </div>
                         </div>
                         <div className="modal-footer flex-column">
@@ -204,7 +178,7 @@ export function ProductModal({ productId, onClose }) {
 
                             <div className="d-flex align-items-center">
                                 <button className="btn rounded-circle btn-sm btn-minus" onClick={handleMin}><i className="fa-solid fa-minus small"></i></button>
-                                <span className="mx-4" id="tempProductAmount">{countProductAmount}</span>
+                                <span className="mx-4" id="tempProductAmount">{countProduct}</span>
                                 <button className="btn rounded-circle btn-sm btn-add" onClick={handleAdd}><i className="fa-solid fa-plus small"></i></button>
                             </div>
 
