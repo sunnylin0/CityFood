@@ -7,6 +7,7 @@ import { calCartTotalPrice } from '../store/state'
 
 
 export let singleItem = {
+	tokenId:"",		//流水號
 	catId: "",                              //"catId": "c05",
 	id: "",                                 //"id": "p053",
 	name: "",                               //"name": "薯條",
@@ -19,6 +20,9 @@ export let singleItem = {
 	total: 0
 }
 
+function createTokenId() {
+	return Math.random().toString(32).substr(2); // remove `0.`
+}
 
 //食物的附加選項
 let AdditionContents = ({ additionIds,useAdditionItems, useAdditionTotalPrice}) => {
@@ -53,7 +57,7 @@ let AdditionContents = ({ additionIds,useAdditionItems, useAdditionTotalPrice}) 
                     <div key={key}>
                         <input type={addObj.isMulti ? 'checkbox' : 'radio'} className="btn-check foodAdditionOption" name={addObj.name}
                             id={'add-' + item.id} value={item.id} data-addprice={item.price} onChange={(e) => handleClickAddition(item.id, e.target.checked)} />
-                        <label className="btn btn-pill-primary" htmlFor={'add-' + item.id} >{item.name + '$' + item.price}</label>
+						<label className="btn btn-pill-primary" htmlFor={'add-' + item.id} >{item.price ? (item.name + '$' + item.price) : item.name}</label>
                     </div>
                 )
                 }
@@ -80,10 +84,10 @@ export function ProductModal({ productId, editProduct, onClose }) {
         myProductObj = theProducts.find(productObj => productObj.id == pID);
         myProductObj = { ...myProductObj, ...editProduct}
     }else return <></>
-    let { catId, id, name, comment, price, img, isSoldOut, additionIds,
-        qty=1, total=0, additems=[], addTotalPrice=0, Remark="" }= myProductObj;
+	let { tokenId=createTokenId(), catId, id, name, comment, price, img, isSoldOut, additionIds,
+		qty = 1, total = 0, additems = [], addTotalPrice = 0, Remark = "" }= myProductObj;
 
-    singleItem = { ...singleItem, catId, id, name, price };
+	singleItem = { ...singleItem, catId, id, name, price, tokenId};
     let [countProduct, setCountProduct] = useState(singleItem.qty);      //商品數量
     let [countProductTotal, setProductTotal] = useState(singleItem.total);      //總價
     let [additionItems, setAdditionItems] = useState(singleItem.additems);       //附加選項價格

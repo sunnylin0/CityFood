@@ -1,19 +1,22 @@
-
-import { atom } from 'jotai'
+ï»¿
+import { atom, createStore } from 'jotai'
 import { getCarts, saveDataToLocalStorage } from '../store/utils'
 
 
+export const store = createStore();
 export let editProductModal = atom(false)
 export let editProductObj = atom({})
 
 export let cardTotalPrice = atom(0)
-//­pºâÁ`»ù®æ
+//è¨ˆç®—ç¸½åƒ¹æ ¼
 export function calCartTotalPrice() {
 	let cartList = getCarts();
 	let totalPrice = cartList.reduce(function (total, productObj) {
 		return total + productObj.total
 	}, 0)
 	console.log("State calCartTotalPrice:" + totalPrice)
-	cardTotalPrice = atom(totalPrice)
+
+	store.set(cardTotalPrice,(pre)=>totalPrice)
+	//cardTotalPrice = atom(totalPrice)
 	//setTotalPrice(totalPrice);
 }
