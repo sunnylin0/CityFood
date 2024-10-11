@@ -1,13 +1,16 @@
 ﻿import { useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useAtom } from 'jotai'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import ModalContent from './PModalContent'
 import { AdModal } from '../modal/AdModal'
 import { ProductModal } from '../modal/ProductModal'
+import { editProductModal, editProductObj } from '../store/state'
 
 export const Menu = ({ selectName }) => {
-
+	let [showEidtProductModal, setShowEditProductModal] = useAtom(editProductModal)
+	let [postEidtProductObj, setEditProductObj] = useAtom(editProductObj)
     const [showModal, setShowModal] = useState(
         {
             show: false,
@@ -21,9 +24,11 @@ export const Menu = ({ selectName }) => {
         });
     }
 
-    return <div className="menu container pb-6" id="menu">
-        {showModal.show &&
-            createPortal(<ProductModal productId={showModal.selectId} onClose={() => setShowModal(false)} />,document.body )}
+	return <div className="menu container pb-6" id="menu">
+		{showModal.show &&
+			createPortal(<ProductModal productId={showModal.selectId} onClose={() => setShowModal({ show: false })} />, document.body)}
+		{showEidtProductModal &&
+			createPortal(<ProductModal editProduct={postEidtProductObj} onClose={() => setEditProductObj(false)} />, document.body)}
         {
             theMenu.map((catObj, index) =>
                 <div className={(catObj.name == selectName || selectName == "全部") ? "" : "d-none"}

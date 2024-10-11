@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom'
 import { useAtom } from 'jotai'
 import { getCarts, saveDataToLocalStorage } from '../store/utils'
 import { ProductModal } from './ProductModal'
-import { editProductModal, editProductObj } from '../store/state'
+import { editProductModal, editProductObj, cardTotalPrice,calCartTotalPrice } from '../store/state'
 
 
 //附加選項id轉name
@@ -27,15 +27,15 @@ function countCartTotalPrice() {
 
 
 let CartFoodCard = ({ index, productObj, deleteCartProduct, editCartProduct }) => {
-	const { id, name, price, qty, comment, additems } = productObj;
+	const { id, name, price, qty, comment, additems, total } = productObj;
 
 	return (
 		<div className="cartfoodCard d-block mb-2" data-id={id} data-price={price}>
 			<div className="d-flex justify-content-between mb-2">
 				<span className="h6 fw-bolder">{name}</span>
 				<div className="">
-					<button className="btn rounded-circle btn-sm cartEdit" onClick={()=>editCartProduct(id, index)}><i className="fa-solid fa-pencil"></i></button>
-					<button className="btn rounded-circle btn-sm cartDelete" onClick={()=>deleteCartProduct(index)}><i className="fa-solid fa-trash-can"></i></button>
+					<button className="btn rounded-circle btn-sm cartEdit" onClick={() => editCartProduct(id, index)}><i className="fa-solid fa-pencil"></i></button>
+					<button className="btn rounded-circle btn-sm cartDelete" onClick={() => deleteCartProduct(index)}><i className="fa-solid fa-trash-can"></i></button>
 				</div>
 			</div>
 
@@ -43,8 +43,8 @@ let CartFoodCard = ({ index, productObj, deleteCartProduct, editCartProduct }) =
 			<span className="h6 fw-light d-block">{additems.map(x => additionIdToName(x)).join("/")}</span>
 			<div className="d-flex justify-content-between">
 
-				<span className="fw-light">${price} / {qty}份</span>
-				<div className="text-danger fw-bold">${price * qty}</div>
+				<span className="fw-light">${total / qty} / {qty}份</span>
+				<div className="text-danger fw-bold">${total}</div>
 			</div>
 		</div>
 	)
@@ -53,17 +53,23 @@ let CartFoodCard = ({ index, productObj, deleteCartProduct, editCartProduct }) =
 export let CartModal = ({ onClose }) => {
 	//let cartList = getCarts()
 	let [cartList, setCartList] = useState(getCarts())
-	let contentCartList = [];	
+	let contentCartList = [];
 	let [showModal, setShowModal] = useState(false)
 	//let editProductObj;
 	let [showEidtProductModal, setShowEditProductModal] = useAtom(editProductModal)
 	let [postEditProductObj, setEditProductObj] = useAtom(editProductObj)
+	let [totalPrice, setTotalPrice] = useAtom(cardTotalPrice)
+	let [cartState, setCartState] = useState({
+		pickmeals: "out",		//取餐方式
+		remark: ""		// 訂單備註
+	})
 
 	//刪除購物車商品
-	let deleteCartProduct=(productIndex)=>{
+	let deleteCartProduct = (productIndex) => {
 		cartList.splice(productIndex, 1);
-		setCartList(() => [...cartList]);		
-		saveDataToLocalStorage('cart', cartList);		
+		setCartList(() => [...cartList]);
+		saveDataToLocalStorage('cart', cartList);
+		calCartTotalPrice()
 		//renderCartModal();
 		//updateFooterTotalPrice();
 	}
@@ -76,6 +82,8 @@ export let CartModal = ({ onClose }) => {
 		setEditProductObj(cartList[productIndex]);
 		onClose();
 		setShowEditProductModal(() => true)
+
+		calCartTotalPrice()
 		//$('#tempProductAmount').text(productObj.qty);
 		//$('#tempProductComment').val(productObj.comment);
 		//$('#tempProductTotal').text(`${productObj.price * productObj.qty}`);
@@ -85,10 +93,20 @@ export let CartModal = ({ onClose }) => {
 		//	$(`#foodAdditionOptions input[value=${additem}]`).prop('checked', true);
 		//})
 	}
-	useEffect(() => setShowModal(true), [showModal]);
+
+	let handleInputChange = (e) => {
+		setCartState({
+			...cartState, [e.target.name]: e.target.value
+		})
+	}
+
+	useEffect(() => {
+		setShowModal(true)
+		calCartTotalPrice();
+	}, [showModal, totalPrice]);
 	return (
 		<>
-		
+
 			<div className="modal fade show" id="cartModal" tabIndex="-1" aria-modal="true" role="dialog" style={{ display: "block" }} >
 				<div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 					<div className="modal-content">
@@ -116,23 +134,28 @@ export let CartModal = ({ onClose }) => {
 							<div name="取餐方式" className="mb-3" id="cartTakeWay">
 								<h5 className="fw-bolder">取餐方式</h5>
 								<hr className="my-2" />
-								<input type="radio" className="btn-check" name="取餐方式" id="tag外帶" value="外帶" autoComplete="off" defaultChecked />
-								<label className="btn btn-cat-tag" forhtml="tag外帶">外帶</label>
+								<input type="radio" className="btn-check" name="pickmeals" id="tag外帶" value="out" data-take="takeout" autoComplete="off"
+									checked={cartState.pickmeals === 'out'}
+									onChange={handleInputChange} />
+								<label className="btn btn-cat-tag" htmlFor="tag外帶" onChange={handleInputChange}>外帶</label>
 
-								<input type="radio" className="btn-check" name="取餐方式" id="tag內用" value="內用" autoComplete="off" />
-								<label className="btn btn-cat-tag" forhtml="tag內用">內用</label>
+								<input type="radio" className="btn-check" name="pickmeals" id="tag內用" value="in" data-take="forhere" autoComplete="off"
+									checked={cartState.pickmeals === 'in'}
+									onChange={handleInputChange} />
+								<label className="btn btn-cat-tag" htmlFor="tag內用" onChange={handleInputChange}>內用</label>
 							</div>
 							<div name="訂單備註" className="mb-3">
 								<h5 className="fw-bolder">訂單備註</h5>
 								<hr className="my-2" />
-								<textarea className="form-control" id="cartComment" rows="2"></textarea>
+								<textarea className="form-control" id="cartComment" name="remark" rows="2" value={cartState.remark}
+									onChange={handleInputChange}></textarea>
 							</div>
 						</div>
 						<div className="modal-footer flex-column">
 							{/*<!-- 加入購物車 -->*/}
 							<button type="button" className="btn btn-addToCart my-1" onClick={() => submitCart()}>
 								<span className=""> 送出訂單</span>
-								<span id="tempCartTotalPrice">($70)</span>
+								<span id="tempCartTotalPrice">(${totalPrice})</span>
 							</button>
 						</div>
 					</div>

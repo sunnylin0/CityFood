@@ -3,6 +3,7 @@
 //import { focusAtom } from 'jotai-optics'
 //import {singleItem } from '../store/global'
 import { getCarts, saveDataToLocalStorage } from '../store/utils'
+import { calCartTotalPrice } from '../store/state'
 
 
 export let singleItem = {
@@ -69,11 +70,13 @@ function getImageUrl(name) {
 //渲染產品Modal
 export function ProductModal({ productId, editProduct, onClose }) {
     console.log( 'load ProductModal')
-    let myProductObj
+	let myProductObj
+	let editflat =false
     if (productId) {
          myProductObj = theProducts.find(productObj => productObj.id == productId);
     } else if (editProduct) {
-        let pID =editProduct.catId
+		let pID = editProduct.id
+		editflat =true
         myProductObj = theProducts.find(productObj => productObj.id == pID);
         myProductObj = { ...myProductObj, ...editProduct}
     }else return <></>
@@ -120,8 +123,30 @@ export function ProductModal({ productId, editProduct, onClose }) {
             total: countProductTotal,            
         });
 		saveDataToLocalStorage('cart', carts);
+		calCartTotalPrice();
 		onClose();
     }
+
+	//更新購物車
+	function updateToCart(productIndex) {
+		const carts = getCarts();
+		const qty = parseInt($('#tempProductAmount').text());
+		const comment = $('#tempProductComment').val();
+		const additems = [];
+		$('#foodAdditionOptions input.foodAdditionOption:checked').each(function () {
+			additems.push($(this).val());
+		});
+		const price = parseInt($("#tempProductTotal").text());
+		carts[productIndex].qty = qty;
+		carts[productIndex].comment = comment;
+		carts[productIndex].additems = additems;
+		carts[productIndex].price = price / qty;
+		saveDataToLocalStorage('cart', carts);
+		sweetSmallSuccess('已更新購物車');
+		$('#productModal').modal('hide');
+		showCartModal();
+		updateFooterTotalPrice();
+	}
 
     return (
         <div>
