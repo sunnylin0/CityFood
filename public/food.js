@@ -10,7 +10,7 @@
 //let theMenu = []; //存放菜單的陣列(sort by catId)
 let theProducts = []; //存放菜單的陣列(sort by productId)
 let theUserOrders = []; //客人的歷史訂單
-//let theFoodAdditions = []; //食物附加選項
+//let theFoodSubjoins = []; //食物附加選項
 const expireMins = 30; //登入過期時間(分鐘)
 // const urlDomain = 'http://localhost:3000';
 const urlDomain = 'https://json-server-vercel-a.vercel.app';
@@ -21,7 +21,7 @@ let theAllOrders = []; //全部的 客戶訂單
 let theDoneOrders = []; //已完成的 客戶訂單資料
 let theMenu = []; //存放菜單的陣列(sort by catId)(cat 底下再放 products)
 let theCats = []; //商品類別
-let theFoodAdditions = []; //食品附加選項
+let theFoodSubjoins = []; //食品附加選項
 
 
 let arr = [
@@ -85,7 +85,7 @@ theMenu = [
                 "comment": "手工蛋餅皮+滿滿玉米",
                 "isSoldOut": false,
                 "price": 30,
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ]
             },
@@ -96,7 +96,7 @@ theMenu = [
                 "price": 35,
                 "comment": "手工蛋餅皮+雙份培根",
                 "img": "./Img/PC/p013.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -108,7 +108,7 @@ theMenu = [
                 "price": 35,
                 "comment": "手工蛋餅皮+整條火腿",
                 "img": "./Img/PC/p014.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -120,7 +120,7 @@ theMenu = [
                 "price": 35,
                 "comment": "手工蛋餅皮+一整罐鮪魚",
                 "img": "./Img/PC/p015.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -132,7 +132,7 @@ theMenu = [
                 "price": 35,
                 "comment": "手工蛋餅皮+爆漿起司",
                 "img": "./Img/PC/p016.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -150,7 +150,7 @@ theMenu = [
                 "price": 15,
                 "comment": "切邊烤土司+一公分厚塗果醬",
                 "img": "./Img/PC/p021.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -162,7 +162,7 @@ theMenu = [
                 "price": 35,
                 "comment": "切邊烤土司+一整罐鮪魚",
                 "img": "./Img/PC/p022.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -174,7 +174,7 @@ theMenu = [
                 "price": 35,
                 "comment": "切邊烤土司+雙份培根",
                 "img": "./Img/PC/p023.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -186,7 +186,7 @@ theMenu = [
                 "price": 35,
                 "comment": "切邊烤土司+厚切里肌豬排",
                 "img": "./Img/PC/p024.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -204,7 +204,7 @@ theMenu = [
                 "price": 55,
                 "comment": "就是豬排加生菜的漢堡啦",
                 "img": "./Img/PC/p031.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -216,7 +216,7 @@ theMenu = [
                 "price": 45,
                 "comment": "是誰住在深海的大鳳梨裡",
                 "img": "./Img/PC/p032.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -228,7 +228,7 @@ theMenu = [
                 "price": 45,
                 "comment": "鱈~魚~堡~",
                 "img": "./Img/PC/p033.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -240,7 +240,7 @@ theMenu = [
                 "price": 100,
                 "comment": "日本來的和牛，頂級享受",
                 "img": "./Img/PC/p034.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -252,7 +252,7 @@ theMenu = [
                 "price": 40,
                 "comment": "內含薯泥沙拉，美味蔬食",
                 "img": "./Img/PC/p035.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": true
@@ -264,7 +264,7 @@ theMenu = [
                 "price": 55,
                 "comment": "精選黃金右腿去骨雞腿排",
                 "img": "./Img/PC/p036.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01"
                 ],
                 "isSoldOut": false
@@ -282,7 +282,7 @@ theMenu = [
                 "price": 55,
                 "comment": "全素草食餐",
                 "img": "./Img/PC/p041.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01",
                     "AH04"
                 ],
@@ -295,7 +295,7 @@ theMenu = [
                 "price": 55,
                 "comment": "很多葉子搭配水煮蛋、舒肥雞胸肉",
                 "img": "./Img/PC/p042.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01",
                     "AH04"
                 ],
@@ -315,7 +315,7 @@ theMenu = [
                 "comment": "薯餅薯餅得第一",
                 "isSoldOut": false,
                 "price": 10,
-                "additionIds": [
+                "subjoinIds": [
                     "AH01",
                     "AH04"
                 ]
@@ -327,7 +327,7 @@ theMenu = [
                 "price": 30,
                 "comment": "一份4塊",
                 "img": "./Img/PC/p052.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH04"
                 ],
                 "isSoldOut": false
@@ -339,7 +339,7 @@ theMenu = [
                 "price": 30,
                 "comment": "酥脆薯條，素食可用",
                 "img": "./Img/PC/p053.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH04"
                 ],
                 "isSoldOut": false
@@ -351,7 +351,7 @@ theMenu = [
                 "price": 30,
                 "comment": "國產熱狗",
                 "img": "./Img/PC/p054.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH04"
                 ],
                 "isSoldOut": false
@@ -363,7 +363,7 @@ theMenu = [
                 "price": 30,
                 "comment": "泰式月亮蝦餅搭配泰式酸辣醬",
                 "img": "./Img/PC/p055.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH04"
                 ],
                 "isSoldOut": false
@@ -381,7 +381,7 @@ theMenu = [
                 "price": 15,
                 "comment": "台灣特色，早餐店奶茶",
                 "img": "./Img/PC/p061.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH02",
                     "AH03",
                     "AH04",
@@ -395,7 +395,7 @@ theMenu = [
                 "price": 15,
                 "comment": "台灣高山茶葉沖泡",
                 "img": "./Img/PC/p062.jpg",
-                "additionIds": [
+                "subjoinIds": [
                     "AH01",
                     "AH02",
                     "AH03"
@@ -407,7 +407,7 @@ theMenu = [
 ]
 
 
-theFoodAdditions =
+theFoodSubjoins =
     [
         {
             "id": "AH01",

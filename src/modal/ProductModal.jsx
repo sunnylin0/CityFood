@@ -15,8 +15,8 @@ export let singleItem = {
 	qty: 1,                               //"qty": 2,
 	//comment: "",                                //"comment": "",
 	remark:"",
-	additems: [],          //"additems": []
-	addTotalPrice: 0,
+	subjoinItems: [],          //"subjoinItems": []
+	subjoinTotalPrice: 0,
 	total: 0
 }
 
@@ -25,29 +25,39 @@ function createTokenId() {
 }
 
 //食物的附加選項
-let AdditionContents = ({ additionIds,useAdditionItems, useAdditionTotalPrice}) => {
-    let [additems, setAdditionItems] = useAdditionItems;                            //附加選項 項目
-    let [additionTotalPrice, setAdditionTotalPrice] = useAdditionTotalPrice;       //附加選項價格
+let SubjoinContents = ({  subjoinIds ,useSingleItem }) => {
+	let [singleState, setSingleState] = useSingleItem;
+
 
     //計算食物的附加選項總價
-    function handleClickAddition(idName, isChecked) {
-        let listAddition = document.querySelectorAll(".foodAdditionOption")
-        let addTotalPrice = 0;
-        listAddition.forEach((ths) => {
-            if (ths.checked) addTotalPrice += Number(ths.dataset.addprice);    
+    function catSubjoinTotalPrice() {
+        let listSubjoin = document.querySelectorAll(".foodSubjoinOption")
+        let newSubTotalPrice = 0;
+        listSubjoin.forEach((ths) => {
+			if (ths.checked) newSubTotalPrice += Number(ths.dataset.subprice);
         });
-
-        let filterNotIsIdname = additems.filter((item, index, array) =>
-            item != idName
-        );
-        if (isChecked) filterNotIsIdname.push(idName);
-        // 更新 附加選項
-        setAdditionTotalPrice(addTotalPrice)
-        setAdditionItems(filterNotIsIdname)
+		setSingleState(prev => ({ ...prev, subjoinTotalPrice: newSubTotalPrice}))
     }
 
-    return (additionIds.map((additionId, key) => {
-        let addObj = theFoodAdditions.find(x => x.id == additionId);
+	//計算食物的附加選項總價
+	let handleSubjoinChange = (e) => {
+		const { subjoinItems } = singleState // 取得原值
+		const value = e.target.value		// 取得數據，無論勾選與取消勾選都會傳值
+		const newSubjoinItems = subjoinItems.filter(item => item !== value)
+		// 把非 value 的部份保留
+		setSingleState(prev => ({
+			...prev,
+			subjoinItems:
+				newSubjoinItems.length !== prev.subjoinItems.length ? newSubjoinItems : [...prev.subjoinItems, value]
+		}))
+
+		catSubjoinTotalPrice()
+	}
+
+
+
+    return (subjoinIds.map((subjoinId, key) => {
+        let addObj = theFoodSubjoins.find(x => x.id == subjoinId);
 
         return (
             <div key={key} className="" data-addtion-id={addObj.id}>
@@ -55,13 +65,16 @@ let AdditionContents = ({ additionIds,useAdditionItems, useAdditionTotalPrice}) 
                 <hr className="my-1" />
                 {addObj.items.map((item, key) =>
                     <div key={key}>
-                        <input type={addObj.isMulti ? 'checkbox' : 'radio'} className="btn-check foodAdditionOption" name={addObj.name}
-                            id={'add-' + item.id} value={item.id} data-addprice={item.price} onChange={(e) => handleClickAddition(item.id, e.target.checked)} />
+                        <input type={addObj.isMulti ? 'checkbox' : 'radio'} className="btn-check foodSubjoinOption" name={addObj.name}
+							id={'add-' + item.id} value={item.id} data-subprice={item.price} 
+							checked={singleState.subjoinItems.indexOf(item.id) >= 0}
+							onChange={handleSubjoinChange}
+							/>
 						<label className="btn btn-pill-primary" htmlFor={'add-' + item.id} >{item.price ? (item.name + '$' + item.price) : item.name}</label>
                     </div>
                 )
                 }
-                {additionTotalPrice}
+				{singleState.subjoinTotalPrice}
             </div>
         )
     }))
@@ -73,84 +86,101 @@ function getImageUrl(name) {
 
 //渲染產品Modal
 export function ProductModal({ productId, editProduct, onClose }) {
-    console.log( 'load ProductModal')
+	console.log('load ProductModal')
 	let myProductObj
-	let editflat =false
-    if (productId) {
-         myProductObj = theProducts.find(productObj => productObj.id == productId);
-    } else if (editProduct) {
+	let flagEdit = false		//是否是編輯旗標
+	if (productId) {
+		myProductObj = theProducts.find(productObj => productObj.id == productId);
+	} else if (editProduct) {
 		let pID = editProduct.id
-		editflat =true
-        myProductObj = theProducts.find(productObj => productObj.id == pID);
-        myProductObj = { ...myProductObj, ...editProduct}
-    }else return <></>
-	let { tokenId=createTokenId(), catId, id, name, comment, price, img, isSoldOut, additionIds,
-		qty = 1, total = 0, additems = [], addTotalPrice = 0, Remark = "" }= myProductObj;
+		flagEdit = true
+		myProductObj = theProducts.find(productObj => productObj.id == pID);
+		myProductObj = { ...myProductObj, ...editProduct }
+	} else return <></>
+	let { tokenId = createTokenId(), catId, id, name, comment, price, img, isSoldOut, subjoinIds,
+		qty = 1, total = 0, subjoinItems = [], subjoinTotalPrice = 0, Remark = "" } = myProductObj;
 
-	singleItem = { ...singleItem, catId, id, name, price, tokenId};
-    let [countProduct, setCountProduct] = useState(singleItem.qty);      //商品數量
-    let [countProductTotal, setProductTotal] = useState(singleItem.total);      //總價
-    let [additionItems, setAdditionItems] = useState(singleItem.additems);       //附加選項價格
-    let [additionTotalPrice, setAdditionTotalPrice] = useState(singleItem.addTotalPrice);       //附加選項價格
-    let [postRemark, setRemark] = useState(singleItem.Remark);
-    
-    //調整商品數量
-    function handleAdd() {
-        setCountProduct(() => countProduct + 1);
-        countCurrentPrice();
-    }
-    function handleMin() {
-        if (countProduct > 1)
-            setCountProduct(() => countProduct - 1)
-        else
-            setCountProduct(() => 1)
+	//singleItem = { ...singleItem, catId, id, name, price, tokenId };
+	let [state, setState] = useState({
+		...singleItem,
+		...myProductObj
+		//catId, id, name, price, tokenId,
+		//qty: 1,								//商品數量
+		//total: 0,							//總價
+		//subjoinItems: [],			//選擇附加選項物件
+		//subjoinTotalPrice: 0,		//附加選項價格
+		//remark: ""							//備註
+	});
+
+	let handleInputChange = (e) => {
+		setState(prev=>({
+			...prev, [e.target.name]: e.target.value
+		}))
+	}
+
+	//調整商品數量
+	const handleAdd = () => {
+		setState(prev => ({ ...prev, qty: prev.qty + 1 }));
+		countCurrentPrice();
+	}
+    const handleMin=()=> {
+		if (state.qty > 1)
+			setState(prev => ({ ...prev, qty: prev.qty - 1 }));
+		else
+			setState(prev => ({ ...prev, qty: 1 }));
+
         countCurrentPrice();
     }
 
     //計算產品總價
-    function countCurrentPrice() {
-        setProductTotal(() => (price + additionTotalPrice) * countProduct)
+	const countCurrentPrice = () => {
+		setState(prev => ({ ...prev, total: prev.qty * (prev.subjoinTotalPrice + price) }))
     }
 
 
-    useEffect(countCurrentPrice, [countProduct, additionTotalPrice])
+	useEffect(countCurrentPrice, [state.qty,state.subjoinTotalPrice])
 
     //加入購物車
-    function addToCart() {
+    function putToCart() {
         const carts = getCarts();  
-        carts.push({
-			...singleItem,
-			remark: postRemark,
-            qty: countProduct,
-            additems: additionItems,
-            addTotalPrice: additionTotalPrice,
-            total: countProductTotal,            
-        });
+		if (flagEdit == false) {
+			carts.push({
+				//...singleItem,
+				...state
+			});
+		} else {
+			carts.forEach(prev => {
+				if (prev.tokenId == state.tokenId)
+					prev = {
+						...state
+					}
+			})
+		}
 		saveDataToLocalStorage('cart', carts);
 		calCartTotalPrice();
 		onClose();
     }
 
-	//更新購物車
-	function updateToCart(productIndex) {
-		const carts = getCarts();
-		const qty = parseInt($('#tempProductAmount').text());
-		const comment = $('#tempProductComment').val();
-		const additems = [];
-		$('#foodAdditionOptions input.foodAdditionOption:checked').each(function () {
-			additems.push($(this).val());
-		});
-		const price = parseInt($("#tempProductTotal").text());
-		carts[productIndex].qty = qty;
-		carts[productIndex].comment = comment;
-		carts[productIndex].additems = additems;
-		carts[productIndex].price = price / qty;
-		saveDataToLocalStorage('cart', carts);
-		sweetSmallSuccess('已更新購物車');
-		$('#productModal').modal('hide');
-		showCartModal();
-		updateFooterTotalPrice();
-	}
+	////更新購物車
+	//function updateToCart(productIndex) {
+	//	const carts = getCarts();
+	//	const qty = parseInt($('#tempProductAmount').text());
+	//	const comment = $('#tempProductComment').val();
+	//	const subjoinItems = [];
+	//	$('#foodSubjoinOptions input.foodSubjoinOption:checked').each(function () {
+	//		subjoinItems.push($(this).val());
+	//	});
+	//	const price = parseInt($("#tempProductTotal").text());
+	//	carts[productIndex].qty = qty;
+	//	carts[productIndex].comment = comment;
+	//	carts[productIndex].subjoinItems = subjoinItems;
+	//	carts[productIndex].price = price / qty;
+	//	saveDataToLocalStorage('cart', carts);
+	//	sweetSmallSuccess('已更新購物車');
+	//	$('#productModal').modal('hide');
+	//	showCartModal();
+	//	updateFooterTotalPrice();
+	//}
 
     return (
         <div>
@@ -171,12 +201,11 @@ export function ProductModal({ productId, editProduct, onClose }) {
                                 <p className="h5">${price}</p>
                             </div>
                             {/*<!-- 選項 -->*/}
-                            <div id="foodAdditionOptions">
-                                <AdditionContents
-                                    additionIds={additionIds}
-                                    useAdditionItems={[additionItems, setAdditionItems] }
-                                    useAdditionTotalPrice={[additionTotalPrice, setAdditionTotalPrice]}
-                                />
+                            <div id="foodSubjoinOptions">
+                                <SubjoinContents
+									subjoinIds={subjoinIds}
+									useSingleItem={[state,setState]}
+									name="subjoin" />
                             </div>
 
                             <br />
@@ -184,23 +213,23 @@ export function ProductModal({ productId, editProduct, onClose }) {
                             <div>
                                 <p className="h6">餐點備註</p>
 								<textarea className="form-control" id="tempProductRemark" rows="2"
-                                    value={postRemark}
-                                    onChange={e => setRemark(e.target.value)}></textarea>
+									name ="remark"
+									value={state.remark}
+									onChange={handleInputChange}></textarea>
                             </div>
                         </div>
                         <div className="modal-footer flex-column">
                             {/*<!-- 數量 -->*/}
-
                             <div className="d-flex align-items-center">
                                 <button className="btn rounded-circle btn-sm btn-minus" onClick={handleMin}><i className="fa-solid fa-minus small"></i></button>
-                                <span className="mx-4" id="tempProductAmount">{countProduct}</span>
+                                <span className="mx-4" id="tempProductAmount">{state.qty}</span>
                                 <button className="btn rounded-circle btn-sm btn-add" onClick={handleAdd}><i className="fa-solid fa-plus small"></i></button>
                             </div>
 
                             {/* <!-- 加入購物車 -->*/}
-                            <button type="button" className="btn btn-addToCart my-1" id="btnAddToCart" onClick={addToCart} >
+							<button type="button" className="btn btn-addToCart my-1" id="btnAddToCart" onClick={putToCart} >
                                 <span className=""> 加入購物車($</span>
-                                <span className="" id="tempProductTotal" data-food-price={price} data-add-price="0" data-total-price={countProductTotal}>{countProductTotal}</span>
+								<span className="" id="tempProductTotal" data-food-price={price} data-add-price="0" >{state.total}</span>
                                 <span className="">)</span>
                             </button>
                         </div>
@@ -221,9 +250,9 @@ function aass() {
         const carts = getCarts();
         const qty = parseInt($('#tempProductAmount').text());
         const comment = $('#tempProductComment').val();
-        let additems = [];
-        $('#foodAdditionOptions input.foodAdditionOption:checked').each(function () {
-            additems.push($(this).val());
+        let subjoinItems = [];
+        $('#foodSubjoinOptions input.foodSubjoinOption:checked').each(function () {
+            subjoinItems.push($(this).val());
         });
         const price = parseInt($("#tempProductTotal").text());
         carts.push({
@@ -233,7 +262,7 @@ function aass() {
             price: price / qty,
             qty: qty,
             comment: comment,
-            additems: additems,
+            subjoinItems: subjoinItems,
         });
         saveDataToLocalStorage('cart', carts);
         $('#productModal').modal('hide');
@@ -244,14 +273,14 @@ function aass() {
         const carts = getCarts();
         const qty = parseInt($('#tempProductAmount').text());
         const comment = $('#tempProductComment').val();
-        const additems = [];
-        $('#foodAdditionOptions input.foodAdditionOption:checked').each(function () {
-            additems.push($(this).val());
+        const subjoinItems = [];
+        $('#foodSubjoinOptions input.foodSubjoinOption:checked').each(function () {
+            subjoinItems.push($(this).val());
         });
         const price = parseInt($("#tempProductTotal").text());
         carts[productIndex].qty = qty;
         carts[productIndex].comment = comment;
-        carts[productIndex].additems = additems;
+        carts[productIndex].subjoinItems = subjoinItems;
         carts[productIndex].price = price / qty;
         saveDataToLocalStorage('cart', carts);
         sweetSmallSuccess('已更新購物車');
@@ -309,21 +338,21 @@ function aass() {
         //$('#tempProductTotal').text(`${price * tempProductAmount}`);
     }
     //附加選項增減
-    function btnAdditionChange() {
-        let addPrice = 0;
-        $("#foodAdditionOptions input.foodAdditionOption:checked").each(function () {
-            addPrice += parseInt($(this).attr('data-add-price'));
+    function btnSubjoinChange() {
+        let subPrice = 0;
+        $("#foodSubjoinOptions input.foodSubjoinOption:checked").each(function () {
+            subPrice += parseInt($(this).attr('data-add-price'));
         })
-        $('#tempProductTotal').attr('data-add-price', addPrice);
+        $('#tempProductTotal').attr('data-add-price', subPrice);
         countCurrentPrice();
     }
 
     //計算產品總價
     function countCurrentPrice() {
         const foodPrice = parseInt($('#tempProductTotal').attr('data-food-price'));
-        const additionPrice = parseInt($('#tempProductTotal').attr('data-add-price'));
+        const subjoinPrice = parseInt($('#tempProductTotal').attr('data-add-price'));
         const qty = parseInt($('#tempProductAmount').text());
-        const currentPrice = (foodPrice + additionPrice) * qty;
+        const currentPrice = (foodPrice + subjoinPrice) * qty;
         $('#tempProductTotal').text(currentPrice);
     }
 }

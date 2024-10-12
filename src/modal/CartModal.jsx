@@ -9,8 +9,8 @@ import { editProductModal, editProductObj, cardTotalPrice,calCartTotalPrice } fr
 
 
 //附加選項id轉name
-function additionIdToName(additionId) {
-	let name = Object.values(theFoodAdditions).reduce((a, b) => [...a, ...b.items], []).find(item => item.id == additionId)?.name
+function subjoinIdToName(subjoinId) {
+	let name = Object.values(theFoodSubjoins).reduce((a, b) => [...a, ...b.items], []).find(item => item.id == subjoinId)?.name
 	return name ? name : '';
 }
 
@@ -27,20 +27,20 @@ function countCartTotalPrice() {
 
 
 let CartFoodCard = ({ index, productObj, deleteCartProduct, editCartProduct }) => {
-	const { id, name, price, qty, comment, additems, total } = productObj;
+	const { id, name, price, qty, comment, subjoinItems, total, tokenId} = productObj;
 
 	return (
 		<div className="cartfoodCard d-block mb-2" data-id={id} data-price={price}>
 			<div className="d-flex justify-content-between mb-2">
 				<span className="h6 fw-bolder">{name}</span>
 				<div className="">
-					<button className="btn rounded-circle btn-sm cartEdit" onClick={() => editCartProduct(id, index)}><i className="fa-solid fa-pencil"></i></button>
-					<button className="btn rounded-circle btn-sm cartDelete" onClick={() => deleteCartProduct(index)}><i className="fa-solid fa-trash-can"></i></button>
+					<button className="btn rounded-circle btn-sm cartEdit" onClick={() => editCartProduct(tokenId)}><i className="fa-solid fa-pencil"></i></button>
+					<button className="btn rounded-circle btn-sm cartDelete" onClick={() => deleteCartProduct(tokenId)}><i className="fa-solid fa-trash-can"></i></button>
 				</div>
 			</div>
 
 			<span className="h6 fw-light d-block">{comment ? (comment) : ""}</span>
-			<span className="h6 fw-light d-block">{additems.map(x => additionIdToName(x)).join("/")}</span>
+			<span className="h6 fw-light d-block">{subjoinItems.map(x => subjoinIdToName(x)).join("/")}</span>
 			<div className="d-flex justify-content-between">
 
 				<span className="fw-light">${total / qty} / {qty}份</span>
@@ -65,8 +65,10 @@ export let CartModal = ({ onClose }) => {
 	})
 
 	//刪除購物車商品
-	let deleteCartProduct = (productIndex) => {
-		cartList.splice(productIndex, 1);
+	let deleteCartProduct = (getTokenId) => {
+		cartList=cartList.filter((ths)=> {
+			return ths.tokenId != getTokenId;
+		});
 		setCartList(() => [...cartList]);
 		saveDataToLocalStorage('cart', cartList);
 		calCartTotalPrice()
@@ -74,23 +76,27 @@ export let CartModal = ({ onClose }) => {
 		//updateFooterTotalPrice();
 	}
 	//編輯購物車商品
-	function editCartProduct(productId, productIndex) {
+	function editCartProduct(getTokenId) {
 		//$('#cartModal').modal('hide');
 		//renderProductModal(productId);
 		let cartList = getCarts();
 		console.log('editCartProduct')
-		setEditProductObj(cartList[productIndex]);
+		let getCartObj = cartList.find((ths) => {
+			return ths.tokenId == getTokenId;
+		});
+
+		setEditProductObj(getCartObj);
 		onClose();
 		setShowEditProductModal(() => true)
 
-		calCartTotalPrice()
+		//calCartTotalPrice()
 		//$('#tempProductAmount').text(productObj.qty);
 		//$('#tempProductComment').val(productObj.comment);
 		//$('#tempProductTotal').text(`${productObj.price * productObj.qty}`);
 		//$('#btnAddToCart').attr('onclick', `updateToCart(${productIndex})`);
 		//$('#productModal').modal('show');
 		//productObj.additems.forEach(additem => {
-		//	$(`#foodAdditionOptions input[value=${additem}]`).prop('checked', true);
+		//	$(`#foodSubjoinOptions input[value=${additem}]`).prop('checked', true);
 		//})
 	}
 
@@ -122,7 +128,7 @@ export let CartModal = ({ onClose }) => {
 									(cartList.length > 0) ?
 										cartList.map((productObj, index) => {
 											//const { id, name, price, qty, comment, additems } = productObj;
-											return <CartFoodCard key={index} index={index}
+											return <CartFoodCard key={index} 
 												productObj={productObj}
 												deleteCartProduct={deleteCartProduct}
 												editCartProduct={editCartProduct}

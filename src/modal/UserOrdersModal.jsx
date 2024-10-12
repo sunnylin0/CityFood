@@ -105,7 +105,7 @@ export function UserOrdersModal({ onClose }) {
     //        <span className="h6 fw-bolder text-start">${foodObj.name}</span>
     //        <br/>
     //        <span className="fw-light">${foodObj.comment ? (foodObj.comment + " / ") : ''}</span>
-    //        <span className="fw-light">${foodObj.additems.length > 0 ? foodObj.additems.map(x => additionIdToName(x)).join("/") : ''}</span>
+    //        <span className="fw-light">${foodObj.additems.length > 0 ? foodObj.additems.map(x => subjoinIdToName(x)).join("/") : ''}</span>
     //        <div className="d-flex justify-content-between">
     //            <span className="fw-light">${foodObj.qty}份</span>
     //            <div className="text-danger fw-bold">$${foodObj.price * foodObj.qty}</div>

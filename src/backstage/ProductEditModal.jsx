@@ -31,17 +31,17 @@ export const ProductEditModal = ({ onClose }) => {
                             </div>
                             <div className="item">
                                 <label forhtml="" className="col-2">附加項目</label>
-                                <div name="additionIds">
-                                    <input type="checkbox" className="btn-check" name="additionIds" id="edit-add-AH01" value="AH01" />
+                                <div name="subjoinIds">
+                                    <input type="checkbox" className="btn-check" name="subjoinIds" id="edit-add-AH01" value="AH01" />
                                     <label className="btn btn-pill-primary" forhtml="edit-add-AH01">加料</label>
 
-                                    <input type="checkbox" className="btn-check" name="additionIds" id="edit-add-AH02" value="AH02" />
+                                    <input type="checkbox" className="btn-check" name="subjoinIds" id="edit-add-AH02" value="AH02" />
                                     <label className="btn btn-pill-primary" forhtml="edit-add-AH02">大小</label>
 
-                                    <input type="checkbox" className="btn-check" name="additionIds" id="edit-add-AH03" value="AH03" />
+                                    <input type="checkbox" className="btn-check" name="subjoinIds" id="edit-add-AH03" value="AH03" />
                                     <label className="btn btn-pill-primary" forhtml="edit-add-AH03">溫度</label>
 
-                                    <input type="checkbox" className="btn-check" name="additionIds" id="edit-add-AH04" value="AH04" />
+                                    <input type="checkbox" className="btn-check" name="subjoinIds" id="edit-add-AH04" value="AH04" />
                                     <label className="btn btn-pill-primary" forhtml="edit-add-AH04">醬料</label>
                                 </div>
                             </div>
