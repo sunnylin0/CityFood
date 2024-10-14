@@ -13,7 +13,7 @@ let AdditionContents = ({ additionIds }) => {
                     <div className="col-auto" key={key}>
                         <input type={addObj.isMulti ? 'checkbox' : 'radio'} className="btn-check foodAdditionOption" name={addObj.name}
                             id={'add-' + item.id} value={item.id} data-add-price={item.price} />
-                        <label className="btn btn-pill-primary" htmlFor={'add-' + item.id} >{ifitem.price? ( item.name +  '+$' + item.price):item.name}</label>
+                        <label className="btn btn-pill-primary" htmlFor={'add-' + item.id} >{item.price? ( item.name +  '+$' + item.price):item.name}</label>
                     </div>
                 )
                 }

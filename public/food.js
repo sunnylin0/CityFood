@@ -87,19 +87,19 @@ let foodCat = {
 	{	"id":"p035",	"catId":"c03",	"name":"素食玉米餅湯",	"price":120,	"comment":"豐盛、溫暖、充滿大膽的味道。",	"img":"./Img/PC/pp4.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	},
 	{	"id":"p036",	"catId":"c03",	"name":"橡子南瓜湯",	"price":120,	"comment":"木質百里香、溫暖的肉荳蔻和辣椒調味，味道鮮美",	"img":"./Img/PC/pp5.jpg",	"additionIds":[	"AH01"	],	"isSoldOut":false	}	]	},
 	{	"id":"c04",	"name":"主菜",	"products":[
-	{	"id":"p041",	"catId":"c04",	"name":"紅鯛魚佐柑橘醬","price":360,	"comment":"融合了原始菜餚的所有明亮、酥脆的味道",	"img":"./Img/PC/mm11.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
-    {	"id":"p042",	"catId":"c04",	"name":"紐約客牛排佐紅酒醬",	"price":450,	"comment":"特製紅酒醬配精選紐約客",	"img":"./Img/PC/mm8.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
-    {	"id":"p043",	"catId":"c04",	"name":"帕爾瑪乾酪龍蝦",	"price":680,	"comment":"閃閃發光的龍蝦鮮甜味",	"img":"./Img/PC/mm12.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
-    {	"id":"p044",	"catId":"c04",	"name":"經典油封鴨",	"price":580,	"comment":"每一口都會在嘴裡融化",	"img":"./Img/PC/mm13.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
-    {	"id":"p045",	"catId":"c04",	"name":"蔬菜煎餅半熟蛋",	"price":200,	"comment":"蛋素草食餐",	"img":"./Img/PC/mm1.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
-	{	"id":"p046",	"catId":"c04",	"name":"主廚特製早午餐",	"price":360,	"comment":"滿足一天的所需",	"img":"./Img/PC/mm2.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	}	]	},
+	{	"id":"p041",	"catId":"c04",	"name":"紅鯛魚佐柑橘醬","price":560,	"comment":"融合了原始菜餚的所有明亮、酥脆的味道",	"img":"./Img/PC/mm11.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
+    {	"id":"p042",	"catId":"c04",	"name":"紐約客牛排佐紅酒醬",	"price":650,	"comment":"特製紅酒醬配精選紐約客",	"img":"./Img/PC/mm8.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
+    {	"id":"p043",	"catId":"c04",	"name":"帕爾瑪乾酪龍蝦",	"price":780,	"comment":"閃閃發光的龍蝦鮮甜味",	"img":"./Img/PC/mm12.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
+    {	"id":"p044",	"catId":"c04",	"name":"經典油封鴨",	"price":680,	"comment":"每一口都會在嘴裡融化",	"img":"./Img/PC/mm13.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
+    {	"id":"p045",	"catId":"c04",	"name":"蔬菜煎餅半熟蛋",	"price":300,	"comment":"蛋素草食餐",	"img":"./Img/PC/mm1.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	},
+	{	"id":"p046",	"catId":"c04",	"name":"主廚特製早午餐",	"price":460,	"comment":"滿足一天的所需",	"img":"./Img/PC/mm2.jpg",	"additionIds":[	"AH01",	"AH04"	],	"isSoldOut":false	}	]	},
     
 	{	"id":"c05",	"name":"點心",	"products":[
 	{	"id":"p051",	"name":"莓好焦糖鬆餅",	"catId":"c05",	"img":"./Img/PC/dd2.jpg",	"comment":"酸甜莓果襯托出鬆餅的美好",	"isSoldOut":false,	"price":180,	"additionIds":[	"AH01",	"AH04"	]	},
-	{	"id":"p052",	"catId":"c05",	"name":"經典蜂蜜鬆餅",	"price":150,	"comment":"簡單又不會尷尬的甜香",	"img":"./Img/PC/dd5.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	},
-	{	"id":"p053",	"catId":"c05",	"name":"蔓越莓一口酥",	"price":160,	"comment":"甜香酥脆一口一個",	"img":"./Img/PC/dd6.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	},
-	{	"id":"p054",	"catId":"c05",	"name":"晴王葡萄澎派",	"price":220,	"comment":"滿滿麝香葡萄太過癮",	"img":"./Img/PC/dd7.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	},
-	{	"id":"p055",	"catId":"c05",	"name":"栗拔山兮蛋糕",	"price":200,	"comment":"栗子泥加上好幾顆栗子的美好",	"img":"./Img/PC/dd8.jpg",	"additionIds":[	"AH04"	],	"isSoldOut":false	}	]	},
+	{	"id":"p052",	"catId":"c05",	"name":"經典蜂蜜鬆餅",	"price":150,	"comment":"簡單又不會尷尬的甜香",	"img":"./Img/PC/dd5.jpg",	"additionIds":[],	"isSoldOut":false	},
+	{	"id":"p053",	"catId":"c05",	"name":"蔓越莓一口酥",	"price":160,	"comment":"甜香酥脆一口一個",	"img":"./Img/PC/dd6.jpg",	"additionIds":[],	"isSoldOut":false	},
+	{	"id":"p054",	"catId":"c05",	"name":"晴王葡萄澎派",	"price":220,	"comment":"滿滿麝香葡萄太過癮",	"img":"./Img/PC/dd7.jpg",	"additionIds":[],	"isSoldOut":false	},
+	{	"id":"p055",	"catId":"c05",	"name":"栗拔山兮蛋糕",	"price":200,	"comment":"栗子泥加上好幾顆栗子的美好",	"img":"./Img/PC/dd8.jpg",	"additionIds":[],	"isSoldOut":false	}	]	},
 	{	"id":"c06",	"name":"飲品",	"products":[
 	{	"id":"p061",	"catId":"c06",	"name":"夢幻咖啡拿鐵",	"price":180,	"comment":"哥倫比單品深烘培日曬處理",	"img":"./Img/PC/latte3.jpg",	"additionIds":[	"AH02",	"AH03"	],	"isSoldOut":false	},
 	{	"id":"p062",	"catId":"c06",	"name":"頂級抹茶拿鐵",	"price":180,	"comment":"宇治高級抹茶配上小農鮮乳",	"img":"./Img/PC/macha2.jpg",	"additionIds":[	"AH02",	"AH03"	],	"isSoldOut":false	},
@@ -202,34 +202,34 @@ theFoodAdditions =
             "items": [
                 {
                     "id": "AD041",
-                    "name": "番茄醬",
+                    "name": "紅酒醬",
                     "price": 0
                 },
                 {
                     "id": "AD042",
-                    "name": "芥末醬",
+                    "name": "胡椒醬",
                     "price": 0
                 },
                 {
                     "id": "AD043",
-                    "name": "辣椒醬",
+                    "name": "奶油蘑菇醬",
                     "price": 0
                 },
                 {
                     "id": "AD044",
-                    "name": "凱薩醬",
+                    "name": "荷蘭醬",
                     "price": 0
                 },
-                {
-                    "id": "AD045",
-                    "name": "胡麻醬",
-                    "price": 0
-                },
-                {
-                    "id": "AD046",
-                    "name": "糖醋醬",
-                    "price": 0
-                }
+                // {
+                //     "id": "AD045",
+                //     "name": "胡麻醬",
+                //     "price": 0
+                // },
+                // {
+                //     "id": "AD046",
+                //     "name": "糖醋醬",
+                //     "price": 0
+                // }
             ]
         }
     ]
@@ -450,6 +450,7 @@ theAllOrders=   [
         "isDone": true,
         "details": [
             {
+                "detailID":"103",
                 "catId": "c03",
                 "id": "p034",
                 "name": "日式和牛堡",
@@ -462,6 +463,7 @@ theAllOrders=   [
                 ]
             },
             {
+                "detailID":"104",
                 "catId": "c05",
                 "id": "p051",
                 "name": "歡樂薯餅",
