@@ -3,12 +3,12 @@ export const TagList = (props) =>
         <div className="tagArea mx-3" {...props}>
             <ul className="tagList" >
                 <TagRadio title='全部' />
-                <TagRadio title='蛋餅' />
-                <TagRadio title='吐司' />
-                <TagRadio title='漢堡' />
+                <TagRadio title='前菜' />
                 <TagRadio title='沙拉' />
+                <TagRadio title='湯品' />
+                <TagRadio title='主菜' />
                 <TagRadio title='點心' />
-                <TagRadio title='飲品' />
+				<TagRadio title='飲品' />
             </ul>
         </div>
 

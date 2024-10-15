@@ -17,10 +17,10 @@ export const RevenueAnalysis = () => {
                     <div id="revenueAnalysis">
                         <h4>單品銷售概況<select className="ms-2" id="selectCat">
                             <option value="all">全品項</option>
-                            <option value="c01">蛋餅</option>
-                            <option value="c02">吐司</option>
-                            <option value="c03">漢堡</option>
-                            <option value="c04">沙拉</option>
+							<option value="c01">前菜</option>
+							<option value="c02">沙拉</option>
+							<option value="c03">湯品</option>
+							<option value="c04">主菜</option>
                             <option value="c05">點心</option>
                             <option value="c06">飲品</option></select></h4>
                         <div id="chart1" className="c3" style={{ "maxHeight": "320px", position: "relative" }}>
