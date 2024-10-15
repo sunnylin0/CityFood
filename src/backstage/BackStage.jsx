@@ -7,7 +7,7 @@ import { UserOrdersModal } from '@/modal/UserOrdersModal'
 import { LoginModal } from '@/modal/LoginModal'
 import { BackHeader } from './BackHeader'
 import { CustomerOrders } from './CustomerOrders'
-import './BackStage.css'
+//import './BackStage.css'
 export const BackStage = (props) => {
     const [switchOrders,setSwitchOrders] = useState('false')
     return (
