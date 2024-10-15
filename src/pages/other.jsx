@@ -1,4 +1,4 @@
-﻿import { FormTable} from './otherForm'
+import { FormTable} from './otherForm'
 import { OtherFooter } from './otherFooter'
 
 export const Other = () => {
