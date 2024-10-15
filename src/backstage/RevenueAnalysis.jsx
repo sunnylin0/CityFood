@@ -23,7 +23,7 @@ export const RevenueAnalysis = () => {
                             <option value="c04">沙拉</option>
                             <option value="c05">點心</option>
                             <option value="c06">飲品</option></select></h4>
-                        <div id="chart1" className="c3" style={{ "max-height": "320px", position: "relative" }}>
+                        <div id="chart1" className="c3" style={{ "maxHeight": "320px", position: "relative" }}>
                             <svg width="531.2" height="320" style={{ overflow: "hidden" }}>
                                 <g transform="translate(60.5,4.5)">
                                     <text className="c3-text c3-empty" textAnchor="middle" dominantBaseline="middle" x="200.6" y="133" style={{ opacity: 0 }}></text>
@@ -133,15 +133,15 @@ export const RevenueAnalysis = () => {
                         <div className="c3-tooltip-container" style={{ position: "absolute", "pointer-events": "none", display: "none", top: "144.7px", left: "350.7px" }}><table className="c3-tooltip"><tbody>
                             <tr><th colSpan="2">經典紅茶</th></tr>
                             <tr className="c3-tooltip-name--銷量">
-                                <td className="name"><span style={{ "background-color": "#1f77b4" }}></span>銷量</td>
+                                <td className="name"><span style={{ "backgroundColor": "#1f77b4" }}></span>銷量</td>
                                 <td className="value">4</td></tr>
                             <tr className="c3-tooltip-name--金額">
-                                <td className="name"><span style={{ "background-color": "#ff7f0e" }}></span>金額</td>
+                                <td className="name"><span style={{ "backgroundColor": "#ff7f0e" }}></span>金額</td>
                                 <td className="value">$60</td></tr></tbody></table></div></div>
                     <br />
                     <h4>各類型銷售概況</h4>
                     <div className="row row-cols-1 row-cols-lg-2">
-                        <div id="chart2" className="*col-6 text-center c3" style={{ "max-height": "320px", position: "relative" }}>
+                        <div id="chart2" className="*col-6 text-center c3" style={{ "maxHeight": "320px", position: "relative" }}>
                             <svg width="350" height="320" style={{ overflow: "hidden" }}><defs>
                                 <clipPath id="c3-1727121227358-clip"><rect width="350" height="296"></rect></clipPath>
                                 <clipPath id="c3-1727121227358-clip-xaxis"><rect x="-31" y="-20" width="412" height="40"></rect></clipPath>
@@ -160,7 +160,7 @@ export const RevenueAnalysis = () => {
                                 </g>
                                 <text className="c3-title" x="175" y="0"></text></svg>
                             <div className="c3-tooltip-container" style={{ position: "absolute", "pointer-events": "none", display: "none" }}></div></div>
-                        <div id="chart3" className="*col-6 text-center c3" style={{ "max-height": "320px", position: "relative" }}>
+                        <div id="chart3" className="*col-6 text-center c3" style={{ "maxHeight": "320px", position: "relative" }}>
                             <svg width="350" height="320" style={{ overflow: "hidden" }}><defs>
                                 <clipPath id="c3-1727121227389-clip"><rect width="350" height="296"></rect></clipPath>
                                 <clipPath id="c3-1727121227389-clip-xaxis"><rect x="-31" y="-20" width="412" height="40"></rect></clipPath>
