@@ -6,10 +6,10 @@ import { TagList } from './TagList'
 import { PopupWindows } from './Popup'
 export const Order = () => {
 	/*    const [state, dispatch] = useStore();*/
-	const [selectName, setSelectName] = useState("全部")
+	const [selectID, setSelectID] = useState("tagALL")
 	const handleChangeMenu = () => {
-		let name = document.querySelector("input[name='分類標籤']:checked").value;
-		setSelectName(name);
+		let tag_id = document.querySelector("input[name='分類標籤']:checked").id;
+		setSelectID(tag_id);
 	}
 
 
@@ -28,11 +28,10 @@ export const Order = () => {
 
 				<div className="container">
 					<div className="d-flex py-2 justify-content-center">
-
 						<TagList onChange={handleChangeMenu} />
 					</div>
 				</div>
-				<Menu selectName={selectName} />
+				<Menu selectID={selectID.substring(3, 10)} />
 			</div>
 			<Footer />
 

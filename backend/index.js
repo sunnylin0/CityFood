@@ -27,11 +27,11 @@ const headers = {
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb" }));
-app.use(function (req, res, next) {
-	// 启用 CORS
-	res.set(headers);
-	next();
-})
+//app.use(function (req, res, next) {
+//	// 启用 CORS
+//	res.set(headers);
+//	next();
+//})
 
 
 app.get('/ss', async (req, res) => {
@@ -79,6 +79,7 @@ async function getUsers() {
 
 
 app.get('/subjoin', async (req, res) => {
+	res.set(headers);
 	let db = new sqlite3.Database(DB_PATHFILE, async (err) => {
 		if (err) {
 			console.error(err);
@@ -170,13 +171,58 @@ async function getSubjoinItem(itemId) {
 
 app.get('/getMenu', async (req, res) => {
 	res.set(headers);
-	let idList = await getMenuList();
+	let idList = await getMenuCatList();
 	console.log("SELECT * FROM menu;");
 	res.send(idList);
 
 });
 
-async function getMenuList() {
+async function getMenuCatList() {
+	const promise = new Promise((resolve, reject) => {
+
+		console.log("getCategoryList");
+		const db = new sqlite3.Database(DB_PATHFILE, async (err) => {
+			if (err) {
+				console.error(err);
+			} else {
+				try {
+					const sql = `SELECT * FROM category;`;
+					console.log("menu 2");
+					db.all(sql, [], (err, rows) => {
+						console.log("in in 577");
+						if (err) {
+							console.log(err);
+							reject(false);
+						}
+						else {
+							console.log("go home 13");
+							let prolist = rows.map(async (ths, index) => {
+								let p = (await getMenuCatProductsList(ths.catId))								
+								console.log("p = (await getMenuCatProductsList(ths.catId))")
+								console.log(p)
+								return ({ ...ths, products: p });
+							})
+							console.log("prolist 334")
+							console.log(prolist)
+							Promise.all(prolist)
+								.then(vales => resolve(vales))
+								.catch(err => reject(err))
+						}
+					})
+				} catch (err) {
+					console.error(err);
+					reject(false);
+				}
+			}
+		});
+	});
+	console.log("back promise")
+	console.log(promise)
+	return promise;
+}
+
+
+async function getMenuCatProductsList(catId) {
 	const promise = new Promise((resolve, reject) => {
 
 		console.log("getSubCategoryId3");
@@ -186,15 +232,15 @@ async function getMenuList() {
 			} else {
 				try {
 					console.log("down 3");
-					const sql = `SELECT menuId, catId, menuNameEn, menuName, comment, price, img, isSoldOut	FROM menu;`;
-					db.all(sql, [], (err, rows) => {
+					const sql = `SELECT menuId, catId, menuNameEn, menuName, comment, price, img, isSoldOut	FROM menu
+								WHERE catId = ?;`;
+					db.all(sql, [catId], (err, rows) => {
 						if (err) reject(false);
 						else {
 							let prolist = rows.map(async (ths, index) => {
 								let p = (await getMenuSubjoinList(ths.menuId))
 									.map(its => its.subCatId)
 								console.log("p=await getMenuSubjoinList(ths.menuId)")
-
 
 								console.log(p)
 								return ({ ...ths, subjoinIds: p });
@@ -257,6 +303,7 @@ async function getMenuSubjoinList(menuId) {
 
 
 app.get('/getCategory', async (req, res) => {
+	res.set(headers);
 	let idList = await getCategoryList();
 	console.log("SELECT * FROM Category;");
 	res.send(idList);
@@ -277,12 +324,7 @@ async function getCategoryList() {
 					db.all(sql, [], (err, rows) => {
 						if (err) reject(false);
 						else {
-							let catlist = rows.map(async ths => ths.catName)
-							console.log("catlist")
-							console.log(catlist)
-							Promise.all(catlist)
-								.then(vales => resolve(vales))
-								.catch(err => reject(err))
+							resolve(rows);
 						}
 					})
 				} catch (err) {
@@ -299,6 +341,7 @@ async function getCategoryList() {
 
 
 app.get('/getOrder', async (req, res) => {
+	res.set(headers);
 	let idList = await getOrderList();
 	//console.log("SELECT * FROM Order;");
 	//console.log(idList)
@@ -444,6 +487,7 @@ async function getOrderDetailSubjoinList(detailId) {
 
 
 app.get('/getOrder2', async (req, res) => {
+	res.set(headers);
 	let orderSQL = `SELECT 'order'.orderId, 'order'.userId, 'order'.userName, users.phone, 'order'.remark, 'order'.dateTime, 'order'.totalPrice, 'order'.takeAway, 'order'.isDone, detail.detailId
 FROM 'users' INNER JOIN ('order' INNER JOIN 'detail' ON 'order'.orderId = detail.orderId) ON users.userId = 'order'.userId;`
 	let orderList = await getTableList(orderSQL);
@@ -453,20 +497,20 @@ FROM 'users' INNER JOIN ('order' INNER JOIN 'detail' ON 'order'.orderId = detail
 				WHERE detail.orderId = ?;`;
 
 	//const detailList = new Promise((resolve, reject) => {
-		let prolist = orderList.map(async (ths, index) => {
-			console.log("ddd")
-			return (await getTableListTest(detailSQL, [ths.orderId]))
-			
-			//console.log(ddd)
-			//return ddd;
-			//	return ({ ...ths, detail: p });
+	let prolist = orderList.map(async (ths, index) => {
+		console.log("ddd")
+		return (await getTableListTest(detailSQL, [ths.orderId]))
 
-		})
-		//Promise.all(prolist)
-		//	.then(vales => resolve(vales))
-		//	.catch(err => reject(err))	
+		//console.log(ddd)
+		//return ddd;
+		//	return ({ ...ths, detail: p });
 
-	console.log("prolist"+prolist)
+	})
+	//Promise.all(prolist)
+	//	.then(vales => resolve(vales))
+	//	.catch(err => reject(err))	
+
+	console.log("prolist" + prolist)
 	console.log(prolist)
 	res.send(prolist);
 });
@@ -486,7 +530,7 @@ async function getTableListTest(sql, arrayWhereId = []) {
 						}
 						else {
 							console.log(sql);
-							console.log("id:"+arrayWhereId);
+							console.log("id:" + arrayWhereId);
 							console.log(rows);
 							resolve(rows);
 						}
@@ -632,6 +676,7 @@ process.on("SIGTERM", closeGracefully);
 
 app.get('/', (req, res) => {
 	delete req.headers['X-Frame-Options'];
+	console.log(req)
 	res.sendFile(path.join(__dirname + '/index.html'))
 });
 
@@ -676,4 +721,59 @@ app.get('/api/user', (req, res) => {
 
 });
 
-//app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.post('/mypost', express.json({ type: '*/*' }), (req, res) => {
+	// echo json
+	res.json(req.body);
+});
+
+app.post('/login2', express.json({ type: '*/*' }), (req, res) => {
+	// echo json
+	let data = req.body
+	console.log(req.body)
+	let mess = `E-Mail: ${data.email }   password:${data.password}`
+	res.json(mess);
+});
+
+app.post('/login', express.json({ type: '*/*' }), async (req, res) => {
+	res.set(headers);
+	let data = req.body
+	console.log(req.body)
+
+	let idList = await getUserList(data?.email, data?.password);
+	
+	res.send(idList);
+
+
+});
+
+async function getUserList(_email,_password) {
+	const promise = new Promise((resolve, reject) => {
+		console.log("getUserList 45");
+		const db = new sqlite3.Database(DB_PATHFILE, async (err) => {
+			if (err) {
+				console.error(err);
+			} else {
+				try {
+					console.log("down 3");
+					const sql = `SELECT * FROM 'users';`
+					db.all(sql, [], (err, rows) => {
+						if (err) {
+							console.log("err go home 19");
+							reject(false);
+						}
+						else {
+							console.log("go home 133");
+							console.log(rows)
+							resolve(rows)
+						}
+					})
+				} catch (err) {
+					console.error(err);
+					reject(false);
+				}
+			}
+		});
+	});
+	return promise;
+}
+

@@ -30,8 +30,18 @@
 		function gourl(str) {
 			console.log()
 			frampage.src = str;
+			txtUrlBox.value = frampage.src;
 			console.log(frampage.src)
 		}
+		function gourl(str) {
+			console.log()
+			frampage.src = str;
+			txtUrlBox.value = frampage.src;
+			console.log(frampage.src)
+		}
+
+
+
 	</script>
 </head>
 
@@ -53,10 +63,18 @@
 			<button onclick="gourl('/ss/')">ss part1</button>
 			<button onclick="gourl('/ss2/')">ss2 part2</button>
 			<button onclick="gourl('/getOrder2/')">ss3   part3</button>
+			<br />
+			<form action="/login/" method="post" target="frmUrl">
+				<input type="text" name="email" value="ming@gmail.com" />
+				<input type="text" name="passowrd" value="0000" />
+				<input type="submit" value="good" />
+
+			</form>
+			<button onclick="putJson()">put data json</button>
 
 		</div>
 		<div>
-			<iframe id="frmUrl" ></iframe>
+			<iframe id="frmUrl" name="frmUrl" ></iframe>
 		</div>
 	</div>
 
