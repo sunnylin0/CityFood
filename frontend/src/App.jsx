@@ -1,30 +1,29 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import './App.css';
+import { Routes, Route, BrowserRouter} from 'react-router-dom'
 
-export default function App() {
-  const [payload, setPayload] = useState();
-  
-  useEffect(() => {
-    axios.get("http://localhost:8080/hello")
-      .then((res) => {
-        setPayload(res.data);
-      })
-      .catch((err) => {
-        console.error(err)
-      });
-  }, []);
+import MainLogo from './pages/mainlogo'
+import { Order } from './pages/Order'
+import { Home } from './pages/home'
+import { Other } from './pages/other'
+import { NotFound } from './pages/notfound'
+import { BackStage } from './backstage/BackStage'
+import { ProductManage } from './backstage/ProductManage'
+import { RevenueAnalysis } from './backstage/RevenueAnalysis'
+import { FoceAtom_extemplat } from './focusAtom/index'
 
-  if (payload)
-    console.log(payload);
+let TTT=()=><div>asdfasdf</div>
+const App = () =>
+   <BrowserRouter basename="/">
+        <Routes>
+            <Route index element={<Order />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/backstage" element={<BackStage />} />
+            <Route path="/productmanage" element={<ProductManage />} />
+            <Route path="/revenueanalysis" element={<RevenueAnalysis />} />
+            <Route path="/main" element={<MainLogo />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/other" element={<Other />} />
+            <Route path="*" element={<FoceAtom_extemplat />} />
+        </Routes>
+</BrowserRouter>
 
-  return (
-    <div className="App">
-      {payload && <>
-        <div>{payload.message}</div>
-        <div>ID: {payload.rows[0].id}</div>
-        <div>Name: {payload.rows[0].name}</div>
-      </>}
-    </div>
-  )
-}
+export default App;

@@ -777,3 +777,51 @@ async function getUserList(_email,_password) {
 	return promise;
 }
 
+
+app.post('/loginTO', express.json({ type: '*/*' }), async (req, res) => {
+	res.set(headers);
+	let data = req.body
+	console.log(req.body)
+
+	let idList = await getUserToList(data?.email, data?.password);
+
+	res.send(idList);
+
+
+});
+
+async function getUserToList(_email, _password) {
+	const promise = new Promise((resolve, reject) => {
+		console.log("getUserList 45");
+		const db = new sqlite3.Database(DB_PATHFILE, async (err) => {
+			if (err) {
+				console.error(err);
+			} else {
+				try {
+					console.log("_email");
+					console.log(_email);
+					console.log("_password");
+					console.log(_password);
+					const sql = `SELECT * FROM 'users'
+						WHERE email=? and password =?;`
+					db.all(sql, [_email, _password], (err, rows) => {
+						if (err) {
+							console.log("err go home 19");
+							reject(false);
+						}
+						else {
+							console.log("go home 133");
+							console.log(rows)
+							resolve(rows)
+						}
+					})
+				} catch (err) {
+					console.error(err);
+					reject(false);
+				}
+			}
+		});
+	});
+	return promise;
+}
+

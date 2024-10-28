@@ -6,11 +6,13 @@
 		button {
 			line-height: 30px;
 		}
+
 		#frmUrl {
 			width: 100%;
 			min-height: 100vh;
 			height: 100%;
 		}
+
 		#txtUrlBox {
 			width: 15%;
 			line-height: 30px;
@@ -23,9 +25,9 @@
 			console.log("load ")
 			frampage = document.getElementById('frmUrl')
 		});
-        function loadUrlToIframe() {
+		function loadUrlToIframe() {
 			var url = document.getElementById("txtUrlBox").value;
-            frampage.src = url;
+			frampage.src = url;
 		}
 		function gourl(str) {
 			console.log()
@@ -40,7 +42,11 @@
 			console.log(frampage.src)
 		}
 
-
+		function loginTo() {
+			console.log("loginTo")
+			frmEmail.action = "/loginTO/";
+			onSubmit.click();
+		}
 
 	</script>
 </head>
@@ -64,17 +70,18 @@
 			<button onclick="gourl('/ss2/')">ss2 part2</button>
 			<button onclick="gourl('/getOrder2/')">ss3   part3</button>
 			<br />
-			<form action="/login/" method="post" target="frmUrl">
-				<input type="text" name="email" value="ming@gmail.com" />
-				<input type="text" name="passowrd" value="0000" />
-				<input type="submit" value="good" />
-
+			<form id="frmEmail" action="/login/" method="post" target="frmUrl">
+				<input type="text" id="userEmail" name="email" value="ming@gmail.com" />
+				<input type="text" id="userPass" name="password" value="0000" />
+				<input type="submit" value="good"  id="onSubmit"/>
+				<input type="button" value="login to" onclick="loginTo()"/>
 			</form>
+
 			<button onclick="putJson()">put data json</button>
 
 		</div>
 		<div>
-			<iframe id="frmUrl" name="frmUrl" ></iframe>
+			<iframe id="frmUrl" name="frmUrl"></iframe>
 		</div>
 	</div>
 

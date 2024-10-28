@@ -6,7 +6,7 @@
 		"initiate": "npm install && cd ./frontend && npm install && cd ../backend && npm install",
 		"start": "concurrently --kill-others \"npm run backend\" \"npm run frontend\"",
 		"start2": "concurrently --kill-others \"npm run backend\" \"npm run frontend\"",
-		"frontend": "cd ./frontendCityFood && npm run dev",
+		"frontend": "cd ./frontend && npm run dev",
 		"frontend2": "cd ./frontend && npm run dev",
 		"backend": "cd ./backend && npm start"
 	},
