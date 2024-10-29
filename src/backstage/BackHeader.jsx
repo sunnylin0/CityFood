@@ -1,7 +1,7 @@
 ﻿import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { NavLink } from 'react-router-dom'
-import logo from '~/img/logo.svg';
+import logo from '~/img/logoA.png';
 import { AdModal } from '@/modal/AdModal'
 import { GuideModal } from '@/modal/GuideModal'
 import { UserOrdersModal } from '@/modal/UserOrdersModal'

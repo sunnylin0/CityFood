@@ -1,7 +1,7 @@
 ﻿
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import logo from '~/img/logo.svg';
+import logo from '~/img/logoA.png';
 import { BackHeader } from './BackHeader'
 
 

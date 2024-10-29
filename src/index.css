@@ -81,7 +81,8 @@ html, body {
 /*#region  ---------- 標題bar ----------*/
 
 .logo {
-	width: 280px;
+	height: 50px;
+	border-radius: 10px 10px 10px 10px;
 }
 
 a.grayLink {
