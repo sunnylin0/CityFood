@@ -54,7 +54,7 @@ html, body {
 	background-color: var(--color-secondary,0.5);
 	/* background-image:url("/img/PC/wood1.jpg"); */
 	width: 100%;
-	/* height: 72px; */
+	height: 68px;
 	z-index: 100;
 	font-size: 20px;
 	color: inherit; /* 保持文字顏色 */
@@ -81,7 +81,7 @@ html, body {
 /*#region  ---------- 標題bar ----------*/
 
 .logo {
-	height: 50px;
+	height: 53px;
 	border-radius: 10px 10px 10px 10px;
 }
 
