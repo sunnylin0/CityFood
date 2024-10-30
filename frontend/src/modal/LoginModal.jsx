@@ -41,24 +41,45 @@ function login(email, password) {
 //渲染loginModal
 export const LoginModal = ({ onClose, bRegister = false}) => {
 	let [loginModal, setLoginModal] = useState(bRegister);
-	let [username, setUsername] = useState();
-	let [useremail, setUseremail] = useState();
-	let [password, setPassword] = useState();
-	let [phone, setPhone] = useState();
+	let [userdata, setUserdata] = useState({
+		username: "",
+		useremail: "",
+		password: "",
+		phone: ""
+	})
+	//let [username, setUsername] = useState("");
+	//let [useremail, setUseremail] = useState("");
+	//let [password, setPassword] = useState("");
+	//let [phone, setPhone] = useState("");
 
 	function demoInput(name) {
 		if (name == '阿姨') {
-			setUseremail("anti@gmail.com")
-			setPassword("0000")
+			setUserdata(function () {
+				return {useremail: "anti@gmail.com",
+						password: "0000"}
+			})
+			//setUseremail("anti@gmail.com")
+			//setPassword("0000")
 		} else if (name == '小明') {
-			setUseremail("cake@gmail.com")
-			setPassword("0000")
+			setUserdata(function () {
+				return {
+					useremail: "cake@gmail.com",
+					password: "0000"
+				}
+			})
+			//setUseremail("cake@gmail.com")
+			//setPassword("0000")
 		}
 	}
 	function btnLogin() {
 		login(useremail, password);
 	}
-
+	function hanledChange(e) {
+		console.log(e)
+		setUserdata(function () {
+			return {...userdata,[e.target.name]:e.target.value}
+		})
+	}
 	return (
 		<>
 			<div className="modal fade show" id="loginModal" tabIndex="-1" aria-modal="true" role="dialog" style={{ display: "block" }} >
@@ -71,18 +92,35 @@ export const LoginModal = ({ onClose, bRegister = false}) => {
 							{loginModal ?
 								<div className="d-flex flex-column align-items-center gap-3">
 									<p className="h4 fw-bold">會員</p>
-									<input type="text" className="login-input" placeholder="Name" id="loginName" value={username}/>
-									<input type="phone" className="login-input" placeholder="phone" id="loginPhone" value={phone}/>
-									<input type="email" className="login-input" placeholder="Email" id="loginEmail" value={useremail}/>
-									<input type="password" className="login-input" placeholder="Password" id="loginPassword" value={password}/>
+									<div className="row">
+
+										<label className="col-2 mt-3" htmlFor="loginName"> 名字 : </label>
+										<input type="text" className="login-input col-10 mt-2" placeholder="name" id="loginName" name="username"
+											value={userdata.username} onChange={hanledChange} />
+										<label className="col-2 mt-3" htmlFor="loginPhone"> 電話 : </label>
+										<input type="phone" className="login-input col-10 mt-2" placeholder="phone" id="loginPhone" name="phone"
+											value={userdata.phone} onChange={hanledChange} />
+										<label className="col-2 mt-3" htmlFor="loginEmail"> E-Mail : </label>
+										<input type="email" className="login-input col-10 mt-2" placeholder="email" id="loginEmail" name="useremail"
+											value={userdata.useremail} onChange={hanledChange} />
+										<label className="col-2 mt-3" htmlFor="loginPassword"> 密碼 : </label>
+										<input type="password" className="login-input col-10 mt-2" placeholder="password" id="loginPassword" name="password"
+											value={userdata.password} onChange={hanledChange} />
+									</div>
 									<button className="btn btn-login" onClick={() => btnRegister()}>註冊</button>
 									<p>已經是會員? <span className="color-primary border-bottom finger" onClick={()=>setLoginModal((iss) => !iss)}>登入</span></p>
 								</div>
 								:
 								<div className="d-flex flex-column align-items-center gap-3">
 									<p className="h4 fw-bold">會員</p>
-									<input type="email" className="login-input" placeholder="Email" id="loginEmail" value={useremail}/>
-									<input type="password" className="login-input" placeholder="Password" id="loginPassword" value={password}/>
+									<div className="row">
+										<label className="col-2 mt-3" htmlFor="loginEmail"> E-Mail : </label>
+										<input type="email" className="login-input col-10 mt-2" placeholder="email" id="loginEmail" name="useremail"
+											value={userdata.useremail} onChange={hanledChange} />
+										<label className="col-2 mt-3" htmlFor="loginPassword"> 密碼 : </label>
+										<input type="password" className="login-input col-10 mt-2" placeholder="password" id="loginPassword" name="password"
+											value={userdata.password} onChange={hanledChange} />
+										</div>
 									<button className="btn btn-login" onClick={btnLogin} >登入</button>
 
 									<p>還沒成為會員? <span className="color-primary border-bottom finger" onClick={()=>setLoginModal((iss) => !iss)}>註冊</span></p>
