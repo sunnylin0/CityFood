@@ -607,14 +607,14 @@ async function getTableList(sql, arrayWhereId = []) {
 }
 
 
-
-
-app.put('/orders', express.json({ type: '*/*' }), (req, res) => {
+app.put('/orders/:orderid', express.json({ type: '*/*' }), (req, res) => {
 	res.set(headers);
-	console.log('orders')
+	console.log('orders/*')
 	console.log(req.header('Authorization'))
 	console.log(req.body)
-	//console.log(req.body)
+	console.log(req.url)
+	console.log(req.params)
+	console.log(req.params.orderid)
 	//res.json(req.body);
 	const auth = req.header('Authorization')
 	if (typeof auth === "undefined") {
@@ -627,8 +627,8 @@ app.put('/orders', express.json({ type: '*/*' }), (req, res) => {
 		console.log('decoded! = ')
 		console.log(decoded)
 		if (decoded.userId >= 1) {
-			console.log('Welcome!')
-			//writeOrder(req.body)
+			console.log('putOrder')
+			putOrder(req.params.orderid, req.body)
 			res.status(200).send({ msg: 'ok' })
 		}
 	} catch {
@@ -636,6 +636,49 @@ app.put('/orders', express.json({ type: '*/*' }), (req, res) => {
 	}
 
 });
+
+async function putOrder(orderId, orderObj) {
+	const promise = new Promise((resolve, reject) => {
+		const db = new sqlite3.Database(DB_PATHFILE, async (err) => {
+			if (err) {
+				console.error(err);
+			} else {
+				try {
+					console.log('insertOrder(db, orderObj)')
+					await updateOrder(db, orderId, orderObj);
+					console.log('insterDetails(db, orderObj.details)')
+					await insterDetails(db, orderObj.orderId, orderObj.details)
+					resolve(true);
+				} catch (err) {
+					console.error(err);
+					reject(false);
+				}
+			}
+		});
+	});
+	return promise;
+}
+async function updateOrder(db, orderId, orderObj) {
+	const { userId, userName, phone, totalPrice, dateTime, takeAway, isDone, remark } = orderObj;
+	console.log(orderObj)
+	const promise = new Promise((resolve, reject) => {
+		console.log('insertOrder 665')
+		db.run(`UPDATE 'order' SET  userId=?, userName=?,  totalPrice=?, dateTime=?, takeAway=?, isDone=?, remark=?
+			WHERE orderId=?; `
+			, [userId, userName, totalPrice, dateTime, takeAway, isDone, remark, orderId], (err) => {
+
+				if (err) {
+					console.log('updateOrder err')
+					console.error(err);
+					reject();
+				} else
+					console.log('updateOrder ok')
+				resolve();
+			});
+	});
+	return promise;
+}
+
 
 
 
@@ -1023,4 +1066,70 @@ async function insterDetails(db, orderId, detailObjs) {
 //	});
 //});
 //db.close();
+
+
+
+
+app.put('/products/:menuid', express.json({ type: '*/*' }), (req, res) => {
+	res.set(headers);
+	console.log('products/*')
+	console.log(req.header('Authorization'))
+	console.log(req.body)
+	console.log(req.url)
+	console.log(req.params)
+	console.log(req.params.menuid)
+	//res.json(req.body);
+	const auth = req.header('Authorization')
+	console.log(auth)
+	if (typeof auth === "undefined") {
+		res.status(401).send({ error: 'Please authenticate.' })
+		return
+	}
+	console.log('/products/:menuid' + 1087)
+	let token = auth.replace('Bearer ', '')
+	try {
+		const decoded = jwt.verify(token, secretKey)
+		console.log('decoded! = ')
+		console.log(decoded)
+		if (decoded.userId >= 1) {
+			console.log('put products')
+			putProducts(req.params.menuid, req.body)
+			res.status(200).send({ msg: 'ok' })
+		}
+	} catch {
+		res.status(401).send({ error: 'Please authenticate.' })
+	}
+
+});
+
+async function putProducts(menuId, menuObj) {
+	const promise = new Promise((resolve, reject) => {
+		const db = new sqlite3.Database(DB_PATHFILE, async (err) => {
+			if (err) {
+				console.error(err);
+			} else {
+				try {
+					const { menuId, catId, menuName, menuNameEn, comment, price, img, isSoldOut, subjoinIds } = menuObj;
+					console.log('insertOrder 665')
+					db.run(`UPDATE 'menu' SET  catId=?, menuName=?, menuNameEn=?, comment=?, price=?, img=?, isSoldOut=?
+					WHERE menuId=?; `
+						, [catId, menuName, menuNameEn, comment, price, img, isSoldOut, menuId], (err) => {
+
+							if (err) {
+								console.log('putProducts err')
+								console.error(err);
+								reject();
+							} else
+								console.log('putProducts ok')
+							resolve();
+						});
+				} catch (err) {
+					console.error(err);
+					reject(false);
+				}
+			}
+		});
+	});
+	return promise;
+}
 

@@ -16,12 +16,19 @@ export const BackStage = (props) => {
 	const [switchOrders, setSwitchOrders] = useState('false')
 
 	function init() {
-		getCustomerOrders()	//計算訂單數量
-		setAllOrders(() => theAllOrders.length)
-		setDoneOrders(() => theDoneOrders.length)
-		setNotDoneOrders(()=> theNotDoneOrders.length)
+		console.log('init')
+		getAllOrders().then(() => {	//計算訂單數量
+			console.log('init then')
+			setAllOrders(() => theAllOrders.length)
+			setDoneOrders(() => theDoneOrders.length)
+			setNotDoneOrders(() => theNotDoneOrders.length)
+		})
+		console.log('init end')
+			setAllOrders(() => theAllOrders.length)
+			setDoneOrders(() => theDoneOrders.length)
+			setNotDoneOrders(() => theNotDoneOrders.length)
 	}
-	useEffect(init,[])
+	useEffect(init, [countAllOrders, countDoneOrders, countNotDoneOrders])
     return (
         <div >
             {/*<!-- 最上方標題導覽列 -->*/}
@@ -31,7 +38,7 @@ export const BackStage = (props) => {
                 {/*<!-- 出餐管理 -->*/}
                 <div className="page customerOrders" style={{ display: 'block' }}>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3 pb-5" id="customerOrders">
-                        <CustomerOrders status={switchOrders}/>
+						<CustomerOrders status={switchOrders} setDoneOrders={setDoneOrders}/>
                     </div>
                 </div>
 

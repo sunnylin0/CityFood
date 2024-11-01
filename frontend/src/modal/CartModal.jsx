@@ -100,8 +100,8 @@ export let CartModal = ({ onClose }) => {
 	function submitCart() {
 		const carts = getCarts();
 		if (carts.length == 0) {
-			//sweetError('購物車沒有商品', '請先加入商品');
-			alert('購物車沒有商品', '請先加入商品')
+			sweetError('購物車沒有商品', '請先加入商品');
+			
 			return;
 		} else if (getDataFromLocalStorage('_token') == null) {
 			saveDataToLocalStorage('returnModal', 'cartModal');
@@ -134,16 +134,14 @@ export let CartModal = ({ onClose }) => {
 				}
 			}).then(function (response) {
 				//gaPurchase(order);
-				//sweetSuccess('訂單送出成功', '將盡快為您備餐', 2500);
-				alert('訂單送出成功', '將盡快為您備餐')
+				sweetSuccess('訂單送出成功', '將盡快為您備餐', 2500);				
 				//switchModal();
 				deleteDataFromLocalStorage('cart');
 				//updateFooterTotalPrice();
 				resolve = { msg: 'ok' }
 				onClose()
 			}).catch(function (error) {
-				//sweetError('訂單送出失敗', '請重新嘗試');
-				alert('訂單送出失敗', '請重新嘗試')
+				sweetError('訂單送出失敗', '請重新嘗試');				
 				console.log('error', error);
 				resolve = { msg: error }
 			});

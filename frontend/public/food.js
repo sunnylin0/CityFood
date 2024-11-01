@@ -52,7 +52,7 @@ async  function init() {
 	getCategory()
 	getMenu()
 	getFoodSubjoin()
-		getAllOrders()
+	getAllOrders()
 
 	//theProducts = theMenu.reduce((a, b) => [...a, ...b.products], [])
 

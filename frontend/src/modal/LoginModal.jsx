@@ -100,25 +100,27 @@ export const LoginModal = ({ onClose, bRegister = false }) => {
 					return;
 				}
 				
-				if (response.data.user.role == 'insider' ||
-					response.data.user.role == 'customer') {
-					navigate('/order')
-					onClose()
-					return;
-				}
+				//if (//response.data.user.role == 'insider' ||
+				//	response.data.user.role == 'customer') {
+				//	navigate('/order')
+				//	onClose()
+				//	return;
+				//}
 
 				//$('#loginModal').modal('hide');
 				//renderNavList();
 				//switchModal();
-				//if (response.data.user.role == 'insider') {
-				//	sweetSmallSuccess(`桌號 ${response.data.user.name}，歡迎光臨`);
-				//} else {
-				//	sweetSmallSuccess(`早安😀 ${response.data.user.name}，登入成功`);
-				//}
+				if (response.data.user.role == 'insider') {
+					sweetSmallSuccess(`桌號 ${response.data.user.userName}，歡迎光臨`);
+				} else {
+					sweetSmallSuccess(`早安😀 ${response.data.user.userName}，登入成功`);
+				}
 
+				navigate('/order')
+				onClose()
 			}).catch(function (error) {
 				console.log("catch(function (error)")
-				//sweetError('登入失敗', '帳號或密碼錯誤');
+				sweetError('登入失敗', '帳號或密碼錯誤');
 			});
 	}
 

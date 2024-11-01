@@ -1,4 +1,5 @@
 ﻿import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 //附加選項id轉name
 function subjoinIdToName(subjoinId) {
@@ -15,20 +16,14 @@ let DetailItem = (props) => {
         </div>
     )
 }
-//完成此訂單
-function finishOrder(orderId) {
-	let myOrder = theNotDoneOrders.find(x => x.orderId == orderId);
-	myOrder.isDone = true;
-	updateOrder(orderId, myOrder);
-}
-
 //更新部分訂單資訊
 function updateOrder(orderId, data) {
 	const token = getDataFromLocalStorage('_token');
 	const config = { headers: { 'Authorization': `Bearer ${token}` } }
-	axios.put(`${urlDomain}/orders`, data, config)
+	console.log("axios.put(`${urlDomain}/orders/${orderId}`, data, config")
+	axios.put(`${urlDomain}/orders/${orderId}`, data, config)
 		.then(function (response) {
-			//sweetSmallSuccess('更新成功');
+			sweetSmallSuccess('更新成功');
 			getCustomerOrders();
 		}).catch(function (error) {
 			console.log('error', error);
@@ -36,8 +31,9 @@ function updateOrder(orderId, data) {
 }
 
 //顯示客戶訂單資訊
-export function CustomerOrders({ status }) {
-    let targetArr = theNotDoneOrders;
+export function CustomerOrders({ status ,setDoneOrders}) {
+	let targetArr = theNotDoneOrders;
+	let linkNav=useNavigate();
     switch (status) {
         case 'true':
             targetArr = theDoneOrders;
@@ -53,7 +49,19 @@ export function CustomerOrders({ status }) {
             break;
     }
 
-    let orderContents = [];
+	let orderContents = [];
+
+
+	//完成此訂單
+	function finishOrder(orderId) {
+		let myOrder = theNotDoneOrders.find(x => x.orderId == orderId);
+		myOrder.isDone = true;
+		updateOrder(orderId, myOrder);
+		setDoneOrders((count)=>count+1)
+		linkNav('/backstage')
+	}
+
+
     return targetArr.map((item, index)=> {
 		let { orderId, userName, phone, comment, totalPrice, dateTime, takeWay,  isDone, details } = item;
 
