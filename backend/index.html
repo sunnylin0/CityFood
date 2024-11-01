@@ -43,8 +43,10 @@
 		}
 
 		function loginTo() {
-			console.log("loginTo")
 			frmEmail.action = "/loginTO/";
+			txtUrlBox.value = frampage.src;
+
+			console.log("loginTo_" + frampage.src )
 			onSubmit.click();
 		}
 
@@ -60,6 +62,8 @@
 			<button onclick="gourl('/getCategory/')">取得菜單分類 <br />the Category</button>
 			<button onclick="gourl('/subjoin/')">取得食品附加項目 <br /> subjoin </button>
 			<button onclick="gourl('/getOrder/')">取得訂單資料 <br /> order </button>
+			<button onclick="gourl('/login/')">取得使用者資料 <br /> login </button>
+			
 			<button onclick="gourl('/mdb2/')">mdb 2</button>
 			<button onclick="gourl('/mdb3/')">mdb 3</button>
 			<button onclick="gourl('/sql1/')">sql 1</button>
@@ -73,8 +77,8 @@
 			<form id="frmEmail" action="/login/" method="post" target="frmUrl">
 				<input type="text" id="userEmail" name="email" value="ming@gmail.com" />
 				<input type="text" id="userPass" name="password" value="0000" />
-				<input type="submit" value="good"  id="onSubmit"/>
-				<input type="button" value="login to" onclick="loginTo()"/>
+				<input type="submit" value="good" id="onSubmit" />
+				<input type="button" value="login to" onclick="loginTo()" />
 			</form>
 
 			<button onclick="putJson()">put data json</button>

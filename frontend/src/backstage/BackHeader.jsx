@@ -1,11 +1,12 @@
 ﻿import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import logo from '~/img/logo.svg';
 import { AdModal } from '@/modal/AdModal'
 import { GuideModal } from '@/modal/GuideModal'
 import { UserOrdersModal } from '@/modal/UserOrdersModal'
 import { LoginModal } from '@/modal/LoginModal'
+
 
 export const BackHeader = () => {
     const [showAdModal, setShowAdModal] = useState(false);
@@ -16,13 +17,30 @@ export const BackHeader = () => {
     function goToCustomerOrdersPage() { setShowAdModal(true); }
     function goToProductManagePage() { setShowGuideModal(true); console.log('openGuideModal')}
     function goToRevenueAnalysisPage() { setShowUserOrderModal(true); console.log('openGuideModal')}
-    function goToIndex() { }
-    function logout() { setShowLoginModal(true); console.log('setShowLoginModal') }
+	function goToIndex() { }
+	let uLink = useNavigate();
+	function hanledLogout() {
+		logout()
+		uLink('/order')
+	}
+    //function logout() { setShowLoginModal(true); console.log('setShowLoginModal') }
     function closeAdmodal() { setShowAdModal(false); }
     function closeGuideModal() { setShowGuideModal(false); }
     function closeUserOrderModal() { setShowUserOrderModal(false);  }
     function xxgoToBackstage() { }
     function closeLoginModal() { setShowLoginModal(false);  }
+
+
+	//渲染NAV清單
+	let isLogin = getDataFromLocalStorage('_token') ? true : false;
+	let userNameContent = "";
+	let loginoutContent = `<span class="nav-link finger" href="" onclick="showLoginModal('login')">登入/註冊</span>`;
+	if (isLogin) {
+		userNameContent =
+			<li className="nav-item" id="navLoginArea">
+			<span className="nav-link" href="" id="">早安!  <b> {getDataFromLocalStorage('_user').userName}</b></span>
+			</li>
+	}
 
     return(
         <div className="header">
@@ -43,12 +61,12 @@ export const BackHeader = () => {
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0" id="navList">
-                            <HeadeItem title={"早安!" + <b>阿姨</b>} />
+							{userNameContent}
                             <HeadeLink to="/backstage" title='出餐管理' />
                             <HeadeLink to="/productmanage" title='菜單管理' />
                             <HeadeLink to="/revenueanalysis" title='營收分析' />
                             <HeadeLink to="/order" title='切換至前台' />
-                            <HeadeItem onClick={logout} title='登出' />
+							<HeadeItem onClick={hanledLogout} title='登出' />
                         </ul>
                     </div>
                 </div>

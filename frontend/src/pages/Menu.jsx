@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+﻿import { useState, useEffect} from 'react'
 import { createPortal } from 'react-dom'
 import { useAtom } from 'jotai'
 import { Header } from './Header'
@@ -7,6 +7,7 @@ import ModalContent from './PModalContent'
 import { AdModal } from '../modal/AdModal'
 import { ProductModal } from '../modal/ProductModal'
 import { editProductModal, editProductObj } from '../store/state'
+
 
 export const Menu = ({ selectID }) => {
 	let [showEidtProductModal, setShowEditProductModal] = useAtom(editProductModal)
@@ -23,6 +24,8 @@ export const Menu = ({ selectID }) => {
             select_Id:Id
         });
     }
+
+
 
 	return <div className="menu container pb-6" id="menu">
 		{showModal.show &&

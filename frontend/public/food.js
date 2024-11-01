@@ -35,7 +35,7 @@ window.addEventListener("load", (event) => {
 
 
 //初始化
-function init() {
+async  function init() {
 	//檢查網址參數
 	urlDomain = "http://" + window.location.hostname + ":8080";
 	const urlParams = new URLSearchParams(window.location.search);
@@ -48,10 +48,11 @@ function init() {
 	if (getDataFromLocalStorage('_user')) {
 		chkTimer();
 	}
-	getCategory();
-	getMenu();
-	getFoodSubjoin();
-	getAllOrders();
+	//Promise.all([
+	getCategory()
+	getMenu()
+	getFoodSubjoin()
+		getAllOrders()
 
 	//theProducts = theMenu.reduce((a, b) => [...a, ...b.products], [])
 
@@ -65,15 +66,28 @@ function init() {
 	//});
 }
 
-
+//附加選項id轉name
+function subjoinIdToName(subObject) {
+	let name = Object.values(theFoodSubjoins).reduce((a, b) =>
+		[...a, ...b.items], [])
+		.find(item =>
+			item.subId == subId)?.subName
+	return name ? name : '';
+}
 
 
 
 //#region ------------------------------ API ------------------------------
-
-function getCategory() {
+//取得全部 客戶訂單資訊
+function getCustomerOrders() {
+	if (theAllOrders) {
+		theNotDoneOrders = theAllOrders.filter(x => x.isDone == false);
+		theDoneOrders = theAllOrders.filter(x => x.isDone == true);
+	}
+}
+async function getCategory() {
 	console.log(`${urlDomain}/getCategory`)
-	axios.get(`${urlDomain}/getCategory`).then(function (response) {
+	return await axios.get(`${urlDomain}/getCategory`).then(function (response) {
 		console.log(`${urlDomain}/getCategory`)
 		theCategory = response.data;
 		
@@ -82,9 +96,9 @@ function getCategory() {
 	});
 }
 //取得菜單資料
-function getMenu() {
+async function getMenu() {
 	console.log(`${urlDomain}/getMenu`)
-	axios.get(`${urlDomain}/getMenu`).then(function (response) {
+	return await axios.get(`${urlDomain}/getMenu`).then(function (response) {
 		console.log(`${urlDomain}/getMenu`)
 		theMenu = response.data;
 		
@@ -95,8 +109,8 @@ function getMenu() {
 	});
 }
 //取得食品附加項目
-function getFoodSubjoin() {
-	axios.get(`${urlDomain}/subjoin`)
+async function getFoodSubjoin() {
+	return await axios.get(`${urlDomain}/subjoin`)
 		.then(function (response) {
 			theFoodSubjoins = response.data;
 		}).catch(function (error) {
@@ -104,8 +118,8 @@ function getFoodSubjoin() {
 		});
 }
 //取得用戶歷史訂單
-function getAllOrders() {
-	axios.get(`${urlDomain}/getOrder`)
+async function getAllOrders() {
+	return await axios.get(`${urlDomain}/getOrder`)
 		.then(function (response) {
 			theAllOrders = response.data;
 			theNotDoneOrders = theAllOrders.filter(x => x.isDone == false);
@@ -119,26 +133,32 @@ function getAllOrders() {
 		});
 }
 //取得用戶歷史訂單
-function getUserOrders() {
-	//const userId = getDataFromLocalStorage('_user').id;
-	//const token = getDataFromLocalStorage('_token');
-	//const config = { headers: { 'Authorization': `Bearer ${token}` } }
+function getUserOrdersxx() {
+	const userId = getDataFromLocalStorage('_user').userId;
+	const token = getDataFromLocalStorage('_token');
+	const config = { headers: { 'Authorization': `Bearer ${token}` } }
 
 	//axios.get(`${urlDomain}/600/orders?userId=${userId}`, config)
-	axios.get(`${urlDomain}/getOrder`)
-		.then(function (response) {
-			theUserOrders = response.data;
-			console.log('theUserOrders', theUserOrders);
-			//renderUserOrdersModal();
-		}).catch(function (error) {
-			console.log('error', error);
-			theUserOrders = [];
-			//renderUserOrdersModal();
-		});
+	return new Promise((resolve, reject) => {
+		axios.get(`${urlDomain}/orders?userId=${userId}`, config)
+			.then( response=> {
+				console.log('ok');
+				console.log('theUserOrders', response);
+				theUserOrders = response.data;
+				resolve = theUserOrders
+				//console.log('theUserOrders', theUserOrders);
+				//renderUserOrdersModal();
+			}).catch((error)=>{
+				console.log('error', error);
+				theUserOrders = [];
+				reject = theUserOrders
+				//renderUserOrdersModal();
+			});
+	})
 }
 //login
-function login(email, password) {
-	axios.post(`${urlDomain}/login`, { email: email, password: password })
+async function login(email, password) {
+	await axios.post(`${urlDomain}/login`, { email: email, password: password })
 		.then(function (response) {
 			gtag("event", "login", {
 				method: "login:" + `(${email})(${response.data.user.name})`
@@ -176,11 +196,11 @@ function logout() {
 	deleteDataFromLocalStorage('_user');
 	deleteDataFromLocalStorage('_expire');
 	deleteDataFromLocalStorage('returnModal');
-	renderNavList();
+	//renderNavList();
 }
 //register
-function register(model) {
-	axios.post(`${urlDomain}/register`, model)
+async function register(model) {
+	await axios.post(`${urlDomain}/register`, model)
 		.then(function (response) {
 			gtag("event", "sign_up", {
 				method: "sign_up:" + `(${model.name})(${model.email})`
@@ -196,9 +216,9 @@ function register(model) {
 		});
 }
 //post cart order with token
-function postCartOrder(order) {
+async function postCartOrderxx(order) {
 	const token = getDataFromLocalStorage('_token');
-	axios.post(`${urlDomain}/mypost`, order, {
+	await axios.post(`${urlDomain}/mypost`, order, {
 		headers: {
 			Authorization: `Bearer ${token}`
 		}
@@ -266,7 +286,7 @@ function updateToCart(productIndex) {
 	updateFooterTotalPrice();
 }
 //送出購物車訂單
-function submitCart() {
+function submitCartxx() {
 	const carts = getCarts();
 	if (carts.length == 0) {
 		sweetError('購物車沒有商品', '請先加入商品');
@@ -384,7 +404,8 @@ function chkTimer() {
 		if (localStorage.getItem('_expire')) {
 			let expireTime = getDataFromLocalStorage('_expire');
 			if (new Date().getTime() - expireTime.time > expireTime.expire) {
-				sweetInfo('登入逾時，請重新登入', 3000);
+				//sweetInfo('登入逾時，請重新登入', 3000);
+				console.log('登入逾時，請重新登入');
 				logout()
 				clearInterval(timer);
 			}
@@ -912,3 +933,78 @@ function gaPurchase(order) {
 //	}
 //]
 
+//theUserOrders=
+//[
+//	{
+//		"id": "OD1670063897679",
+//		"userId": 3,
+//		"name": "小明",
+//		"phone": "0911333555",
+//		"comment": "謝謝老闆",
+//		"price": 115,
+//		"orderDate": "2022-12-03",
+//		"orderTime": "18:38:17",
+//		"takeWay": "外帶",
+//		"isPaid": false,
+//		"isDone": false,
+//		"details": [
+//			{
+//				"catId": "c06",
+//				"id": "p061",
+//				"name": "早餐店奶茶",
+//				"price": 15,
+//				"qty": 1,
+//				"comment": "",
+//				"additems": [
+//					"AD021",
+//					"AD034"
+//				]
+//			},
+//			{
+//				"catId": "c01",
+//				"id": "p012",
+//				"name": "玉米蛋餅",
+//				"price": 50,
+//				"qty": 2,
+//				"comment": "裝在一起",
+//				"additems": [
+//					"AD011",
+//					"AD014"
+//				]
+//			}
+//		]
+//	},
+//	{
+//		"id": "OD1669622562629",
+//		"userId": 3,
+//		"name": "小明",
+//		"phone": "0911333555",
+//		"comment": "第一次來這邊點餐",
+//		"price": 115,
+//		"orderDate": "2022-11-28",
+//		"orderTime": "16:02:42",
+//		"takeWay": "外帶",
+//		"isPaid": false,
+//		"isDone": true,
+//		"details": [
+//			{
+//				"catId": "c03",
+//				"id": "p034",
+//				"name": "日式和牛堡",
+//				"additems": [],
+//				"price": 100,
+//				"qty": 1,
+//				"comment": ""
+//			},
+//			{
+//				"catId": "c06",
+//				"id": "p062",
+//				"name": "經典紅茶",
+//				"additems": [],
+//				"price": 15,
+//				"qty": 1,
+//				"comment": ""
+//			}
+//		]
+//	}
+//]

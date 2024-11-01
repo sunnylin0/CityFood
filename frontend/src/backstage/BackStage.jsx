@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+﻿import { useState,useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import logo from '~/img/logo.svg';
 import { AdModal } from '@/modal/AdModal'
@@ -8,8 +8,20 @@ import { LoginModal } from '@/modal/LoginModal'
 import { BackHeader } from './BackHeader'
 import { CustomerOrders } from './CustomerOrders'
 import './BackStage.css'
+
 export const BackStage = (props) => {
-    const [switchOrders,setSwitchOrders] = useState('false')
+	let [countAllOrders, setAllOrders] = useState(0)
+	let [countDoneOrders, setDoneOrders] = useState(0)
+	let [countNotDoneOrders, setNotDoneOrders] = useState(0)
+	const [switchOrders, setSwitchOrders] = useState('false')
+
+	function init() {
+		getCustomerOrders()	//計算訂單數量
+		setAllOrders(() => theAllOrders.length)
+		setDoneOrders(() => theDoneOrders.length)
+		setNotDoneOrders(()=> theNotDoneOrders.length)
+	}
+	useEffect(init,[])
     return (
         <div >
             {/*<!-- 最上方標題導覽列 -->*/}
@@ -36,15 +48,15 @@ export const BackStage = (props) => {
                         <div className="d-flex justify-content-end align-items-center py-2">
                             <div className="border-left me-3 fw-bolder finger" onClick={() => setSwitchOrders('all')}>
                                 <span className="ms-2">全部訂單</span>
-                                <span className="*text-danger" id="allOrdersCount">8</span>
+								<span className="*text-danger" id="allOrdersCount">{countAllOrders}</span>
                             </div>
                             <div className="border-left me-3 fw-bolder finger" onClick={() => setSwitchOrders('true')}>
                                 <span className="ms-2">已完成</span>
-                                <span className="*text-danger" id="doneOrdersCount">5</span>
+								<span className="*text-danger" id="doneOrdersCount">{countDoneOrders}</span>
                             </div>
                             <div className="border-left me-3 fw-bolder finger" onClick={() => setSwitchOrders('false')}>
                                 <span className="ms-2">未完成</span>
-                                <span className="text-danger" id="notDoneOrdersCount">3</span>
+								<span className="text-danger" id="notDoneOrdersCount">{countNotDoneOrders}</span>
                             </div>
                         </div>
                     </div>

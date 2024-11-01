@@ -1,5 +1,8 @@
 ﻿import express from 'express';
 import sqlite3 from 'sqlite3';
+import cors from 'cors';
+import jwt from 'jsonwebtoken'
+import expressJWT from 'express-jwt'
 import randomstring from 'randomstring'
 import path from 'path';
 import { v4 as uuidvs } from 'uuid';
@@ -15,14 +18,15 @@ const DB_PATHFILE = '../database/myFood.sqlite'
 //await seedDatabase();
 //await cityFoodDB();
 
+const secretKey = 'CidyFood';
 
 const app = express();
 const port = 8080;
 const headers = {
-	"Content-Type": "application/json",
+	"Content-Type": "application/json;charset=utf-8",
 	"Access-Control-Allow-Origin": "*",
-	"Access-Control-Allow-Headers": "Content-Type",
-	"Access-Control-Allow-Methods": "OPTIONS,GET,POST"
+	//"Access-Control-Allow-Headers": "Content-Type",
+	"Access-Control-Allow-Methods": "OPTIONS,GET,POST, HEAD"
 }
 
 app.use(express.json({ limit: "50mb" }));
@@ -33,7 +37,15 @@ app.use(express.urlencoded({ limit: "50mb" }));
 //	next();
 //})
 
+app.use(cors());
 
+
+//app.all('*', function (req, res, next) {
+//	res.header('Access-Control-Allow-Origin', '*');
+//	res.header('Access-Control-Allow-Headers', 'Content-Type');
+//	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+//	next();
+//});
 app.get('/ss', async (req, res) => {
 	let db = new sqlite3.Database(DB_PATHFILE, async (err) => {
 		if (err) {
@@ -197,7 +209,7 @@ async function getMenuCatList() {
 						else {
 							console.log("go home 13");
 							let prolist = rows.map(async (ths, index) => {
-								let p = (await getMenuCatProductsList(ths.catId))								
+								let p = (await getMenuCatProductsList(ths.catId))
 								console.log("p = (await getMenuCatProductsList(ths.catId))")
 								console.log(p)
 								return ({ ...ths, products: p });
@@ -348,7 +360,7 @@ app.get('/getOrder', async (req, res) => {
 	res.send(idList);
 });
 
-async function getOrderList() {
+async function getOrderList(userId) {
 	const promise = new Promise((resolve, reject) => {
 		console.log("getOrderList 7");
 		const db = new sqlite3.Database(DB_PATHFILE, async (err) => {
@@ -359,15 +371,28 @@ async function getOrderList() {
 				try {
 					console.log("down 3");
 					//					const sql = `SELECT * FROM 'order' ;`;
-					const sql = `SELECT 'order'.orderId, 'order'.userId, 'order'.userName, users.phone, 'order'.remark, 'order'.dateTime, 'order'.totalPrice, 'order'.takeAway, 'order'.isDone, detail.detailId
-FROM 'users' INNER JOIN ('order' INNER JOIN 'detail' ON 'order'.orderId = detail.orderId) ON users.userId = 'order'.userId;`
-					db.all(sql, [], (err, rows) => {
+					let sql = ""
+					let arrWhere = []
+					if (userId) {
+						console.log("ok")
+						console.log(userId)
+						sql = `SELECT * FROM 'order' WHERE  'order'.userId =?;`
+						arrWhere = [userId]
+					} else {
+						console.log(" no")
+						console.log(userId)
+						sql = `SELECT * FROM 'order'`
+						arrWhere = []
+					}
+					db.all(sql, [userId], (err, rows) => {
 						if (err) {
 							console.log("err go home 19");
 							reject(false);
 						}
 						else {
 							console.log("go home 13");
+							console.log(rows);
+
 							let prolist = rows.map(async (ths, index) => {
 								let p = (await getOrderDetailList(ths.orderId))
 								//.map(its => its.subCatId)
@@ -482,7 +507,24 @@ async function getOrderDetailSubjoinList(detailId) {
 	return promise;
 }
 
+app.get('/orders', async (req, res) => {
+	res.set(headers);
+	let idList
+	if (req.query.userId)
+		idList = await getOrderList(req.query.userId);
+	else
+		idList = await getOrderList(-1);
+	console.log('orde req.query')
+	console.log(req.query)
+	console.log(idList)
+	if (idList.length >= 1) {
+		res.send(idList);
+	} else {
+		res.status(404).json({ msg: "無資料..." });
+		return;
+	}
 
+});
 
 
 
@@ -496,19 +538,12 @@ FROM 'users' INNER JOIN ('order' INNER JOIN 'detail' ON 'order'.orderId = detail
 				FROM [order] INNER JOIN detail ON [order].orderId = detail.orderId
 				WHERE detail.orderId = ?;`;
 
-	//const detailList = new Promise((resolve, reject) => {
 	let prolist = orderList.map(async (ths, index) => {
 		console.log("ddd")
 		return (await getTableListTest(detailSQL, [ths.orderId]))
 
-		//console.log(ddd)
-		//return ddd;
-		//	return ({ ...ths, detail: p });
 
 	})
-	//Promise.all(prolist)
-	//	.then(vales => resolve(vales))
-	//	.catch(err => reject(err))	
 
 	console.log("prolist" + prolist)
 	console.log(prolist)
@@ -570,6 +605,37 @@ async function getTableList(sql, arrayWhereId = []) {
 	})
 	return promise;
 }
+
+
+
+
+app.put('/orders', express.json({ type: '*/*' }), (req, res) => {
+	res.set(headers);
+	console.log('orders')
+	console.log(req.header('Authorization'))
+	console.log(req.body)
+	//console.log(req.body)
+	//res.json(req.body);
+	const auth = req.header('Authorization')
+	if (typeof auth === "undefined") {
+		res.status(401).send({ error: 'Please authenticate.' })
+		return
+	}
+	let token = auth.replace('Bearer ', '')
+	try {
+		const decoded = jwt.verify(token, secretKey)
+		console.log('decoded! = ')
+		console.log(decoded)
+		if (decoded.userId >= 1) {
+			console.log('Welcome!')
+			//writeOrder(req.body)
+			res.status(200).send({ msg: 'ok' })
+		}
+	} catch {
+		res.status(401).send({ error: 'Please authenticate.' })
+	}
+
+});
 
 
 
@@ -721,32 +787,25 @@ app.get('/api/user', (req, res) => {
 
 });
 
-app.post('/mypost', express.json({ type: '*/*' }), (req, res) => {
-	// echo json
-	res.json(req.body);
-});
-
 app.post('/login2', express.json({ type: '*/*' }), (req, res) => {
 	// echo json
 	let data = req.body
 	console.log(req.body)
-	let mess = `E-Mail: ${data.email }   password:${data.password}`
+	let mess = `E-Mail: ${data.email}   password:${data.password}`
 	res.json(mess);
 });
 
-app.post('/login', express.json({ type: '*/*' }), async (req, res) => {
+app.get('/login', express.json({ type: '*/*' }), async (req, res) => {
 	res.set(headers);
 	let data = req.body
 	console.log(req.body)
 
 	let idList = await getUserList(data?.email, data?.password);
-	
+
 	res.send(idList);
-
-
 });
 
-async function getUserList(_email,_password) {
+async function getUserList(_email, _password) {
 	const promise = new Promise((resolve, reject) => {
 		console.log("getUserList 45");
 		const db = new sqlite3.Database(DB_PATHFILE, async (err) => {
@@ -780,17 +839,31 @@ async function getUserList(_email,_password) {
 
 app.post('/loginTO', express.json({ type: '*/*' }), async (req, res) => {
 	res.set(headers);
-	let data = req.body
+	console.log("loginTO_backend")
 	console.log(req.body)
 
-	let idList = await getUserToList(data?.email, data?.password);
 
-	res.send(idList);
+	try {
+		const { useremail, password } = req.body;
 
+		let user = await getUser(useremail, password);
+		if (!user) {
+			res.status(404).json({ msg: "帳號密碼輸入錯誤" });
+			return;
+		}
+
+		const token = jwt.sign(user, secretKey);
+		res.status(200).json({ user: user, accessToken: token });
+		return;
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ msg: "err" });
+		return;
+	}
 
 });
 
-async function getUserToList(_email, _password) {
+async function getUser(_email, _password) {
 	const promise = new Promise((resolve, reject) => {
 		console.log("getUserList 45");
 		const db = new sqlite3.Database(DB_PATHFILE, async (err) => {
@@ -802,9 +875,9 @@ async function getUserToList(_email, _password) {
 					console.log(_email);
 					console.log("_password");
 					console.log(_password);
-					const sql = `SELECT * FROM 'users'
+					const sql = `SELECT userId,userName,phone,email,role FROM 'users'
 						WHERE email=? and password =?;`
-					db.all(sql, [_email, _password], (err, rows) => {
+					db.get(sql, [_email, _password], (err, rows) => {
 						if (err) {
 							console.log("err go home 19");
 							reject(false);
@@ -824,4 +897,130 @@ async function getUserToList(_email, _password) {
 	});
 	return promise;
 }
+
+
+app.post('/mypost', express.json({ type: '*/*' }), (req, res) => {
+	res.set(headers);
+	console.log('mypost')
+	console.log(req.header('Authorization'))
+	console.log(req.body)
+	console.log(req.body.details[0].subjoinItems)
+	//res.json(req.body);
+	const auth = req.header('Authorization')
+	if (typeof auth === "undefined") {
+		res.status(401).send({ error: 'Please authenticate.' })
+		return
+	}
+	let token = auth.replace('Bearer ', '')
+	try {
+		const decoded = jwt.verify(token, secretKey)
+		console.log('decoded! = ')
+		console.log(decoded)
+		if (decoded.userId >= 1) {
+			console.log('Welcome!')
+			writeOrder(req.body)
+			res.status(200).send({ msg: 'ok' })
+		}
+	} catch {
+		res.status(401).send({ error: 'Please authenticate.' })
+	}
+
+});
+
+
+async function writeOrder(orderObj) {
+	const promise = new Promise((resolve, reject) => {
+		const db = new sqlite3.Database(DB_PATHFILE, async (err) => {
+			if (err) {
+				console.error(err);
+			} else {
+				try {
+					console.log('insertOrder(db, orderObj)')
+					await insertOrder(db, orderObj);
+					console.log('insterDetails(db, orderObj.details)')
+					await insterDetails(db, orderObj.orderId, orderObj.details)
+					resolve(true);
+				} catch (err) {
+					console.error(err);
+					reject(false);
+				}
+			}
+		});
+	});
+	return promise;
+}
+async function insertOrder(db, orderObj) {
+	const { orderId, userId, userName, phone, totalPrice, dateTime, takeAway, isDone, remark } = orderObj;
+	console.log(orderObj)
+	const promise = new Promise((resolve, reject) => {
+		console.log('insertOrder 926')
+		db.run("INSERT INTO 'order' (orderId, userId, userName,  totalPrice, dateTime, takeAway, isDone, remark) VALUES(?, ?, ?, ?, ?, ?, ?, ?);"
+			, [orderId, userId, userName, totalPrice, dateTime, takeAway, isDone, remark], (err) => {
+				//db.run("INSERT INTO `users` ( `userName`,`password`,`email`,`role`) VALUES(?, ?, ?);"
+				//	, ['大神', '0000', 'god@gmail.com', 'admin'], (err) => {
+
+
+				if (err) {
+					console.log('insertOrder err')
+					console.error(err);
+					reject();
+				} else
+					console.log('insertOrder ok')
+				resolve();
+			});
+	});
+	return promise;
+}
+
+async function insterDetails(db, orderId, detailObjs) {
+	db.serialize(() => { // 將db操作指令包在serialize中，可確保執行順序
+		let promise = detailObjs.forEach((detObj) => new Promise((resolve, reject) => {
+			let { menuId, menuName, price, subPrice, qty, remark, subjoinItems } = detObj
+			db.run("INSERT INTO 'detail'(orderId, menuId, menuName, price, subPrice, qty, remark) VALUES(?, ?, ?, ?, ?, ?, ?);"
+				, [orderId, menuId, menuName, price, subPrice, qty, remark], (err) => {
+					if (err) {
+						console.error(err);
+						reject();
+					} else
+						resolve();
+				});
+			let detailId
+			db.get("select * from detail where orderId=? and menuId=?", [orderId, menuId], (err, row) => {
+				if (err) {
+					console.error(err);
+				} else {
+					console.log(`select detailId from detail where orderId=${orderId} and menuId=${menuId}`)
+					console.log(row)
+					detailId = row.detailId
+				}
+			})
+
+
+			//const stmt = db.prepare("INSERT INTO 'detailSubjoin'(detailId, subId) VALUES(?, ?);");
+			//subjoinItems.forEach(function (ths) {
+			//	stmt.run(parseInt(detailId), parseInt(ths));
+			//	console.log('this.lastId=');
+			//	console.log(stmt.lastId);
+			//})
+
+			//stmt.finalize();  //銷毀 Statement 並釋放與之相關聯的任何資源
+			//console.log('this.lastId  for ok');
+		}))
+		return promise;
+	})
+}
+
+
+//db.serialize(() => { // 將db操作指令包在serialize中，可確保執行順序
+//	db.run("CREATE TABLE lorem (info TEXT)");
+//	const stmt = db.prepare("INSERT INTO lorem VALUES (?)");
+//	for (let i = 0; i < 10; i++) {
+//		stmt.run("Ipsum " + i);
+//	}
+//	stmt.finalize();  //銷毀 Statement 並釋放與之相關聯的任何資源
+//	db.each("SELECT rowid AS id, info FROM lorem", (err, row) => {
+//		console.log(row.id + ": " + row.info);
+//	});
+//});
+//db.close();
 
