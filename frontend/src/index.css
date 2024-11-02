@@ -54,7 +54,7 @@ html, body {
 	background-color: var(--color-secondary,0.5);
 	/* background-image:url("/img/PC/wood1.jpg"); */
 	width: 100%;
-	/* height: 72px; */
+	/*height: 72px;*/
 	z-index: 100;
 	font-size: 20px;
 	color: inherit; /* 保持文字顏色 */
@@ -81,7 +81,7 @@ html, body {
 /*#region  ---------- 標題bar ----------*/
 
 .logo {
-	width: 280px;
+	width: 250px;
 }
 
 a.grayLink {
@@ -153,7 +153,7 @@ ul.tagList {
 	box-sizing: border-box;
 	gap: 8px;
 	width: 100%;
-	background: var(--color-white);
+	background-color: #f5f1df80;
 	border: 2px solid var(--color-secondary);
 	box-shadow: 0 4px 4px rgba(0,0,0,0.2);
 	border-radius: 8px;
@@ -376,7 +376,7 @@ ul.tagList {
 /*#region ---------- NAN ----------*/
 /*#endregion NAN*/
 .announce {
-	background-image: url(./Img/logo.png);
+	background-image: url(./Img/logoB.png);
 }
 /* backstage */
 
@@ -438,12 +438,13 @@ ul.tagList {
 	.table-scroll thead {
 		position: sticky;
 		top: 0;
-		background-color: #ffffff;
+		background-color: #fff0fff0;
 	}
 
 	.table-scroll tbody tr {
 		vertical-align: middle;
-		border-bottom: 1px solid #ddd;
+		border-bottom: 2px solid #ddd;
+		background-color: #ffffff60;
 	}
 
 /*#endregion Table設定*/
@@ -486,3 +487,8 @@ ul.tagList {
 	color: var(--color-white);
 }
 /*#endregion 產品編輯Modal productEditModal*/
+
+/*RevenueAnalysis*/
+#chart1, #chart2, #chart3 {
+	background-color: #ffffff60;
+}

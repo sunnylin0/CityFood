@@ -1,6 +1,6 @@
 ﻿import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import logo from '~/img/logo.svg';
+import logo from '~/img/logoB.png';
 import { AdModal } from '@/modal/AdModal'
 import { GuideModal } from '@/modal/GuideModal'
 import { UserOrdersModal } from '@/modal/UserOrdersModal'
@@ -57,7 +57,7 @@ export const Header = () => {
 
             <nav className="navbar navbar-expand-lg navbar-light *bg-c-secondary">
                 <div className="container *container-fluid">
-                    <span className="navbar-brand m-0" id="logo">
+					<span className="btn navbar-brand m-0" id="logo" onClick={() => uLink('/order')}>
                         <img className="logo" src={logo} alt="" />
                     </span>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
@@ -97,42 +97,3 @@ const HeadeLink = (props) =>
         <NavLink className="nav-link finger" {...props}>{props.title}</NavLink>
     </li>
 
-
-
-////渲染NAV清單
-//function renderNavList() {
-//	let isLogin = getDataFromLocalStorage('_token') ? true : false;
-//	let isAdmin = getDataFromLocalStorage('_user') ? getDataFromLocalStorage('_user').role == 'admin' : false;
-//	let userNameContent = "";
-//	let loginoutContent = `<span class="nav-link finger" href="" onclick="showLoginModal('login')">登入/註冊</span>`;
-//	if (isLogin) {
-//		let helloStr = getDataFromLocalStorage('_user').role == 'insider' ? '桌號 ' : '早安!';
-//		userNameContent = `
-//        <li class="nav-item" id="navLoginArea">
-//            <span class="nav-link" href="" id="">${helloStr}  <b>${getDataFromLocalStorage('_user').name}</b></span>
-//        </li>
-//        ` ;
-//		loginoutContent = `<span class="nav-link finger" href="" onclick=
-//        "logout()">登出</span>`
-//	}
-
-//	let content = `
-//    ${userNameContent}
-//    <li class="nav-item">
-//        <span class="nav-link finger" onclick="showAdModal()">活動快訊</span>
-//    </li>
-//    <li class="nav-item">
-//        <span class="nav-link finger" onclick="showGuideModal()">功能介紹</span>
-//    </li>
-//    <li class="nav-item">
-//        ${isLogin ? '<span class="nav-link finger" onclick="showUserOrderModal()">訂單查詢</span>' : ''}
-//    </li>
-//    <li class="nav-item">
-//        ${isAdmin ? '<span class="nav-link finger" onclick="goToBackstage()">切換至後台</span>' : ''}
-//    </li>
-//    <li class="nav-item" id="">
-//        ${loginoutContent}
-//    </li>
-//    `;
-//	$("#navList").html(content);
-//}

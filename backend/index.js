@@ -1133,3 +1133,82 @@ async function putProducts(menuId, menuObj) {
 	return promise;
 }
 
+
+
+
+app.post('/detailAnalysis/:catId', express.json({ type: '*/*' }),async (req, res) => {
+	res.set(headers);
+	console.log('mypost')
+	console.log(req.header('Authorization'))
+	console.log(req.body)
+	console.log(req.params.catId)
+	const auth = req.header('Authorization')
+	if (typeof auth === "undefined") {
+		res.status(401).send({ error: 'Please authenticate.' })
+		return
+	}
+	let token = auth.replace('Bearer ', '')
+
+	console.log(token)
+	try {
+		const decoded = jwt.verify(token, secretKey)
+		console.log('decoded! = ')
+		console.log(decoded)
+		if (decoded.userId >= 1) {
+			console.log('Welcome!')
+			let data = await getDetailAndCat(req.params.catId)
+			console.log('data.length')
+			console.log(data.length)
+			res.status(200).send(data)
+		}
+	} catch {
+		res.status(401).send({ error: 'Please authenticate.' })
+	}
+
+});
+
+async function getDetailAndCat(catId) {
+	const promise = new Promise((resolve, reject) => {
+		const db = new sqlite3.Database(DB_PATHFILE, async (err) => {
+			if (err) {
+				console.error(err);
+			} else {
+				try {
+					let whereSel=[]
+					let	sql = `SELECT detail.*, category.catId, category.catName
+							FROM (category INNER JOIN menu ON category.catId = menu.catId)
+							INNER JOIN detail ON menu.menuId = detail.menuId`
+					if (catId = 'ALL') {
+						sql += ';'
+						whereSel=[]
+					} else {
+						sql += `WHERE category.catId=?;`;
+						whereSel = [catId]
+					}
+							
+					console.log("getDetailAndCat 2");
+					db.all(sql, [], (err, rows) => {
+						console.log("getDetailAndCat 25");
+						if (err) {
+							console.log("error");
+							console.log(err);
+							reject(false);
+						}
+						else {
+							console.log(`getDetailAndCat '${catId}';`)
+							console.log(rows);
+							console.log('rows.length')
+							console.log(rows.length)
+							resolve(rows);
+						}
+					})
+				} catch (err) {
+					console.log("very error");
+					console.error(err);
+					reject(false);
+				}
+			}
+		});
+	});
+	return promise;
+}

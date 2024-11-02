@@ -1,6 +1,5 @@
 ﻿import { useState,useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import logo from '~/img/logo.svg';
 import { AdModal } from '@/modal/AdModal'
 import { GuideModal } from '@/modal/GuideModal'
 import { UserOrdersModal } from '@/modal/UserOrdersModal'

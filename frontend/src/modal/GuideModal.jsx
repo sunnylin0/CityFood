@@ -1,5 +1,77 @@
 ﻿import a3qrcode from '~/img/PC/A3-qrcode.png'
 export const GuideModal = ({ onClose }) => {
+
+	function login(useremail, password) {
+		console.log(`${urlDomain}/loginTO/`)
+		//axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+		//const response = wait axios({
+		//	url: "http://localhost:3000/api/auth"
+		//	method: 'POST',
+		//	data: {
+		//		使用者名稱: 'user',
+		//		密碼: 'pass123'
+		//	},
+		//});
+
+		let config = {
+			headers: {
+				//"Cache-Control": "no-cache",
+				"Content-Type": "application/json;charset=utf-8",
+				"Access-Control-Allow-Origin": "*",
+				//	"Access-Control-Allow-Headers": "Content-Type",
+			},
+		}
+		//axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+		//axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.post(`${urlDomain}/loginTO/`, { useremail, password }, config)
+			.then(function (response) {
+				//gtag("event", "login", {
+				//	method: "login:" + `(${email})(${response.data.user.name})`
+				//});
+				console.log("response.data")
+				console.log(response.data)
+				saveDataToLocalStorage('_token', response.data.accessToken);
+				saveDataToLocalStorage('_user', response.data.user);
+				saveDataToLocalStorage('_expire', { time: new Date().getTime(), expire: expireMins * 60 * 1000 });
+				chkTimer();
+				if (response.data.user.role == 'admin') {
+					deleteDataFromLocalStorage('returnModal');
+					//window.location.href = '/backstage';
+					navigate('/backstage')
+					onClose()
+					return;
+				}
+
+				//if (//response.data.user.role == 'insider' ||
+				//	response.data.user.role == 'customer') {
+				//	navigate('/order')
+				//	onClose()
+				//	return;
+				//}
+
+				//$('#loginModal').modal('hide');
+				//renderNavList();
+				//switchModal();
+				if (response.data.user.role == 'insider') {
+					sweetSmallSuccess(`桌號 ${response.data.user.userName}，歡迎光臨`);
+				} else {
+					sweetSmallSuccess(`早安😀 ${response.data.user.userName}，登入成功`);
+				}
+
+				//navigate('/order')
+				onClose()
+			}).catch(function (error) {
+				console.log("catch(function (error)")
+				sweetError('登入失敗', '帳號或密碼錯誤');
+			});
+	}
+
+	function btnLogin() {
+		login('A3@store.com', '0000');
+	}
+	
+
+
     /*<!--導覽Modal -->*/
     //<div className="modal fade show" id="adModal" tabIndex="-1" aria-modal="true" role="dialog" style={{ display: "block" }} >
     //    <div className="modal-dialog modal-dialog-centered modal-xl">
@@ -48,10 +120,10 @@ export const GuideModal = ({ onClose }) => {
                                     </div>
                                 </div>
                                 <div className="tab-pane fade" id="guideTable" role="tabpanel">
-                                    <div className="d-flex flex-column justify-content-center align-items-center pt-4">
+									<div className="btn d-flex flex-column justify-content-center align-items-center pt-4" onClick={btnLogin }>
                                         <div className="text-center">請掃描QR Code後進行點餐</div>
                                         <div className="mt-3" id="qrCode">
-                                            <img src={a3qrcode} alt="" />                                       </div>
+                                            <img src={a3qrcode} alt="https://coldingpotato.github.io/onlineOrder/redirect.html?insider=A3" />                                       </div>
                                     </div>
                                 </div>
                                 <div className="tab-pane fade" id="guideBack" role="tabpanel">

@@ -1,7 +1,7 @@
 ﻿import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { NavLink, useNavigate } from 'react-router-dom'
-import logo from '~/img/logo.svg';
+import logo from '~/img/logoB.png';
 import { AdModal } from '@/modal/AdModal'
 import { GuideModal } from '@/modal/GuideModal'
 import { UserOrdersModal } from '@/modal/UserOrdersModal'
@@ -52,7 +52,7 @@ export const BackHeader = () => {
 
             <nav className="navbar navbar-expand-lg navbar-light *bg-c-secondary">
                 <div className="container *container-fluid">
-                    <span className="navbar-brand m-0" id="logo">
+					<span className="btn navbar-brand m-0" id="logo" onClick={() => uLink('/order') }>
                         <img className="logo" src={logo} alt="" />
                     </span>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
@@ -64,7 +64,7 @@ export const BackHeader = () => {
 							{userNameContent}
                             <HeadeLink to="/backstage" title='出餐管理' />
                             <HeadeLink to="/productmanage" title='菜單管理' />
-                          {/*  <HeadeLink to="/revenueanalysis" title='營收分析' />*/}
+                            <HeadeLink to="/revenueanalysis" title='營收分析'/>
                             <HeadeLink to="/order" title='切換至前台' />
 							<HeadeItem onClick={hanledLogout} title='登出' />
                         </ul>

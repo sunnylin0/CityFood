@@ -1,0 +1,17 @@
+https://www.drawdb.app/editor
+
+
+
+https://www.drawdb.app/editor
+資料庫關連圖
+
+
+
+https://www.tsnien.idv.tw/DataBase_WebBook/chap10/10-7%20%E9%82%8F%E8%BC%AF%E8%A8%AD%E8%A8%88%E6%BC%94%E7%B7%B4.html
+資料庫系統概論：第 十章 資料庫邏輯設計   
+
+10-7 邏輯設計演練
+內容：
+10-7-1 範例研討：商品管理系統
+10-7-2 自我挑戰：改善 Trader_db 系統
+10-7-3 自我挑戰：人事管理系統
