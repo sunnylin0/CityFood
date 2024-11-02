@@ -5,12 +5,15 @@ import { createPortal } from 'react-dom'
 import { useAtom } from 'jotai'
 import { getCarts, saveDataToLocalStorage } from '../store/utils'
 import { ProductModal } from './ProductModal'
-import { editProductModal, editProductObj, cardTotalPrice,calCartTotalPrice } from '../store/state'
+import { editProductModal, editProductObj, cardTotalPrice, calCartTotalPrice } from '../store/state'
 
 
 //附加選項id轉name
 function subjoinIdToName(subjoinId) {
-	let name = Object.values(theFoodSubjoins).reduce((a, b) => [...a, ...b.items], []).find(item => item.id == subjoinId)?.name
+	let name = Object.values(theFoodSubjoins).reduce(
+		(a, b) => [...a, ...b.items], [])
+		.find(item =>
+			item.subId == subjoinId)?.subName
 	return name ? name : '';
 }
 
@@ -27,19 +30,18 @@ function countCartTotalPrice() {
 
 
 let CartFoodCard = ({ index, productObj, deleteCartProduct, editCartProduct }) => {
-	const { id, name, price, qty, comment, subjoinItems, total, tokenId} = productObj;
-
+	const { menuId, menuName, price, qty, remark, subjoinItems, total, tokenId } = productObj;
 	return (
-		<div className="cartfoodCard d-block mb-2" data-id={id} data-price={price}>
+		<div className="cartfoodCard d-block mb-2" data-id={menuId} data-price={price}>
 			<div className="d-flex justify-content-between mb-2">
-				<span className="h6 fw-bolder">{name}</span>
+				<span className="h6 fw-bolder">{menuName}</span>
 				<div className="">
 					<button className="btn rounded-circle btn-sm cartEdit" onClick={() => editCartProduct(tokenId)}><i className="fa-solid fa-pencil"></i></button>
 					<button className="btn rounded-circle btn-sm cartDelete" onClick={() => deleteCartProduct(tokenId)}><i className="fa-solid fa-trash-can"></i></button>
 				</div>
 			</div>
 
-			<span className="h6 fw-light d-block">{comment ? (comment) : ""}</span>
+			<span className="h6 fw-light d-block">{remark ? (remark) : ""}</span>
 			<span className="h6 fw-light d-block">{subjoinItems.map(x => subjoinIdToName(x)).join("/")}</span>
 			<div className="d-flex justify-content-between">
 
@@ -64,9 +66,14 @@ export let CartModal = ({ onClose }) => {
 		remark: ""		// 訂單備註
 	})
 
+	let handleInputChange = (e) => {
+		setCartState({
+			...cartState, [e.target.name]: e.target.value
+		})
+	}
 	//刪除購物車商品
 	let deleteCartProduct = (getTokenId) => {
-		cartList=cartList.filter((ths)=> {
+		cartList = cartList.filter((ths) => {
 			return ths.tokenId != getTokenId;
 		});
 		setCartList(() => [...cartList]);
@@ -86,26 +93,60 @@ export let CartModal = ({ onClose }) => {
 		});
 
 		setEditProductObj(getCartObj);
-		onClose();
+		//onClose();
 		setShowEditProductModal(() => true)
-
-		//calCartTotalPrice()
-		//$('#tempProductAmount').text(productObj.qty);
-		//$('#tempProductComment').val(productObj.comment);
-		//$('#tempProductTotal').text(`${productObj.price * productObj.qty}`);
-		//$('#btnAddToCart').attr('onclick', `updateToCart(${productIndex})`);
-		//$('#productModal').modal('show');
-		//productObj.additems.forEach(additem => {
-		//	$(`#foodSubjoinOptions input[value=${additem}]`).prop('checked', true);
-		//})
 	}
-
-	let handleInputChange = (e) => {
-		setCartState({
-			...cartState, [e.target.name]: e.target.value
+	//送出購物車訂單
+	function submitCart() {
+		const carts = getCarts();
+		if (carts.length == 0) {
+			sweetError('購物車沒有商品', '請先加入商品');
+			
+			return;
+		} else if (getDataFromLocalStorage('_token') == null) {
+			saveDataToLocalStorage('returnModal', 'cartModal');
+			//$("#cartModal").modal('hide');
+			//showLoginModal()
+			alert('請登入')
+			return;
+		}
+		const order = {
+			orderId: "OD" + (+new Date()).toString(),
+			userId: getDataFromLocalStorage('_user').userId,
+			userName: getDataFromLocalStorage('_user').userName,
+			phone: getDataFromLocalStorage('_user').phone,
+			remark: cartState.remark,
+			totalPrice: totalPrice,
+			dateTime: getTimeNow(),
+			takeWay: cartState?.pickmeals == 'out' ? 1 : 0,
+			isDone: false,
+			details: carts,
+		}
+		postCartOrder(order);
+	}
+	//post cart order with token
+	function postCartOrder(order) {
+		const token = getDataFromLocalStorage('_token');
+		return new Promise((resolve, reject) => {
+			axios.post(`${urlDomain}/mypost`, order, {
+				headers: {
+					Authorization: `Bearer ${token}`
+				}
+			}).then(function (response) {
+				//gaPurchase(order);
+				sweetSuccess('訂單送出成功', '將盡快為您備餐', 2500);				
+				//switchModal();
+				deleteDataFromLocalStorage('cart');
+				//updateFooterTotalPrice();
+				resolve = { msg: 'ok' }
+				onClose()
+			}).catch(function (error) {
+				sweetError('訂單送出失敗', '請重新嘗試');				
+				console.log('error', error);
+				resolve = { msg: error }
+			});
 		})
 	}
-
 	useEffect(() => {
 		setShowModal(true)
 		calCartTotalPrice();
@@ -128,7 +169,7 @@ export let CartModal = ({ onClose }) => {
 									(cartList.length > 0) ?
 										cartList.map((productObj, index) => {
 											//const { id, name, price, qty, comment, additems } = productObj;
-											return <CartFoodCard key={index} 
+											return <CartFoodCard key={index}
 												productObj={productObj}
 												deleteCartProduct={deleteCartProduct}
 												editCartProduct={editCartProduct}

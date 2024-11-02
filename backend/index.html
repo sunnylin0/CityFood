@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<style>
+		button {
+			line-height: 30px;
+		}
+
+		#frmUrl {
+			width: 100%;
+			min-height: 100vh;
+			height: 100%;
+		}
+
+		#txtUrlBox {
+			width: 15%;
+			line-height: 30px;
+			margin: 25px 25px 25px 0;
+		}
+	</style>
+	<script type="text/javascript">
+		var frampage
+		window.addEventListener("load", (event) => {
+			console.log("load ")
+			frampage = document.getElementById('frmUrl')
+		});
+		function loadUrlToIframe() {
+			var url = document.getElementById("txtUrlBox").value;
+			frampage.src = url;
+		}
+		function gourl(str) {
+			console.log()
+			frampage.src = str;
+			txtUrlBox.value = frampage.src;
+			console.log(frampage.src)
+		}
+		function gourl(str) {
+			console.log()
+			frampage.src = str;
+			txtUrlBox.value = frampage.src;
+			console.log(frampage.src)
+		}
+
+		function loginTo() {
+			frmEmail.action = "/loginTO/";
+			txtUrlBox.value = frampage.src;
+
+			console.log("loginTo_" + frampage.src )
+			onSubmit.click();
+		}
+
+	</script>
+</head>
+
+<body>
+	<div>
+		<div class="head">
+			<input id="txtUrlBox" type="text" />
+			<button id="btnLoadUrl" onclick="loadUrlToIframe()">load url</button>
+			<button onclick="gourl('/getMenu/')">取得菜單資料 <br />the Menu</button>
+			<button onclick="gourl('/getCategory/')">取得菜單分類 <br />the Category</button>
+			<button onclick="gourl('/subjoin/')">取得食品附加項目 <br /> subjoin </button>
+			<button onclick="gourl('/getOrder/')">取得訂單資料 <br /> order </button>
+			<button onclick="gourl('/login/')">取得使用者資料 <br /> login </button>
+			
+			<button onclick="gourl('/mdb2/')">mdb 2</button>
+			<button onclick="gourl('/mdb3/')">mdb 3</button>
+			<button onclick="gourl('/sql1/')">sql 1</button>
+			<button onclick="gourl('/tab1/')">tab 1</button>
+			<button onclick="gourl('/api/user')">api/user</button>
+			<br />
+			<button onclick="gourl('/ss/')">ss part1</button>
+			<button onclick="gourl('/ss2/')">ss2 part2</button>
+			<button onclick="gourl('/getOrder2/')">ss3   part3</button>
+			<br />
+			<form id="frmEmail" action="/login/" method="post" target="frmUrl">
+				<input type="text" id="userEmail" name="email" value="ming@gmail.com" />
+				<input type="text" id="userPass" name="password" value="0000" />
+				<input type="submit" value="good" id="onSubmit" />
+				<input type="button" value="login to" onclick="loginTo()" />
+			</form>
+
+			<button onclick="putJson()">put data json</button>
+
+		</div>
+		<div>
+			<iframe id="frmUrl" name="frmUrl"></iframe>
+		</div>
+	</div>
+
+</body>
+
+</html>

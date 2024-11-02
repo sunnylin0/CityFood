@@ -1,24 +1,32 @@
-﻿import { useState } from 'react'
+﻿import { useState, useEffect, useCallback} from 'react'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { Menu } from './Menu'
 import { TagList } from './TagList'
 import { PopupWindows } from './Popup'
+
+var isLoadReaw = false
 export const Order = () => {
 	/*    const [state, dispatch] = useStore();*/
-	const [selectName, setSelectName] = useState("全部")
+	const [selectID, setSelectID] = useState("tagALL")
 	const handleChangeMenu = () => {
-		let name = document.querySelector("input[name='分類標籤']:checked").value;
-		setSelectName(name);
+		let tag_id = document.querySelector("input[name='分類標籤']:checked").id;
+		setSelectID(tag_id);
 	}
 
+	const [, updateState] = useState();
+	const forceUpdate = useCallback(() => updateState({}), []);
+	function loadReaw() {
 
-	//const [show, setShow] = useState(false);
-
-	//const handleClose = () => setShow(false);
-	//const handleShow = () => setShow(true);
-
-
+		if (theMenu.length > 1 && isLoadReaw == true) {
+			isLoadReaw = false
+			forceUpdate();
+		} else if (theMenu.length == 0) {
+			isLoadReaw = true;
+			setTimeout(loadReaw, 1000)
+		}
+	}
+	useEffect(loadReaw, [])
 
 	return (
 		<div>
@@ -32,7 +40,7 @@ export const Order = () => {
 						<TagList onChange={handleChangeMenu} />
 					</div>
 				</div>
-				<Menu selectName={selectName} />
+				<Menu selectID={selectID.substring(3, 10)} />
 			</div>
 			<Footer />
 
