@@ -35,7 +35,7 @@ window.addEventListener("load", (event) => {
 
 
 //初始化
-async  function init() {
+async function init() {
 	//檢查網址參數
 	urlDomain = "http://" + window.location.hostname + ":8080";
 	const urlParams = new URLSearchParams(window.location.search);
@@ -56,14 +56,6 @@ async  function init() {
 
 	//theProducts = theMenu.reduce((a, b) => [...a, ...b.products], [])
 
-theMenu=
-[
-{	"id":"c01",	"name":"前菜",	"products":[
-{	"id":"p012",	"name":"布里起司塔佐蔓越莓醬",	"catId":"c01",	"img":"./Img/PC/aa1.jpg",	"comment":"蔓越莓醬佐特製布里起司",	"isSoldOut":false,	"price":180,	"subjoinIds":[	"AH01"	]	},
-{	"id":"p013",	"catId":"c01",	"name":"培根扇貝捲佐香醋蛋黃醬",	"price":200,	"comment":"高級培根+生食級干貝",	"img":"./Img/PC/aa9.jpg",	"subjoinIds":[	"AH01"	],	"isSoldOut":false	},
-{	"id":"p014",	"catId":"c01",	"name":"美味香辣惡魔蛋",	"price":130,	"comment":"放山雞蛋+特製芥末醬",	"img":"./Img/PC/aa4.jpg",	"subjoinIds":[	"AH01"	],	"isSoldOut":false	},
-{	"id":"p015",	"catId":"c01",	"name":"炙燒黑松露海膽",	"price":200,	"comment":"極致鮮美的海陸首選",	"img":"./Img/PC/aa2.jpg",	"subjoinIds":[	"AH01"	],	"isSoldOut":false	},
-{	"id":"p016",	"catId":"c01",	"name":"蜜餞山核桃蔓越莓山羊起司球",	"price":150,	"comment":"精選果乾堅果+爆漿山羊起司",	"img":"./Img/PC/aa5.jpg",	"subjoinIds":[	"AH01"	],	"isSoldOut":false	}	]	},
 
 	//renderNavList();
 	//renderQrCode();
@@ -83,17 +75,6 @@ function subjoinIdToName(subObject) {
 	return name ? name : '';
 }
 
-{	"id":"c05",	"name":"點心",	"products":[
-{	"id":"p051",	"name":"莓好焦糖鬆餅",	"catId":"c05",	"img":"./Img/PC/dd2.jpg",	"comment":"酸甜莓果襯托出鬆餅的美好",	"isSoldOut":false,	"price":180,	"subjoinIds":[	"AH01",	"AH04"	]	},
-{	"id":"p052",	"catId":"c05",	"name":"經典蜂蜜鬆餅",	"price":150,	"comment":"簡單又不會尷尬的甜香",	"img":"./Img/PC/dd5.jpg",	"subjoinIds":[],	"isSoldOut":false	},
-{	"id":"p053",	"catId":"c05",	"name":"蔓越莓一口酥",	"price":160,	"comment":"甜香酥脆一口一個",	"img":"./Img/PC/dd6.jpg",	"subjoinIds":[],	"isSoldOut":false	},
-{	"id":"p054",	"catId":"c05",	"name":"晴王葡萄澎派",	"price":220,	"comment":"滿滿麝香葡萄太過癮",	"img":"./Img/PC/dd7.jpg",	"subjoinIds":[],	"isSoldOut":false	},
-{	"id":"p055",	"catId":"c05",	"name":"栗拔山兮蛋糕",	"price":200,	"comment":"栗子泥加上好幾顆栗子的美好",	"img":"./Img/PC/dd8.jpg",	"subjoinIds":[],	"isSoldOut":false	}	]	},
-{	"id":"c06",	"name":"飲品",	"products":[
-{	"id":"p061",	"catId":"c06",	"name":"夢幻咖啡拿鐵",	"price":180,	"comment":"哥倫比單品深烘培日曬處理",	"img":"./Img/PC/latte3.jpg",	"subjoinIds":[	"AH02",	"AH03"	],	"isSoldOut":false	},
-{	"id":"p062",	"catId":"c06",	"name":"頂級抹茶拿鐵",	"price":180,	"comment":"宇治高級抹茶配上小農鮮乳",	"img":"./Img/PC/macha2.jpg",	"subjoinIds":[	"AH02",	"AH03"	],	"isSoldOut":false	},
-{	"id":"p063",	"catId":"c06",	"name":"熱帶蘭姆氣旋",	"price":180,	"comment":"加勒比熱帶風情",	"img":"./Img/PC/cock1.jpg",	"subjoinIds":[	"AH02",	"AH03"	],	"isSoldOut":false	},
-{	"id":"p064",	"catId":"c06",	"name":"綜合水果茶",	"price":180,	"comment":"新鮮酸甜好滋味",	"img":"./Img/PC/tea1.jpg",	"subjoinIds":[	"AH02",	"AH03"	],	"isSoldOut":false	}	]	}	]
 
 
 //#region ------------------------------ API ------------------------------
@@ -103,39 +84,13 @@ function getCustomerOrders() {
 		theNotDoneOrders = theAllOrders.filter(x => x.isDone == false);
 		theDoneOrders = theAllOrders.filter(x => x.isDone == true);
 	}
-            ]
-        },
-        {
-            "id": "AH03",
-            "name": "溫度",
-            "isMulti": false,
-            "items": [
-                {
-                    "id": "AD031",
-                    "name": "熱",
-                    "price": 0
-                },
-                {
-                    "id": "AD032",
-                    "name": "溫",
-                    "price": 0
-                },
-                {
-                    "id": "AD033",
-                    "name": "去冰",
-                    "price": 0
-                },
-                {
-                    "id": "AD034",
-                    "name": "冰",
-                    "price": 0
 }
 async function getCategory() {
 	console.log(`${urlDomain}/getCategory`)
 	return await axios.get(`${urlDomain}/getCategory`).then(function (response) {
 		console.log(`${urlDomain}/getCategory`)
 		theCategory = response.data;
-		
+
 	}).catch(function (error) {
 		console.log('error', error);
 	});
@@ -146,7 +101,7 @@ async function getMenu() {
 	return await axios.get(`${urlDomain}/getMenu`).then(function (response) {
 		console.log(`${urlDomain}/getMenu`)
 		theMenu = response.data;
-		
+
 		theProducts = theMenu.reduce((a, b) => [...a, ...b.products], [])
 		//renderMenu();
 	}).catch(function (error) {
@@ -186,14 +141,14 @@ function getUserOrdersxx() {
 	//axios.get(`${urlDomain}/600/orders?userId=${userId}`, config)
 	return new Promise((resolve, reject) => {
 		axios.get(`${urlDomain}/orders?userId=${userId}`, config)
-			.then( response=> {
+			.then(response => {
 				console.log('ok');
 				console.log('theUserOrders', response);
 				theUserOrders = response.data;
 				resolve = theUserOrders
 				//console.log('theUserOrders', theUserOrders);
 				//renderUserOrdersModal();
-			}).catch((error)=>{
+			}).catch((error) => {
 				console.log('error', error);
 				theUserOrders = [];
 				reject = theUserOrders

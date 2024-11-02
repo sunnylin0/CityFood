@@ -51,8 +51,8 @@ export const ProductManage = () => {
 			{/*<!-- 最上方標題導覽列 -->*/}
 			<BackHeader />
 			{/*<!-- 中間主要內容 -->*/}
-			<div className="main-content container">
-				<div className="page productManage" style={{ display: "block" }}>
+			<div className="main-content ">
+				<div className="page productManage container" style={{ display: "block" }}>
 					<div className="table-scroll h-100vh pb-5" id="productManage">
 						<table className="table">
 							<thead>

@@ -64,7 +64,7 @@ export const BackHeader = () => {
 							{userNameContent}
                             <HeadeLink to="/backstage" title='出餐管理' />
                             <HeadeLink to="/productmanage" title='菜單管理' />
-                            <HeadeLink to="/revenueanalysis" title='營收分析' />
+                          {/*  <HeadeLink to="/revenueanalysis" title='營收分析' />*/}
                             <HeadeLink to="/order" title='切換至前台' />
 							<HeadeItem onClick={hanledLogout} title='登出' />
                         </ul>

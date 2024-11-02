@@ -145,9 +145,9 @@ export const RevenueAnalysis = () => {
 			{/*<!-- 最上方標題導覽列 -->*/}
 			<BackHeader />
 			{/*<!-- 中間主要內容 -->*/}
-			<div className="main-content container">
+			<div className="main-content ">
 				{/*<!-- 營收分析 -->*/}
-				<div className="page revenueAnalysis" style={{ display: "block" }}>
+				<div className="page revenueAnalysis container" style={{ display: "block" }}>
 					<div id="revenueAnalysis">
 						<h4>單品銷售概況<select className="ms-2" id="selectCat">
 							{postSelectOptionList}

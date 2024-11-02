@@ -1,22 +1,22 @@
-# template-viteReact-express-sqlite3
-A starting template for using Vite ReactJs, NodeJs with express, and sqlite3.
+# CityFood
+幼幼點餐系統
 
-## Procedures:
+## 本地運行
 
-0. Prerequist: A relatively new version of Node and NPM
+### 使用 Node.js
 
-1. To install everything
-```console
-npm run initiate
-```
+##### 要求
+- [Node.js](https://nodejs.org/) v20.0 or higher.
 
-2. To start
-```console
-npm start
-```
+##### Dependencies
+運行 `npm install` 以載入 package.json 項目的所有相依性。
 
-3. Visit: http://localhost:3000
+##### 起動伺服器
+運行 `npm run start` 起動伺服器。導航至http://localhost:3000/.如果您更改任何來源文件，該應用程式將自動重新載入。
 
-## Recommended vscode extension:
+##### Build
+運行 `npm run build` 以建置專案。建置工件將儲存在該dist/目錄中。
 
-1. REST Client: Test it out in `root/backend/http_tests/health.rest` by clicking `Send Request` above line 1.
+
+## 特別感謝
+ 🙇 

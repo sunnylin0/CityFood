@@ -1,12 +1,8 @@
 ﻿import { useState, useEffect } from 'react'
 
-
-
-
 //渲染歷史訂單Modal //todo
 export function UserOrdersModal({ onClose }) {
 	let [userOrders, setUserOrders] = useState(theUserOrders)
-	
 	let contents = [];
 	let content
 	let [userOrdersPage, setUserOrdersPage] = useState()
@@ -65,7 +61,7 @@ export function UserOrdersModal({ onClose }) {
 	//渲染歷史訂單Modal //todo
 	function renderUserOrdersModal() {
 		if (theUserOrders.length > 0) {
-			setUserOrdersPage(() => theUserOrders.map((orderObj,index) => {
+			setUserOrdersPage(() => theUserOrders.map((orderObj, index) => {
 				//let { orderId, userId, userName, phone, comment, price, orderDate, isPaid, isDone, details } = orderObj;
 				let { orderId, userId, userName, phone, remark, totalPrice, dateTime, takeAway, isDone, details } = orderObj;
 				let cartfoodCard =
@@ -73,9 +69,9 @@ export function UserOrdersModal({ onClose }) {
 						className="cartfoodCard d-flex mb-2"
 						data-order-id={orderId}
 						data-bs-toggle="collapse"
-						data-bs-target={"#collapseOrder-"+orderId}
+						data-bs-target={"#collapseOrder-" + orderId}
 					>
-					
+
 						<div>
 							<div className="">
 								<span className="h6 fw-bolder">訂單日期</span>
@@ -91,27 +87,26 @@ export function UserOrdersModal({ onClose }) {
 							<span className="text-danger fw-bold ms-auto">${totalPrice}</span>
 						</div>
 					</div>
-                        <div className="collapse px-3 pt-0 pb-3" id="collapseOrder-OD1670063897679">
 
 
-				let detailContent = details.map((foodObj,index) => {
+				let detailContent = details.map((foodObj, index) => {
 					return (
 						<div key={index} className="cartfoodCard d-block mb-2" data-id={foodObj.orderId} data-price={foodObj.price}>
-						<span className="h6 fw-bolder text-start">{foodObj.menuName}</span>
-						<br />
-						<span className="fw-light">{foodObj.remark ? (foodObj.remark + " / ") : ''}</span>
-						<span className="fw-light">{foodObj.subItems.length > 0 ? foodObj.subItems.map(x => x.subName).join("/") : ''}</span>
-						<div className="d-flex justify-content-between">
-							<span className="fw-light">{foodObj.qty}份</span>
-							<div className="text-danger fw-bold">${foodObj.price * foodObj.qty}</div>
-						</div>
-					</div>)
+							<span className="h6 fw-bolder text-start">{foodObj.menuName}</span>
+							<br />
+							<span className="fw-light">{foodObj.remark ? (foodObj.remark + " / ") : ''}</span>
+							<span className="fw-light">{foodObj.subItems.length > 0 ? foodObj.subItems.map(x => x.subName).join("/") : ''}</span>
+							<div className="d-flex justify-content-between">
+								<span className="fw-light">{foodObj.qty}份</span>
+								<div className="text-danger fw-bold">${foodObj.price * foodObj.qty}</div>
+							</div>
+						</div>)
 				})
 
 				let content =
 					<div key={index} >
 						{cartfoodCard}
-						<div className="collapse px-3 pt-0 pb-3" id={"collapseOrder-"+orderId}>
+						<div className="collapse px-3 pt-0 pb-3" id={"collapseOrder-" + orderId}>
 							{detailContent}
 						</div>
 					</div>
@@ -136,62 +131,11 @@ export function UserOrdersModal({ onClose }) {
 					<div className="modal-body">
 						{userOrdersPage}
 					</div>
-                        </div></div>
 					<div className="modal-footer flex-column border-0"></div>
 				</div>
 			</div>
 		</div>
 		<div className="modal-backdrop fade show" onClick={onClose}></div>
 	</ >
-    //let contents = [];
-    //if (theUserOrders.length > 0) {
-    //    theUserOrders.forEach(orderObj => {
-    //        let { id, userId, name, phone, comment, price, orderDate, orderTime, isPaid, isDone, details } = orderObj;
-    //        let detailContent = details.map(foodObj => {
-    //            let str = `
-    //    <div className="cartfoodCard d-block mb-2" data-id="${foodObj.id}" data-price="${foodObj.price}">
-    //        <span className="h6 fw-bolder text-start">${foodObj.name}</span>
-    //        <br/>
-    //        <span className="fw-light">${foodObj.comment ? (foodObj.comment + " / ") : ''}</span>
-    //        <span className="fw-light">${foodObj.additems.length > 0 ? foodObj.additems.map(x => subjoinIdToName(x)).join("/") : ''}</span>
-    //        <div className="d-flex justify-content-between">
-    //            <span className="fw-light">${foodObj.qty}份</span>
-    //            <div className="text-danger fw-bold">$${foodObj.price * foodObj.qty}</div>
-    //        </div>
-    //    </div>`
-    //            return str;
-    //        })
-    //        let content = `
-    //<div
-    //    className="cartfoodCard d-flex mb-2"
-    //    data-order-id="${id}"
-    //    data-bs-toggle="collapse"
-    //    data-bs-target="#collapseOrder-${id}"
-    //>
-    //    <div>
-    //        <div className="">
-    //            <span className="h6 fw-bolder">訂單日期</span>
-    //            <span className="fw-light">${orderDate} ${orderTime}</span>
-    //        </div>
-    //        <div>
-    //            <span className="h6 fw-bolder">訂單編號</span>
-    //            <span className="fw-light">${id}</span>
-    //        </div>
-    //    </div>
-    //    <div className="d-flex flex-column ms-auto">
-    //        <span>${isDone ? '已完成' : '製作中'}</span>
-    //        <span className="text-danger fw-bold ms-auto">$${price}</span>
-    //    </div>
-    //</div>
-    //<div className="collapse px-3 pt-0 pb-3" id="collapseOrder-${id}">
-    //    ${detailContent.join("")}
-    //</div>`
-    //        contents.push(content);
-    //    })
-    //} else {
-    //    contents.push(`<div className="text-center">沒有訂單</div>`)
-    //}
-    //$("#userOrdersModal .modal-body").html(contents.join(""));
-    //$('#userOrdersModal').modal('show');
 }
 

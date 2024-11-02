@@ -33,9 +33,9 @@ export const BackStage = (props) => {
             {/*<!-- 最上方標題導覽列 -->*/}
             <BackHeader />
             {/*<!-- 中間主要內容 -->*/}
-            <div className="main-content container">
+            <div className="main-content ">
                 {/*<!-- 出餐管理 -->*/}
-                <div className="page customerOrders" style={{ display: 'block' }}>
+				<div className="page customerOrders container" style={{ display: 'block' }}>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3 pb-5" id="customerOrders">
 						<CustomerOrders status={switchOrders} setDoneOrders={setDoneOrders}/>
                     </div>

@@ -79,7 +79,7 @@ export const Header = () => {
 								<HeadeItem onClick={openAdmodal} title='活動快訊' />
 								<HeadeItem onClick={openGuideModal} title='功能介紹' />								
 								<HeadeItem onClick={openLoginModal} title='登入/註冊' />								
-                            <NavLink className="nav-link finger"  to="./backstage">後台</NavLink>
+                            {/*<NavLink className="nav-link finger"  to="./backstage">後台</NavLink>*/}
 							</ul>
 						</div>
 						}
