@@ -1,0 +1,26 @@
+.AppFocus {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+  border: none;
+}
+
+/* html,
+body {
+  height: 100%;
+} */
+
+/* html {
+  display: table;
+  margin: auto;
+}
+
+body {
+  display: table-cell;
+  vertical-align: middle;
+} */
