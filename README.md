@@ -17,6 +17,8 @@ npm start
 
 3. Visit: http://localhost:3000
 
+4. Backend: http://localhost:8080
+
 ## Recommended vscode extension:
 
 1. REST Client: Test it out in `root/backend/http_tests/health.rest` by clicking `Send Request` above line 1.

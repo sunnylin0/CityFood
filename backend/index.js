@@ -8,10 +8,6 @@ import path from 'path';
 import { v4 as uuidvs } from 'uuid';
 import seedDatabase from './seedDatabase.js';
 import cityFoodDB, { init_food } from './CityFoodDB.js';
-import {
-	mdbinit, mdb2, mdb3, mdb_quer,
-	mdb_sql1, mdb_table1
-} from './mdbtools.js';
 
 const __dirname = path.resolve();
 const DB_PATHFILE = '../database/myFood.sqlite'
