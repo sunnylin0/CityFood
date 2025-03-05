@@ -1,8 +1,10 @@
 
-//Åª¨úÁÊª«¨®¤º®e
+//è®€å–è³¼ç‰©è»Šå…§å®¹
 export function getCarts() {
-	const cart = JSON.parse(localStorage.getItem('cart')) || [];
-	return cart;
+	if(localStorage.getItem('cart'))
+		return JSON.parse(localStorage.getItem('cart'));
+	else
+		return []	
 }
 
 //save data in local storage
@@ -11,13 +13,16 @@ export function saveDataToLocalStorage(key, data) {
 }
 //get data from local storage
 export function getDataFromLocalStorage(key) {
-	return JSON.parse(localStorage.getItem(key));
+	if(localStorage.getItem(key))
+		return JSON.parse(localStorage.getItem(key));
+	else
+		return undefined
 }
 //delete data from local storage
 export function deleteDataFromLocalStorage(key) {
 	localStorage.removeItem(key);
 }
-// ¨ú±o·í«e®É¶¡(2022-01-01 00:00:00)
+// å–å¾—ç•¶å‰æ™‚é–“(2022-01-01 00:00:00)
 export function getTimeNow() {
 	let d = new Date();
 	const theTime = d.getFullYear() + "-" + (d.getMonth() + 1).AddZero() + "-" + d.getDate().AddZero() + " " + d.getHours().AddZero() + ":" + d.getMinutes().AddZero() + ":" + d.getSeconds().AddZero();

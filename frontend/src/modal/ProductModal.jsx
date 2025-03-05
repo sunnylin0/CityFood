@@ -319,8 +319,10 @@ function aass() {
 	}
 	//讀取購物車內容
 	function getCarts() {
-		const cart = JSON.parse(localStorage.getItem('cart')) || [];
-		return cart;
+		if(localStorage.getItem('cart'))
+			return JSON.parse(localStorage.getItem('cart'));
+		else
+			return []	
 	}
 	//調整商品數量
 	function adjAmount(price, method) {

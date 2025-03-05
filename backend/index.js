@@ -6,7 +6,7 @@ import expressJWT from 'express-jwt'
 import randomstring from 'randomstring'
 import path from 'path';
 import { v4 as uuidvs } from 'uuid';
-import seedDatabase from './seedDatabase.js';
+//import seedDatabase from './seedDatabase.js';
 import cityFoodDB, { init_food } from './CityFoodDB.js';
 
 const __dirname = path.resolve();
@@ -883,9 +883,9 @@ app.post('/loginTO', express.json({ type: '*/*' }), async (req, res) => {
 
 
 	try {
-		const { useremail, password } = req.body;
+		const { email, password } = req.body;
 
-		let user = await getUser(useremail, password);
+		let user = await getUser(email, password);
 		if (!user) {
 			res.status(404).json({ msg: "帳號密碼輸入錯誤" });
 			return;

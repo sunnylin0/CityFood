@@ -9,9 +9,24 @@ export const ProductManage = () => {
 	//let [showEditModal, setShowEditModal] = useState();
 	let [postEditMenuId, setEditMenuId] = useState();
 	let [showContents, setContents] = useState([]);
+	let [postIsModify, setIsModify] = useState(false);
 	//function openEditModal(idName) { setShowEditModal(idName); }
+	let handleIsModify=(isModify,mfyModel)=>{
+		if(isModify){			
+			getMenu(); 
+			theProducts.forEach((product, index,arr) => {
+				let { menuId, menuName, price, catId, comment, img, isSoldOut, subjoinIds } = product;
+				if(mfyModel.menuId==menuId){
+					arr[index]=mfyModel;
+				}		
+		})
+			init();
+			setIsModify(true);
+			//useEffect(init,[!postEditMenuId]);
+		}
+	}
 	function closeEditModal() { setEditMenuId(false); }
-
+	
 	/* 新增品項 */
 	function btnAddProduct() {
 		setShowEditModal("add");
@@ -47,15 +62,15 @@ export const ProductManage = () => {
 	useEffect(init,[])
 	return (
 		<>
-			{postEditMenuId && createPortal(<ProductEditModal menuId={postEditMenuId} onClose={closeEditModal} />, document.body)}
+			{postEditMenuId && createPortal(<ProductEditModal menuId={postEditMenuId} onIsModify={handleIsModify} onClose={closeEditModal} />, document.body)}
 			{/*<!-- 最上方標題導覽列 -->*/}
 			<BackHeader />
 			{/*<!-- 中間主要內容 -->*/}
 			<div className="main-content ">
 				<div className="page productManage container" style={{ display: "block" }}>
 					<div className="table-scroll h-100vh pb-5" id="productManage">
-						<table className="table">
-							<thead>
+						<table className={"table IS_" + postIsModify}>
+							<thead> 
 								<tr className="text-center">
 									<th>品項名稱</th>
 									<th>類別</th>

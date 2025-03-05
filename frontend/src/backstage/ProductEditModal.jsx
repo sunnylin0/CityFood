@@ -1,7 +1,7 @@
 ﻿import { useState ,useEffect } from 'react'
 
 
-export const ProductEditModal = ({ menuId, onClose }) => {
+export const ProductEditModal = ({ menuId, onClose ,onIsModify}) => {
 	let [postCategoryList, setCategoryList] = useState();
 	let [postSubjoinContents, setSubjoinContents] = useState();
 	let [postMenuData, setMenuData] = useState({
@@ -102,15 +102,17 @@ export const ProductEditModal = ({ menuId, onClose }) => {
 	function updateProduct(menuId, model) {
 
 		const token = getDataFromLocalStorage('_token');
-		const config = { headers: { 'Authorization': `Bearer ${token}` } }
+		const config = { headers: { 'Authorization': `Bearer ${token}` ,
+					'Content-Type': 'application/json' // 確保 Content-Type 是 application/json }
+		}};
 		axios.put(`${urlDomain}/products/${menuId}`, model, config)
-			.then(function (response) {
-				getMenu();
-				//$("#productEditModal").modal("hide")
+			.then(function (response) {				
 				sweetSuccess('更新成功', '商品已更新');
+				onIsModify(true,model);
 				onClose();
 			}).catch(function (error) {
 				console.log('error', error);
+				sweetError('更新失敗', '請檢查網路連線或稍後再試');
 			});
 	}
 	//新增產品資料

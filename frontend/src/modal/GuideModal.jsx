@@ -1,7 +1,7 @@
 ﻿import a3qrcode from '~/img/PC/A3-qrcode.png'
 export const GuideModal = ({ onClose }) => {
 
-	function login(useremail, password) {
+	function login(email, password) {
 		console.log(`${urlDomain}/loginTO/`)
 		//axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 		//const response = wait axios({
@@ -23,7 +23,7 @@ export const GuideModal = ({ onClose }) => {
 		}
 		//axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 		//axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-		axios.post(`${urlDomain}/loginTO/`, { useremail, password }, config)
+		axios.post(`${urlDomain}/loginTO/`, { email, password }, config)
 			.then(function (response) {
 				//gtag("event", "login", {
 				//	method: "login:" + `(${email})(${response.data.user.name})`

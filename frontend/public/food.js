@@ -13,7 +13,7 @@ let theProducts = [];//存放菜單的陣列(sortbyproductId)
 let theUserOrders = [];//客人的歷史訂單
 //let theFoodSubjoins=[];//食物附加選項
 const expireMins = 30;//登入過期時間(分鐘)
-let urlDomain = 'http://localhost:8080';
+let urlDomain = 'http://localhost:6060';
 //const urlDomain = 'https://json-server-vercel-a.vercel.app';
 let foodCategory = {}
 
@@ -237,8 +237,10 @@ async function postCartOrderxx(order) {
 
 //讀取購物車內容
 function getCarts() {
-	const cart = JSON.parse(localStorage.getItem('cart')) || [];
-	return cart;
+	if(localStorage.getItem('cart'))
+		return JSON.parse(localStorage.getItem('cart'));
+	else
+		return []	
 }
 
 //加入購物車
@@ -323,7 +325,10 @@ function saveDataToLocalStorage(key, data) {
 }
 //get data from local storage
 function getDataFromLocalStorage(key) {
-	return JSON.parse(localStorage.getItem(key));
+	if(localStorage.getItem(key))
+		return JSON.parse(localStorage.getItem(key));
+	else
+		return undefined
 }
 //delete data from local storage
 function deleteDataFromLocalStorage(key) {

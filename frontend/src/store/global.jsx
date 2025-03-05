@@ -10,7 +10,7 @@ const initialData = {};
 export let singleItem = atom({
     catId: "c05",         //"catId": "c05",
     id: "p053",           //"id": "p053",
-    name: "¡¶±¯",         //"name": "¡¶±¯",
+    name: "ËñØÊ¢ù",         //"name": "ËñØÊ¢ù",
     price: 30,            //"price": 30,
     qty: 1,               //"qty": 2,
     comment: "",          //"comment": "",
